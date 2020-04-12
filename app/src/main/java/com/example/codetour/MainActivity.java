@@ -2,6 +2,7 @@ package com.example.codetour;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
@@ -14,10 +15,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LinearLayout linearLayoutTmap = (LinearLayout)findViewById(R.id.linearLayoutTmap);
-        TMapView tMapView = new TMapView(this);
-
-        tMapView.setSKTMapApiKey( "l7xx61de16fc438e4bdd8a7a25468c6eca39" );
-        linearLayoutTmap.addView( tMapView );
+        Intent intent = new Intent(this, RouteCheck.class);
+        startActivityForResult(intent, 0);
     }
 }

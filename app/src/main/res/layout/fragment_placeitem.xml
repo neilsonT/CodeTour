@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        >
+
+        <ImageView
+            android:id="@+id/placeImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+
+            />
+        <TextView
+            android:id="@+id/placeName"
+            android:layout_toRightOf="@+id/placeImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:textSize="100dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/shape"/>
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_toRightOf="@+id/placeName"-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--&gt;-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/closeButton"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:paddingLeft="10dp"-->
+                <!--android:textSize="20sp"-->
+                <!--android:textColor="@android:color/black"-->
+                <!--/>-->
+        <!--</LinearLayout>-->
+
+    </RelativeLayout>
+</LinearLayout>
