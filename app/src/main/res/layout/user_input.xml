@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InputActivity" >
+
+    <!--wrap_form : 입력칸들을 감싸고 있는 layout-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/wrap_form"
+        android:layout_width="350dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomL"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/border_to_layout"
+        app:layout_constraintVertical_weight="13"
+        android:layout_marginTop="20dp"
+        >
+        <!--wrap_date : 가는날/오는날 감싸고 있는 layout-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/wrap_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/wrap_budget"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            >
+            <!--start_date_T : 가는 날 textView(그냥 글씨 띄우는 용도)-->
+            <TextView
+                android:id="@+id/start_date_T"
+                android:text="가는 날"
+                android:gravity="center"
+                android:layout_width="150dp"
+                android:layout_height="20dp"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/start_date_B"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/end_date_T"
+                >
+
+            </TextView>
+            <!--end_date_T : 오는 날 textView(그냥 글씨 띄우는 용도)-->
+            <TextView
+                android:id="@+id/end_date_T"
+                android:text="오는 날"
+                android:gravity="center"
+                android:layout_width="150dp"
+                android:layout_height="20dp"
+                app:layout_constraintVertical_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/end_date_B"
+                app:layout_constraintLeft_toRightOf="@id/start_date_T"
+                app:layout_constraintRight_toRightOf="parent">
+
+            </TextView>
+            <!--start_date_B : 가는 날 지정 button-->
+            <Button
+                android:id="@+id/start_date_B"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintTop_toBottomOf="@id/start_date_T"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/end_date_B"
+                android:onClick="OnClickHandlerD"
+                >
+
+            </Button>
+            <!--end_date_B : 오는 날 지정 button-->
+            <Button
+                android:id="@+id/end_date_B"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                app:layout_constraintTop_toBottomOf="@id/end_date_T"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/start_date_B"
+                android:onClick="OnClickHandlerD"
+                >
+
+            </Button>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- wrap_budget : 예산 입력 감싸는 layout-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/wrap_budget"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/wrap_date"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/wrap_food"
+            >
+            <!--tour_budget : 활동 예산 textview-->
+            <TextView
+                android:id="@+id/tour_budget"
+                android:text="활동 예산 : "
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/acc_budget"
+                app:layout_constraintRight_toLeftOf="@id/input_Tbudget"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:gravity="center">
+            </TextView>
+            <!--acc_budget : 숙소 예산 textview-->
+            <TextView
+                android:id="@+id/acc_budget"
+                android:text="숙소 예산 : "
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                app:layout_constraintTop_toBottomOf="@id/tour_budget"
+                app:layout_constraintRight_toLeftOf="@id/input_Abudget"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:gravity="center">
+            </TextView>
+<!--input_Tbudget : 활동 예산 입력 받는 EditText-->
+            <EditText
+                android:id="@+id/input_Tbudget"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/input_Abudget"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/tour_budget"
+                android:hint="입력하세요">
+
+            </EditText>
+            <!--input_Abudget : 숙소 예산 입력 받는 EditText-->
+            <EditText
+                android:id="@+id/input_Abudget"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/acc_budget"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:hint="입력하세요">
+
+            </EditText>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <!--wrap_food : 음식 입력 감싸는 layout-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/wrap_food"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            app:layout_constraintTop_toBottomOf="@id/wrap_budget"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/wrap_theme">
+            <!--food_text : 음식 표시 text-->
+            <TextView
+                android:id="@+id/food_text"
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:text="음식 취향 : "
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/food_spinner">
+
+            </TextView>
+            <!--food_spinner : 음식 종류 입력을 위한 Spinner (중복 선택 가능) -->
+            <com.example.codetour.MultiSelectionSpinner
+                android:id="@+id/food_spinner"
+                android:layout_width="200dp"
+                android:layout_height="20dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/food_text"
+                >
+
+            </com.example.codetour.MultiSelectionSpinner>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+<!-- 여행 테마-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/wrap_theme"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/wrap_food"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/wrap_pNum">
+            <TextView
+                android:id="@+id/theme_text"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:text="테마 : "
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/theme_spinner">
+
+            </TextView>
+            //멀티스패너를 넣어야 하지만.. class를 커스텀해야 하기 때문에 일단 넘김
+            <com.example.codetour.MultiSelectionSpinner
+                android:id="@+id/theme_spinner"
+                android:layout_width="250dp"
+                android:layout_height="20dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/theme_text">
+
+            </com.example.codetour.MultiSelectionSpinner>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+<!-- 인원-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/wrap_pNum"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            app:layout_constraintTop_toBottomOf="@id/wrap_theme"
+            app:layout_constraintBottom_toTopOf="@id/wrap_time"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                android:id="@+id/pNum_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="인원 : "
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent">
+
+            </TextView>
+            <Button
+                android:id="@+id/pNum_minus"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:text="-"
+                app:layout_constraintLeft_toRightOf="@id/pNum_text"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/pNum"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                android:gravity="center"
+                android:onClick="onClick">
+            </Button>
+            <TextView
+                android:id="@+id/pNum"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:text="1 명"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/pNum_minus"
+                app:layout_constraintRight_toLeftOf="@id/pNum_plus"
+                app:layout_constraintHorizontal_chainStyle="packed">
+            </TextView>
+            <Button
+                android:id="@+id/pNum_plus"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:text="+"
+                app:layout_constraintLeft_toRightOf="@id/pNum"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                android:gravity="center"
+                android:onClick="onClick">
+            </Button>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+<!-- 활동 시간, 종료 시간 입력 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/wrap_time"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/wrap_pNum"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/time_text"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:text="활동 시간 :"
+                android:gravity="center"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/start_time_B">
+
+            </TextView>
+            <Button
+                android:id="@+id/start_time_B"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/end_time_B"
+                app:layout_constraintLeft_toRightOf="@id/time_text"
+                app:layout_constraintRight_toLeftOf="@id/from_text"
+                android:onClick="OnClickHandlerT"
+              >
+
+            </Button>
+            <Button
+                android:id="@+id/end_time_B"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                app:layout_constraintTop_toBottomOf="@id/start_time_B"
+                app:layout_constraintLeft_toRightOf="@id/time_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/to_text"
+                android:onClick="OnClickHandlerT"
+               >
+
+            </Button>
+            <TextView
+                android:id="@+id/from_text"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:text="부터"
+                app:layout_constraintBottom_toTopOf="@id/to_text"
+                app:layout_constraintLeft_toRightOf="@id/start_time_B"
+                app:layout_constraintRight_toRightOf="parent"
+                >
+
+            </TextView>
+            <TextView
+                android:id="@+id/to_text"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:text="까지"
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toBottomOf="@id/from_text"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/end_time_B"
+               >
+
+            </TextView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--아래쪽 layout-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomL"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_weight="2"
+        app:layout_constraintTop_toBottomOf="@id/wrap_form"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="parent">
+<!--제출 버튼 -->
+        <Button
+            android:id="@+id/makeCourse"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="여행 코스 생성"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

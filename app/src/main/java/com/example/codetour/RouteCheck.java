@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.example.codetour.fragment.PlaceItem;
+import com.example.codetour.fragment.PlaceItemFragment;
 import com.example.codetour.vo.Place;
 import com.skt.Tmap.TMapMarkerItem;
 import com.skt.Tmap.TMapPOIItem;
@@ -21,10 +21,11 @@ import com.skt.Tmap.TMapView;
 import java.util.ArrayList;
 import java.util.List;
 
+// 경로 확인 페이지 클래스
 public class RouteCheck extends AppCompatActivity {
 
     private FragmentManager fm;
-    private PlaceItem placeListFragment;
+    private PlaceItemFragment placeListFragment;
 
     private List<Parcelable> placeList;
 
@@ -36,7 +37,7 @@ public class RouteCheck extends AppCompatActivity {
         // 지도 띄우기
         LinearLayout linearLayoutTmap = (LinearLayout)findViewById(R.id.linearLayoutTmap);
         TMapView tMapView = new TMapView(this);
-        tMapView.setSKTMapApiKey( "l7xx61de16fc438e4bdd8a7a25468c6eca39" );
+        tMapView.setSKTMapApiKey(getString(R.string.tmap_key));
         linearLayoutTmap.addView( tMapView );
 
         // 지도에 이벤트 핸들러 설정
@@ -44,7 +45,7 @@ public class RouteCheck extends AppCompatActivity {
 
         // 경로 정보에 대한 Fragment 관리
         fm = getSupportFragmentManager();
-        placeListFragment = (PlaceItem)fm.findFragmentById(R.id.placeItemFragment);
+        placeListFragment = (PlaceItemFragment)fm.findFragmentById(R.id.placeItemFragment);
         fm.beginTransaction().addToBackStack(null);
         hideFragment(placeListFragment);
 

@@ -1,14 +1,10 @@
 package com.example.codetour.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Parcelable;
 import android.view.LayoutInflater;
@@ -16,25 +12,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.codetour.R;
-import com.example.codetour.fragment.dummy.DummyContent;
-import com.example.codetour.fragment.dummy.DummyContent.DummyItem;
 import com.example.codetour.vo.Place;
 
 import java.util.ArrayList;
 import java.util.List;
 
+// 코스 상세 정보를 담고 있는 Class
+public class PlaceItemFragment extends Fragment {
 
-public class PlaceItem extends Fragment {
-
-    private List<Place> dataset;
+    private List<Place> dataset;    // 장소들의 List
     private ListView listView;
-    private ArrayAdapter<Place> adapter;
     private PlaceItemViewAdapter placeItemViewAdapter;
+
+    private TextView placeAdd;  // 장소 추가 버튼
+    private ImageButton placeDeleteButton;  // 장소 삭제 버튼
 
     @Nullable
     @Override
@@ -46,11 +41,33 @@ public class PlaceItem extends Fragment {
         placeItemViewAdapter = new PlaceItemViewAdapter(dataset,getActivity().getApplicationContext());
         listView.setAdapter(placeItemViewAdapter);
 
+        View v = inflater.inflate(R.layout.fragment_placeitem,container,false);
+        placeAdd = v.findViewById(R.id.placeAddButton);
+        placeDeleteButton = v.findViewById(R.id.placeDeleteButton);
+
+        // 장소 추가 버튼 이벤트 핸들러
+        placeAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // 장소 추가
+            }
+        });
+
+        // 장소 삭제 버튼 이벤트 핸들러
+        placeDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //  장소 삭제
+            }
+        });
 
         return rootView;
     }
 
+    // 장소의 리스트를 보여주는 메소드
+    // 변경된 장소가 매개변수로 들어오면 해당 placeList가 dataset에 추가된다
     public void showPlaceList(List<Parcelable> placeList) {
+        dataset.clear();
         for(Parcelable p : placeList){
             dataset.add((Place) p);
         }

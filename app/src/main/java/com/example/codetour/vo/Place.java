@@ -5,16 +5,17 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.widget.ImageView;
 
+// 장소 클래스
 public class Place implements Parcelable {
 
-    private String name;
-    private String tel;
-    private String address;
-    private double lat;
-    private double lon;
-    private String detail;
+        private String name;
+        private String tel;
+        private String address;
+        private double lat;
+        private double lon;
+        private String detail;
 //    private Image imageView;
-    private boolean type;
+        private boolean type;
 
 
     public Place() {

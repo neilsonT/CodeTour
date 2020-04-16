@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--SchedulListView에 들어갈item의 레이아웃입니다-->
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/round_border"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
+
+    <RelativeLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!--날짜를 보여주는 TextView-->
+        <TextView
+            android:id="@+id/datetextview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="5dp"
+            android:text="TextView" />
+        <!--일정 이름을 보여주는 TextView-->
+        <TextView
+            android:id="@+id/scheduleName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/datetextview"
+            android:paddingTop="11dp"
+            android:text="TextView"
+            android:textSize="25dp"
+            android:textColor="#000000"
+            android:textStyle="bold"/>
+
+        <!--delete Button-->
+        <Button
+            android:id="@+id/delete_btn"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:background="@drawable/xmark"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

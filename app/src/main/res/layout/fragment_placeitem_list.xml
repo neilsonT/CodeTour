@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:weightSum="100">
 
+        <!-- 장소들을 담고 있는 리스트뷰 -->
         <ListView
             android:id="@+id/placeItemList"
             android:layout_width="0dp"
