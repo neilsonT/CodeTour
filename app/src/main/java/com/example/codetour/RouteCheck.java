@@ -9,7 +9,10 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import com.example.codetour.fragment.PlaceItemFragment;
 import com.example.codetour.vo.Place;
@@ -28,6 +31,8 @@ public class RouteCheck extends AppCompatActivity {
     private PlaceItemFragment placeListFragment;
 
     private List<Parcelable> placeList;
+
+    private List<String> dayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +54,25 @@ public class RouteCheck extends AppCompatActivity {
         fm.beginTransaction().addToBackStack(null);
         hideFragment(placeListFragment);
 
+        dayList = new ArrayList<>();
 
+        Spinner daySpinner = findViewById(R.id.daySpinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dayList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        daySpinner.setAdapter(adapter);
+
+        daySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         // 장소 리스트 테스트용도
         placeList = new ArrayList<>();
