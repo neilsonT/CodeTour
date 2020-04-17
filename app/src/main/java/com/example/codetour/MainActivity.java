@@ -8,16 +8,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
-    //상수 & 임시 상수 설정
-    final int days = 4;
-    final int code_sePosSetting = 1;
+    public class MainActivity extends AppCompatActivity {
+        //상수 & 임시 상수 설정
+        final int days = 4;
+        final int code_sePosSetting = 1;
 
-    //사용되는 객체 선언
-    Button btn_temp;
-    sePos se;
-
-    Button btn;
+        //사용되는 객체 선언
+        Button btn_temp;
+        sePos se;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
