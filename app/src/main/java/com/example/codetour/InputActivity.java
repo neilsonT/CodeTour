@@ -2,7 +2,9 @@ package com.example.codetour;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -12,9 +14,12 @@ import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Date;
 
 public class InputActivity extends AppCompatActivity {
     //날짜 설정을 위한 변수
@@ -22,17 +27,25 @@ public class InputActivity extends AppCompatActivity {
     private Button end_date_B;
     private DatePickerDialog.OnDateSetListener callbackMethodD;
     private int DataPickerCalled; //가는날/오는날 중에 어떤 버튼을 클릭한 것인지 저장
+    //private int[] startDate=new int[3];
+    //private int[] endDate=new int[3];
+    private String startDate;
+    private String endDate;
     //시간 설정을 위한 변수
     private TimePickerDialog.OnTimeSetListener callbackMethodT;
     private Button start_time_B;
     private Button end_time_B;
     private int TimePickerCalled;
+    private int[] startTime=new int[2];
+    private int[] endTime=new int[2];
     //spinner
     private MultiSelectionSpinner food_spinner;
     private MultiSelectionSpinner theme_spinner;
     //예산 입력
     private EditText tour_budget;
     private EditText acc_budget;
+    int tourBudget;
+    int accBudget;
     //인원 설정
     private TextView pNum;
     int num=1;
@@ -87,10 +100,35 @@ public class InputActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth){
                 //이 DataPicker를 부른 것이 가는날인지, 오는날인지 확인해서 해당 text를 바꿔준다.
-                if (DataPickerCalled == R.id.start_date_B)
-                    start_date_B.setText(year+"-"+monthOfYear+"-"+dayOfMonth);
-                else if (DataPickerCalled == R.id.end_date_B)
-                    end_date_B.setText(year+"-"+monthOfYear+"-"+dayOfMonth);
+                if (DataPickerCalled == R.id.start_date_B){
+                    String month;
+                    String day;
+                    if (monthOfYear+1<10)
+                        month="0"+(monthOfYear+1);
+                    else
+                        month=(monthOfYear+1)+"";
+                    if(dayOfMonth<10)
+                        day="0"+dayOfMonth;
+                    else
+                        day=dayOfMonth+"";
+                    startDate = year+"-"+month+"-"+day;
+                    start_date_B.setText(startDate);
+                }
+
+                else if (DataPickerCalled == R.id.end_date_B) {
+                    String month;
+                    String day;
+                    if (monthOfYear+1<10)
+                        month="0"+(monthOfYear+1);
+                    else
+                        month=(monthOfYear+1)+"";
+                    if(dayOfMonth<10)
+                        day="0"+dayOfMonth;
+                    else
+                        day=dayOfMonth+"";
+                    endDate = year+"-"+month+"-"+day;
+                    end_date_B.setText(endDate);
+                }
             }
         };
         //시간입력 '완료'버튼을 눌렀을 때 실행되는 부분
@@ -101,6 +139,8 @@ public class InputActivity extends AppCompatActivity {
                 //이 TimePicker를 부른 것이 활동시간인지, 종료시간인지 확인해서 해당 text를 바꿔준다
                 if (TimePickerCalled==R.id.start_time_B){
                     m=Integer.toString(minute);
+                    startTime[0]=hourOfDay;
+                    startTime[1]=minute;
                     if (minute<10){ //분이 한자리수 이면 앞에 0을 붙여서 두 자리로 만들어서 출력
                         start_time_B.setText(hourOfDay+" : 0"+m);
                     }
@@ -109,12 +149,13 @@ public class InputActivity extends AppCompatActivity {
                 }
                 else if (TimePickerCalled==R.id.end_time_B){
                     m=Integer.toString(minute);
+                    endTime[0]=hourOfDay;
+                    endTime[1]=minute;
                     if (minute<10){ //분이 한자리수 이면 앞에 0을 붙여서 두 자리로 만들어서 출력
                         end_time_B.setText(hourOfDay+" : 0"+m);
                     }
                     else //분이 두자리면 그냥 출력
                         end_time_B.setText(hourOfDay+" : "+m);
-
                 }
             }
         };
@@ -124,7 +165,7 @@ public class InputActivity extends AppCompatActivity {
         //날짜 선택 창을 처음 띄웠을 때 '오늘 날짜' 기준으로 표시하기 위해 사용
         GregorianCalendar today = new GregorianCalendar();
         int year = today.get(today.YEAR);
-        int month = today.get(today.MONTH)+1;
+        int month = today.get(today.MONTH);
         int day = today.get(today.DAY_OF_MONTH);
         DatePickerDialog dialog = new DatePickerDialog(this, callbackMethodD,year,month,day); //여기 쓰여지는 날짜는 무슨 의미인가?
         DataPickerCalled = view.getId();
@@ -149,7 +190,13 @@ public class InputActivity extends AppCompatActivity {
             }
         }
     }
-    public void HandOverInput(){ //여행 코스 추천 버튼을 눌렀을 때(미완)
-
+    public void SubmitInput(View view){ //여행 코스 추천 버튼을 눌렀을 때(미완)
+        tourBudget = Integer.parseInt( "" + tour_budget.getText() );
+        accBudget = Integer.parseInt( "" + acc_budget.getText() );
+        Tour tour = new Tour("null",startDate,endDate,num,tourBudget,accBudget,startTime,endTime);
+        Intent intent=new Intent(getApplicationContext(),Test.class);
+        intent.putExtra("class", tour);
+        //intent.putExtra("name","안녕");
+        startActivity(intent);
     }
 }
