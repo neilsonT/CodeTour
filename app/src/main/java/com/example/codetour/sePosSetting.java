@@ -21,10 +21,13 @@ public class sePosSetting extends AppCompatActivity {
 
         //이전 페이지로부터 데이터들을 받아옴
         Intent seIntent = getIntent();
+        Tour tour=(Tour)seIntent.getSerializableExtra("class");
 
         //sePos가 내부적으로 Exception을 throw하므로, try-catch를 사용
         try {
-            sepos = new sePos(seIntent.getIntExtra("days", -1));
+            //정보들을 따로 getExtra로 안건넨받고 Tour class에 담아서 객체를 위에서 받았다. 따라서 여기부터 tour의 필드값 이용하면 된다.
+            sepos = new sePos(tour.difdays);
+            //startPos 랑 endPos도 tour 인스턴스 필드 참조하면 되는데 아직 어떤 타입으로 필드 채울지 안정함
             sepos.startPos = seIntent.getStringArrayExtra("stPos");
             sepos.endPos = seIntent.getStringArrayExtra("edPos");
         }
@@ -45,6 +48,8 @@ public class sePosSetting extends AppCompatActivity {
             text.setText(new String((i+1)+"일째"));
             tr.addView(text);
 
+            //아직 위치값을 넣지 않았기 때문에 실행해보기 위해서 주석처리 해놓음
+/*
             //i번째날 출발지 입력칸을 row에 추가
             EditText stPos = new EditText(this);
             stPos.setText(sepos.startPos[i]);
@@ -56,9 +61,11 @@ public class sePosSetting extends AppCompatActivity {
             edPos.setText(sepos.endPos[i]);
             edPos.setId(2*i+1);
             tr.addView(edPos);
-
+*/
             //row를 테이블에 추가
             seEdit.addView(tr);
+
+
         }
     }
 }

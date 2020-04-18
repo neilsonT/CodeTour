@@ -194,7 +194,7 @@ public class InputActivity extends AppCompatActivity {
         tourBudget = Integer.parseInt( "" + tour_budget.getText() );
         accBudget = Integer.parseInt( "" + acc_budget.getText() );
         Tour tour = new Tour("null",startDate,endDate,num,tourBudget,accBudget,startTime,endTime);
-        Intent intent=new Intent(getApplicationContext(),Test.class);
+        Intent intent=new Intent(getApplicationContext(),sePosSetting.class);
         intent.putExtra("class", tour);
         //intent.putExtra("name","안녕");
         startActivity(intent);
