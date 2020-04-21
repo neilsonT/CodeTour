@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import com.example.codetour.TmapOverlay.MarkerOverlay;
 import com.example.codetour.fragment.PlaceItemFragment;
 import com.example.codetour.vo.Place;
 import com.skt.Tmap.TMapMarkerItem;
@@ -32,13 +33,23 @@ public class RouteCheck extends AppCompatActivity {
     private FragmentManager fm;
     private PlaceItemFragment placeListFragment;
 
+    // 장소 리스트
     private List<Parcelable> placeList;
 
+    // 여행 날짜 리스트
     private List<String> dayList;
 
+    // 장소의 마커 리스트
     private List<TMapMarkerItem> locationList;
 
+    // 티맵 지도
     private TMapView tMapView;
+
+    // 마커 풍선
+    private MarkerOverlay markerOverlay;
+
+    // 마커 선택시 해당 장소 저장용도
+    private Place selectedPlace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +163,28 @@ public class RouteCheck extends AppCompatActivity {
             Log.d("onPressUpEvent","지도 클릭");
             // 지도 선택시 장소 경로 숨기기
             hideFragment(placeListFragment);
+
+            // 말풍선 지우기
+            if(markerOverlay != null) {
+                tMapView.removeMarkerItem2(markerOverlay.getID());
+            }
+
+            // 장소를 선택한게 아니면 아무일도 없다
+            if(arrayList.size() == 0) {
+                selectedPlace = null;
+                return false;
+            }
+
+            // 마커를 선택했다는 조건 추가해야됨
+            if(true) {
+                Bitmap image = null;
+                markerOverlay = new MarkerOverlay(getApplicationContext(), "https://www.dhnews.co.kr/news/photo/201807/83555_72577_634.png", "서울시립대", "123-123-123", "서울시 동대문구");
+                tMapView.addMarkerItem2("id", markerOverlay);
+                markerOverlay.setID("id");
+                markerOverlay.setPosition(0.0f, 0.0f);
+                markerOverlay.setTMapPoint(tMapPoint);
+            }
+
             return false;
         }
     }
