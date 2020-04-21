@@ -38,6 +38,8 @@ public class RouteCheck extends AppCompatActivity {
 
     private List<TMapMarkerItem> locationList;
 
+    private TMapView tMapView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +47,7 @@ public class RouteCheck extends AppCompatActivity {
 
         // 지도 띄우기
         LinearLayout linearLayoutTmap = (LinearLayout)findViewById(R.id.linearLayoutTmap);
-        TMapView tMapView = new TMapView(this);
+        tMapView = new TMapView(this);
         tMapView.setSKTMapApiKey(getString(R.string.tmap_key));
         linearLayoutTmap.addView( tMapView );
 
@@ -84,24 +86,6 @@ public class RouteCheck extends AppCompatActivity {
             placeList.add(new Place("시립대"+i));
         }
 
-        // 마커 리스트 테스트용도
-        locationList = new ArrayList<>();
-        for(int i=0; i<10; i++){
-            TMapMarkerItem markerItem = new TMapMarkerItem();
-
-            TMapPoint tMapPoint = new TMapPoint(37.570841+0.001*i, 126.985302-0.001*i);
-            // 마커 아이콘
-            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.marker);
-
-            markerItem.setIcon(bitmap);
-            markerItem.setPosition(0.5f,1.0f);
-            markerItem.setTMapPoint(tMapPoint);
-            markerItem.setName("marker");
-            tMapView.addMarkerItem("markerItem"+i,markerItem);
-
-            locationList.add(markerItem);
-        }
-        tMapView.setCenterPoint(126.985302,37.570841);
     }
 
     // fragment 숨기기
@@ -123,6 +107,28 @@ public class RouteCheck extends AppCompatActivity {
     // 장소 상세 정보 설정하기
     public void setPlaceDetail(){
         placeListFragment.showPlaceList(placeList);
+    }
+
+    // 마커 지도에 표시
+    public void showMarker(){
+        // 마커 리스트 테스트용도
+        locationList = new ArrayList<>();
+        for(int i=0; i<10; i++){
+            TMapMarkerItem markerItem = new TMapMarkerItem();
+
+            TMapPoint tMapPoint = new TMapPoint(37.570841+0.001*i, 126.985302-0.001*i);
+            // 마커 아이콘
+            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.marker);
+
+            markerItem.setIcon(bitmap);
+            markerItem.setPosition(0.5f,1.0f);
+            markerItem.setTMapPoint(tMapPoint);
+            markerItem.setName("marker");
+            tMapView.addMarkerItem("markerItem"+i,markerItem);
+
+            locationList.add(markerItem);
+        }
+        tMapView.setCenterPoint(126.985302,37.570841);
     }
 
 
