@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -33,6 +35,8 @@ public class RouteCheck extends AppCompatActivity {
     private List<Parcelable> placeList;
 
     private List<String> dayList;
+
+    private List<TMapMarkerItem> locationList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +83,25 @@ public class RouteCheck extends AppCompatActivity {
         for(int i=0; i<10; i++){
             placeList.add(new Place("시립대"+i));
         }
+
+        // 마커 리스트 테스트용도
+        locationList = new ArrayList<>();
+        for(int i=0; i<10; i++){
+            TMapMarkerItem markerItem = new TMapMarkerItem();
+
+            TMapPoint tMapPoint = new TMapPoint(37.570841+0.001*i, 126.985302-0.001*i);
+            // 마커 아이콘
+            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.marker);
+
+            markerItem.setIcon(bitmap);
+            markerItem.setPosition(0.5f,1.0f);
+            markerItem.setTMapPoint(tMapPoint);
+            markerItem.setName("marker");
+            tMapView.addMarkerItem("markerItem"+i,markerItem);
+
+            locationList.add(markerItem);
+        }
+        tMapView.setCenterPoint(126.985302,37.570841);
     }
 
     // fragment 숨기기
