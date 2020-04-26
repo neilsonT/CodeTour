@@ -6,12 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!--  TODO: 버튼들 가운데 정렬 어떻게?  -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -20,13 +19,13 @@
                 android:id="@+id/btnMakeSchedule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_centerInParent="true"
                 android:onClick="makeSchedule"
                 android:text="@string/btnMakeSchedule" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -35,10 +34,12 @@
                 android:id="@+id/btnViewSchedule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:onClick="showScehdulList"
+                android:layout_centerInParent="true"
+                android:onClick="showScheduleList"
                 android:text="@string/btnViewSchedule" />
 
-        </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

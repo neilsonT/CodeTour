@@ -7,9 +7,9 @@ public class sePos {
     public String[] endPos;
 
     public sePos(){
-        days = 1;
-        startPos = new String[1];
-        endPos = new String[1];
+        days = 4;
+        startPos = new String[this.days];
+        endPos = new String[this.days];
     }
 
     public sePos(int d) throws Exception{
