@@ -7,7 +7,6 @@ import java.net.URL;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
-
 public class SpotManager {
     final private String key_DY = "YuGhNUdswtkAVKVlwFiC%2BgZF%2F1qCuhiKIln3Q1UTlY31jCR987Kfcg8Ci82dTLTfZAzHTgkiQPSJ1qEXOZFoVw%3D%3D";
     final String endPoint = "http://api.visitkorea.or.kr/openapi/service/rest";
