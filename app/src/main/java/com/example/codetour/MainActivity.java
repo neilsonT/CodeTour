@@ -63,7 +63,7 @@ import android.widget.Button;
         startActivityForResult(intent,0);
     }
 
-    public void showScehdulList(View view) {
+    public void showScheduleList(View view) {
         Intent intent = new Intent(this, ScheduleList.class);
         startActivityForResult(intent,0);
     }

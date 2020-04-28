@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -32,8 +33,9 @@ public class sePosSetting extends AppCompatActivity {
             sepos.endPos = seIntent.getStringArrayExtra("edPos");
         }
         catch(Exception e){
-            sePos sepos = new sePos();
+            sepos = new sePos();
         }
+        //sepos = new sePos();
 
         //동적으로 테이블 생성.
         TableLayout seEdit = (TableLayout)findViewById(R.id.seEdit);
@@ -42,30 +44,31 @@ public class sePosSetting extends AppCompatActivity {
         for(int i=0; i<sepos.days; ++i){
             //row 생성
             TableRow tr = new TableRow(this);
+            TableLayout.LayoutParams tmpRowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, 4);
+            tr.setLayoutParams(tmpRowParams);
 
             //몇일째인지 날짜를 보여주는 텍스트를 row에 추가
             TextView text = new TextView(this);
             text.setText(new String((i+1)+"일째"));
-            tr.addView(text);
+            text.setGravity(Gravity.CENTER_VERTICAL);
+            tr.addView(text, new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 1));
 
             //아직 위치값을 넣지 않았기 때문에 실행해보기 위해서 주석처리 해놓음
-/*
+
             //i번째날 출발지 입력칸을 row에 추가
             EditText stPos = new EditText(this);
             stPos.setText(sepos.startPos[i]);
             stPos.setId(2*i);
-            tr.addView(stPos);
+            tr.addView(stPos, new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 3));
 
             //i번째날 도착지 입력칸을 row에 추가
             EditText edPos = new EditText(this);
             edPos.setText(sepos.endPos[i]);
             edPos.setId(2*i+1);
-            tr.addView(edPos);
-*/
+            tr.addView(edPos, new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 3));
+
             //row를 테이블에 추가
             seEdit.addView(tr);
-
-
         }
     }
 }
