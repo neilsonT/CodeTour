@@ -28,10 +28,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 // 경로 확인 페이지 클래스
-public class RouteCheck extends AppCompatActivity {
+public class RouteCheck extends AppCompatActivity implements  ScheduleContract.View{
+
+    // presenter
+    private ScheduleContract.Presenter schedulePresenter;
 
     private FragmentManager fm;
-    private PlaceItemFragment placeListFragment;
+    private PlaceItemFragment placeItemFragment;
 
     // 장소 리스트
     private List<Parcelable> placeList;
@@ -56,6 +59,9 @@ public class RouteCheck extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_check);
 
+        // presenter 생성
+        schedulePresenter = new SchedulePresenter(this);
+
         // 지도 띄우기
         LinearLayout linearLayoutTmap = (LinearLayout)findViewById(R.id.linearLayoutTmap);
         tMapView = new TMapView(this);
@@ -67,12 +73,13 @@ public class RouteCheck extends AppCompatActivity {
 
         // 경로 정보에 대한 Fragment 관리
         fm = getSupportFragmentManager();
-        placeListFragment = (PlaceItemFragment)fm.findFragmentById(R.id.placeItemFragment);
+        placeItemFragment = (PlaceItemFragment)fm.findFragmentById(R.id.placeItemFragment);
         fm.beginTransaction().addToBackStack(null);
-        hideFragment(placeListFragment);
+        hideFragment(placeItemFragment);
 
         dayList = new ArrayList<>();
 
+        // 여행 날짜 선택 spinnner
         Spinner daySpinner = findViewById(R.id.daySpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, dayList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -112,12 +119,12 @@ public class RouteCheck extends AppCompatActivity {
     // 장소 상세 설명 버튼 누르면 작동
     public void openPlaceList(View view) {
         setPlaceDetail();
-        showFragment(placeListFragment);
+        showFragment(placeItemFragment);
     }
 
     // 장소 상세 정보 설정하기
     public void setPlaceDetail(){
-        placeListFragment.showPlaceList(placeList);
+        placeItemFragment.showPlaceList(placeList);
     }
 
     // 마커 지도에 표시
@@ -162,7 +169,7 @@ public class RouteCheck extends AppCompatActivity {
         public boolean onPressUpEvent(ArrayList<TMapMarkerItem> arrayList, ArrayList<TMapPOIItem> arrayList1, TMapPoint tMapPoint, PointF pointF) {
             Log.d("onPressUpEvent","지도 클릭");
             // 지도 선택시 장소 경로 숨기기
-            hideFragment(placeListFragment);
+            hideFragment(placeItemFragment);
 
             // 말풍선 지우기
             if(markerOverlay != null) {

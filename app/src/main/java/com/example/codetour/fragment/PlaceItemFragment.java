@@ -22,7 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 // 코스 상세 정보를 담고 있는 Class
-public class PlaceItemFragment extends Fragment {
+public class PlaceItemFragment extends Fragment implements PlaceItemContract.View {
+
+    private PlaceItemContract.Presenter placeItemPresenter ; // presenter
 
     private List<Place> dataset;    // 장소들의 List
     private ListView listView;
@@ -35,6 +37,8 @@ public class PlaceItemFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_placeitem_list,container,false);
+
+        placeItemPresenter = new PlaceItemPresenter(this);
 
         dataset = new ArrayList<Place>();
         listView = rootView.findViewById(R.id.placeItemList);
