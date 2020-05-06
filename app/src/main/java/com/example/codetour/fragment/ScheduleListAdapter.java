@@ -9,15 +9,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.codetour.R;
-import com.example.codetour.vo.Datatmp;
+import com.example.codetour.TripSchedule;
 import java.util.ArrayList;
+import java.util.List;
 
-public class DataAdapter extends BaseAdapter {  //ScheduleListView와 연결되는 Adapter
+public class ScheduleListAdapter extends BaseAdapter{  //ScheduleListView와 연결되는 Adapter
     Context mContext = null;
     LayoutInflater mLayoutInflater = null;
-    ArrayList<Datatmp> sample;
+    List<TripSchedule> sample;
 
-    public DataAdapter(Context context, ArrayList<Datatmp> data) {
+    public ScheduleListAdapter(Context context, List<TripSchedule> data) {
         mContext = context;
         sample = data;
         mLayoutInflater = LayoutInflater.from(mContext);
@@ -34,7 +35,7 @@ public class DataAdapter extends BaseAdapter {  //ScheduleListView와 연결되�
     }
 
     @Override
-    public Datatmp getItem(int position) {
+    public TripSchedule getItem(int position) {
         return sample.get(position);
     }
 
@@ -57,10 +58,10 @@ public class DataAdapter extends BaseAdapter {  //ScheduleListView와 연결되�
             System.out.println(e.getMessage());
         }
 
-        scheduleName.setText(sample.get(position).getScheduleName());   //List에서 index받아 해당위치에 있는 일정이름 TextView에 표시
-        dateTextView.setText(sample.get(position).getStartDate()+"~"+sample.get(position).getFinishDate());
+        scheduleName.setText(sample.get(position).getName());   //List에서 index받아 해당위치에 있는 일정이름 TextView에 표시
+        dateTextView.setText(sample.get(position).getStartDate()+"~"+sample.get(position).getEndDate());
 
         return view;
     }
-    
+
 }
