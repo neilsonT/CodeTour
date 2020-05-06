@@ -3,6 +3,7 @@ package com.example.codetour;
 import java.util.List;
 
 public class Course {
+    SpotManager spotManager;
     int num;
     int[] timeList; //소요시간 list
     List<Spot> spotList;
@@ -15,13 +16,13 @@ public class Course {
     public Course(){
 
     }
-    public void AddSpot(){
+    public void addSpot(){
 
     }
-    public void DeleteSpot(){
+    public void deleteSpot(){
 
     }
-    public void ChangeSpot(){
+    public void changeSpot(){
 
     }
 
