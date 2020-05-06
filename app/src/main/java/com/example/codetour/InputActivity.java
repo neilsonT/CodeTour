@@ -193,7 +193,7 @@ public class InputActivity extends AppCompatActivity {
     public void SubmitInput(View view){ //여행 코스 추천 버튼을 눌렀을 때(미완)
         tourBudget = Integer.parseInt( "" + tour_budget.getText() );
         accBudget = Integer.parseInt( "" + acc_budget.getText() );
-        Tour tour = new Tour("null",startDate,endDate,num,tourBudget,accBudget,startTime,endTime);
+        TripSchedule tour = new TripSchedule("null",startDate,endDate,num,tourBudget,accBudget,startTime,endTime);
         Intent intent=new Intent(getApplicationContext(),sePosSetting.class);
         intent.putExtra("class", tour);
         //intent.putExtra("name","안녕");

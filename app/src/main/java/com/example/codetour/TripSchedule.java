@@ -4,7 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Tour implements Serializable{
+public class TripSchedule implements Serializable{
+    CourseManager courseManager;
     String name;
     Course[] courseList;
     String startDate;
@@ -21,7 +22,7 @@ public class Tour implements Serializable{
     int[] startTime;
     int[] endTime;
 
-    public Tour(String name, String startDate, String endDate, int pNum,
+    public TripSchedule(String name, String startDate, String endDate, int pNum,
                 int tourBudget, int accBudget, int[] startTime, int[] endTime){
         this.name=name;
         this.startDate=startDate;
