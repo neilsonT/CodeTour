@@ -1,54 +1,59 @@
 package com.example.codetour;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.List;
+
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.codetour.fragment.DataAdapter;
-import com.example.codetour.vo.Datatmp;
+import com.example.codetour.fragment.ScheduleListAdapter;
 
 
-public class ScheduleList extends AppCompatActivity {   //ScheduleListView의 생성(+Data받아오기, 전달 추가 필요)
+public class ScheduleList extends AppCompatActivity implements ScheduleListContract.View {   //ScheduleListView의 생성(+Data받아오기, 전달 추가 필요)
 
-    ArrayList<Datatmp> scheduleDataList;    //임시데이터
+    ScheduleListContract.Presenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_list);
-        this.InitializescheduleData();
+        presenter = new ScheduleListPresenter(this);
 
-        ListView listView = (ListView)findViewById(R.id.listView);
-        final DataAdapter myAdapter = new DataAdapter(this,scheduleDataList);
-
-        listView.setAdapter(myAdapter); //listView와 Adapter연결
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-            @Override
-            public void onItemClick(AdapterView parent, View v, int position, long id){ //item click시 동작
-                Toast.makeText(getApplicationContext(),
-                        myAdapter.getItem(position).getScheduleName(),
-                        Toast.LENGTH_LONG).show();  //해당 item을 받아와 이름을 보여줍니다(차후 페이지 이동&data 전달로로 수정)
-            }
-        });
-
+        presenter.getScheduleList();
 
     }
 
-    public void InitializescheduleData()
-    {
-        scheduleDataList = new ArrayList<Datatmp>();
+    @Override
+    public void showScheduleList(List<TripSchedule> trip_schedule_list){
+        ListView listView = (ListView)findViewById(R.id.listView);
 
-        scheduleDataList.add(new Datatmp("일정1","2020-01-03","2020-01-05"));
-        scheduleDataList.add(new Datatmp("일정2","2020-03-03","2020-03-05"));
-        scheduleDataList.add(new Datatmp("일정3","2020-04-01","2020-04-05"));
-        scheduleDataList.add(new Datatmp("일정4","2020-04-02","2020-04-04"));
-        scheduleDataList.add(new Datatmp("일정5","2020-04-06","2020-05-08"));
-        scheduleDataList.add(new Datatmp("일정6","2020-03-06","2020-05-07"));
-        scheduleDataList.add(new Datatmp("일정7","2020-06-06","2020-07-05"));
-        scheduleDataList.add(new Datatmp("일정8입니다.","2020-07-03","2020-07-05"));
+        if(trip_schedule_list!=null){
+            ScheduleListAdapter myAdapter = new ScheduleListAdapter(this,trip_schedule_list);
 
+            listView.setAdapter(myAdapter); //listView와 Adapter연결
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                @Override
+                public void onItemClick(AdapterView parent, View v, int position, long id){ //item click시 동작
+                   presenter.getSchdule(position);
+                }
+            });
+        }
+        else {
+
+        }
+    }
+
+    @Override
+    public void showSchedule(TripSchedule trip_schedule){
+        Toast.makeText(getApplicationContext(),trip_schedule.getName(),Toast.LENGTH_LONG).show();
+
+        //RouteCheck로 이동합니다.
+        //Intent intent= new Intent(this, RouteCheck.class);
+        //intent.putExtra("tripSchedule",trip_schedule);
+        //startActivityForResult(intent,0);
     }
 }

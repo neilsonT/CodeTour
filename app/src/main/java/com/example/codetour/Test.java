@@ -17,7 +17,7 @@ public class Test extends AppCompatActivity {
         setContentView(R.layout.activity_test);
         test = (TextView)findViewById(R.id.testText);
         Intent intent = getIntent();
-        Tour tour=(Tour)intent.getSerializableExtra("class");
+        TripSchedule tour=(TripSchedule) intent.getSerializableExtra("class");
         //String name = intent.getExtras().getString("name");
         String s = tour.name;
         test.setText(s);

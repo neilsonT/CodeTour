@@ -22,7 +22,7 @@ public class sePosSetting extends AppCompatActivity {
 
         //이전 페이지로부터 데이터들을 받아옴
         Intent seIntent = getIntent();
-        Tour tour=(Tour)seIntent.getSerializableExtra("class");
+        TripSchedule tour=(TripSchedule) seIntent.getSerializableExtra("class");
 
         //sePos가 내부적으로 Exception을 throw하므로, try-catch를 사용
         try {
