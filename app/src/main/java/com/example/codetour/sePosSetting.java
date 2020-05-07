@@ -23,12 +23,12 @@ public class sePosSetting extends AppCompatActivity {
         //이전 페이지로부터 데이터들을 받아옴
         Intent seIntent = getIntent();
         TripSchedule tour=(TripSchedule) seIntent.getSerializableExtra("class");
-
         //sePos가 내부적으로 Exception을 throw하므로, try-catch를 사용
         try {
             //정보들을 따로 getExtra로 안건넨받고 Tour class에 담아서 객체를 위에서 받았다. 따라서 여기부터 tour의 필드값 이용하면 된다.
             sepos = new sePos(tour.difdays);
             //startPos 랑 endPos도 tour 인스턴스 필드 참조하면 되는데 아직 어떤 타입으로 필드 채울지 안정함
+            //바다 : startPos와 endPos 전 화면에서 받는게 아니라 이 화면에서 받는겅 아녀?
             sepos.startPos = seIntent.getStringArrayExtra("stPos");
             sepos.endPos = seIntent.getStringArrayExtra("edPos");
         }
