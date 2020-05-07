@@ -6,11 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -53,7 +51,7 @@ public class PlaceItemFragment extends Fragment implements PlaceItemContract.Vie
         placeAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 장소 추가
+                placeItemPresenter.loadRecommendPlace();
             }
         });
 
@@ -61,7 +59,8 @@ public class PlaceItemFragment extends Fragment implements PlaceItemContract.Vie
         placeDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //  장소 삭제
+                Place place = null;
+                placeItemPresenter.deletePlace(place);
             }
         });
 
@@ -70,10 +69,20 @@ public class PlaceItemFragment extends Fragment implements PlaceItemContract.Vie
 
     // 장소의 리스트를 보여주는 메소드
     // 변경된 장소가 매개변수로 들어오면 해당 placeList가 dataset에 추가된다
-    public void showPlaceList(List<Parcelable> placeList) {
+    public void showPlaceList(List<Place> placeList) {
         dataset.clear();
-        for(Parcelable p : placeList){
+        for(android.os.Parcelable p : placeList){
             dataset.add((Place) p);
         }
+    }
+
+    // 추천장소를 화면에 표시하는 메서드
+    public void showRecommendPlace(List<Place> placeList){
+
+    }
+
+    // 코스에 포함된 장소를 화면에서 삭제하는 메서드
+    public void erasePlace(Place place){
+
     }
 }
