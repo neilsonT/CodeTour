@@ -10,18 +10,20 @@ import android.widget.TextView;
 
 import com.example.codetour.R;
 import com.example.codetour.TripSchedule;
-import java.util.ArrayList;
+
 import java.util.List;
 
-public class ScheduleListAdapter extends BaseAdapter{  //ScheduleListView와 연결되는 Adapter
+public class ScheduleListAdapter extends BaseAdapter implements ScheduleListItemContract.View{  //ScheduleListView와 연결되는 Adapter
     Context mContext = null;
     LayoutInflater mLayoutInflater = null;
     List<TripSchedule> sample;
+    ScheduleListItemContract.Presenter presenter;
 
     public ScheduleListAdapter(Context context, List<TripSchedule> data) {
         mContext = context;
         sample = data;
         mLayoutInflater = LayoutInflater.from(mContext);
+        presenter = new ScheduleListItemPresenter(this);
     }
 
     @Override
@@ -41,27 +43,27 @@ public class ScheduleListAdapter extends BaseAdapter{  //ScheduleListView와 연
 
     @Override
     public View getView(final int position, View converView, ViewGroup parent) {
-        View view = mLayoutInflater.inflate(R.layout.content_layout, null);
+        View view = mLayoutInflater.inflate(R.layout.schedule_list_item, null);
 
-        TextView scheduleName = (TextView)view.findViewById(R.id.scheduleName); //
-        TextView dateTextView = (TextView)view.findViewById(R.id.datetextview); //
-        Button del_btn=(Button)view.findViewById(R.id.delete_btn);  //
-
-        try{    //delete버튼 클릭 시 동작(데이터 삭제 좀 더 보정해야합니다...)
-            del_btn.setOnClickListener(new Button.OnClickListener(){
-                public void onClick(View v){
-                    sample.remove(position);
-                    notifyDataSetChanged();
-                }
-            });
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        TextView scheduleName = (TextView)view.findViewById(R.id.scheduleName);
+        TextView dateTextView = (TextView)view.findViewById(R.id.datetextview);
+        Button delete_btn=(Button)view.findViewById(R.id.delete_btn);
 
         scheduleName.setText(sample.get(position).getName());   //List에서 index받아 해당위치에 있는 일정이름 TextView에 표시
         dateTextView.setText(sample.get(position).getStartDate()+"~"+sample.get(position).getEndDate());
 
+
+        delete_btn.setOnClickListener(new Button.OnClickListener(){
+                public void onClick(View v){
+                    presenter.Delete_Schedule(position);
+                }
+        });
+
         return view;
+    }
+
+    public void UpdateView(){
+        //notifyDataSetChanged();
     }
 
 }
