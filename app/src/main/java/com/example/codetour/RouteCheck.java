@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,7 +36,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     private PlaceItemFragment placeItemFragment;
 
     // 장소 리스트
-    private List<Parcelable> placeList;
+    private List<Place> placeList;
 
     // 여행 날짜 리스트
     private List<String> dayList;
@@ -106,6 +105,12 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
     }
 
+    // 경로 보기 설명 버튼 누르면 작동. 경로의 정보가 설정되고 fragment가 표시된다
+    public void openPlaceList(View view) {
+        setPlaceDetail(placeList);
+        showFragment(placeItemFragment);
+    }
+
     // fragment 숨기기
     public void hideFragment(Fragment fragment){
         fm.beginTransaction().hide(fragment).commit();
@@ -116,14 +121,10 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         fm.beginTransaction().show(fragment).commit();
     }
 
-    // 장소 상세 설명 버튼 누르면 작동
-    public void openPlaceList(View view) {
-        setPlaceDetail();
-        showFragment(placeItemFragment);
-    }
 
-    // 장소 상세 정보 설정하기
-    public void setPlaceDetail(){
+
+    // 경로의 정보가 fragment에 표시될수 있도록 세팅된다
+    public void setPlaceDetail(List<Place> placeList){
         placeItemFragment.showPlaceList(placeList);
     }
 
@@ -149,11 +150,22 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         tMapView.setCenterPoint(126.985302,37.570841);
     }
 
+    public void hideMarker() {
 
+    }
 
+    public void showMarkerOverlay(TMapPoint tMapPoint){
+        Bitmap image = null;
+        markerOverlay = new MarkerOverlay(getApplicationContext(), "https://www.dhnews.co.kr/news/photo/201807/83555_72577_634.png", "서울시립대", "123-123-123", "서울시 동대문구");
+        tMapView.addMarkerItem2("id", markerOverlay);
+        markerOverlay.setID("id");
+        markerOverlay.setPosition(0.0f, 0.0f);
+        markerOverlay.setTMapPoint(tMapPoint);
+    }
 
-
-
+    public void hideMarkerOverlay(MarkerOverlay markerOverlay){
+        tMapView.removeMarkerItem2(markerOverlay.getID());
+    }
 
 
     // 지도 클릭 이벤트 핸들러
@@ -173,7 +185,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
             // 말풍선 지우기
             if(markerOverlay != null) {
-                tMapView.removeMarkerItem2(markerOverlay.getID());
+               hideMarkerOverlay(markerOverlay);
             }
 
             // 장소를 선택한게 아니면 아무일도 없다
@@ -184,12 +196,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
             // 마커를 선택했다는 조건 추가해야됨
             if(true) {
-                Bitmap image = null;
-                markerOverlay = new MarkerOverlay(getApplicationContext(), "https://www.dhnews.co.kr/news/photo/201807/83555_72577_634.png", "서울시립대", "123-123-123", "서울시 동대문구");
-                tMapView.addMarkerItem2("id", markerOverlay);
-                markerOverlay.setID("id");
-                markerOverlay.setPosition(0.0f, 0.0f);
-                markerOverlay.setTMapPoint(tMapPoint);
+                showMarkerOverlay(tMapPoint);
             }
 
             return false;
