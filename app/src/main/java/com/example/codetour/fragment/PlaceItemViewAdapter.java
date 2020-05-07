@@ -1,7 +1,5 @@
 package com.example.codetour.fragment;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
