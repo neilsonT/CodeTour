@@ -16,7 +16,7 @@
         <activity android:name=".Test"></activity>
         <activity android:name=".RouteCheck" />
         <activity android:name=".InputActivity" />
-        <activity android:name=".sePosSetting" />
+        <activity android:name=".SePosSetting" />
         <activity android:name=".ScheduleList" />
         <activity android:name=".MainActivity">
             <intent-filter>

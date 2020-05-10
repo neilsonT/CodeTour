@@ -6,7 +6,6 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -16,12 +15,9 @@ import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Date;
 
 public class InputActivity extends AppCompatActivity implements InputContract.View{
     InputContract.Presenter presenter;
@@ -232,12 +228,17 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
             List<String> theme_selection = theme_spinner.getSelectedStrings();
             presenter.makeTripSchedule("",startDate,endDate,num,tourBudget,accBudget,startTime,endTime,food_selection,theme_selection);
 
-            Intent intent=new Intent(getApplicationContext(),sePosSetting.class);
+            Intent intent=new Intent(getApplicationContext(),SePosSetting.class);
             intent.putExtra("class", presenter.getTripSchedule());
             startActivity(intent);
         } catch (NumberFormatException e) {
             alert.setMessage("모두 입력해주세요");
 
+//<<<<<<< HEAD
+        Intent intent=new Intent(getApplicationContext(), SePosSetting.class);
+        intent.putExtra("class", presenter.getTripSchedule());
+        startActivity(intent);
+//=======
             alert.show();
             //e.printStackTrace();
         } catch (NullPointerException e) {
@@ -247,5 +248,6 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
                 alert.setMessage("출발/도착 날짜를 확인하세요");
                 alert.show();
         }
+//>>>>>>> e0c04da052e7c5e8056f596d75eb26ae5b2e6f64
     }
 }

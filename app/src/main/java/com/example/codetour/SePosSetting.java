@@ -2,23 +2,24 @@ package com.example.codetour;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-public class sePosSetting extends AppCompatActivity implements SePosSettingContract.View {
+public class SePosSetting extends AppCompatActivity implements SePosSettingContract.View {
     //사용되는 객체. sePos는 이후 일정에 대한 클래스로 대체 예정
-    sePos sepos;
+    SePos sepos;
     SePosSettingContract.Presenter presenter;
     Intent seIntent;
     int[] stPosID;
     int[] edPosID;
+    Button sePosSettingConfirm;
 
     TableLayout seEdit;
     TripSchedule tour;
@@ -39,6 +40,25 @@ public class sePosSetting extends AppCompatActivity implements SePosSettingContr
     public void InitializeView() {
         //테이블 틀 생성
         seEdit = (TableLayout) findViewById(R.id.seEdit);
+        sePosSettingConfirm = (Button) findViewById(R.id.sePosSettingConfirm);
+
+        sePosSettingConfirm.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                EditText tmp;
+                for(int i=0; i<sepos.days; ++i){
+                    tmp = (EditText)findViewById(stPosID[i]);
+                    sepos.startPos.set(i, tmp.getText().toString());
+
+                    tmp = (EditText)findViewById(edPosID[i]);
+                    sepos.endPos.set(i, tmp.getText().toString());
+                }
+
+                Intent intent = new Intent(getApplicationContext(), RouteCheck.class);
+                intent.putExtra("sepos", sepos);
+                startActivity(intent);
+            }
+        });
     }
 
     public void GetDataFromPrevView(){
@@ -49,10 +69,10 @@ public class sePosSetting extends AppCompatActivity implements SePosSettingContr
         //sePos가 내부적으로 Exception을 throw하므로, try-catch를 사용
         try {
             //정보들을 따로 getExtra로 안건넨받고 Tour class에 담아서 객체를 위에서 받았다. 따라서 여기부터 tour의 필드값 이용하면 된다.
-            sepos = new sePos(tour.difdays, tour.startPoss, tour.endPoss);
+            sepos = new SePos(tour.difdays, tour.startPoss, tour.endPoss);
         }
         catch(Exception e){
-            sepos = new sePos();
+            sepos = new SePos();
         }
         stPosID = new int[sepos.days];
         edPosID = new int[sepos.days];
@@ -105,23 +125,6 @@ public class sePosSetting extends AppCompatActivity implements SePosSettingContr
 
             tmp = (EditText)findViewById(edPosID[i]);
             tmp.setText(tour.endPoss.get(i));
-        }
-    }
-
-    public void onClick(View view){
-        if(view.getId()==R.id.sePosSettingConfirm){
-            EditText tmp;
-            for(int i=0; i<sepos.days; ++i){
-                tmp = (EditText)findViewById(stPosID[i]);
-                sepos.startPos.set(i, tmp.getText().toString());
-
-                tmp = (EditText)findViewById(edPosID[i]);
-                sepos.endPos.set(i, tmp.getText().toString());
-            }
-
-            Intent intent = new Intent(getApplicationContext(), RouteCheck.class);
-            intent.putExtra("sepos", sepos);
-            startActivity(intent);
         }
     }
 }

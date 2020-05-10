@@ -2,6 +2,7 @@ package com.example.codetour;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -48,8 +49,18 @@ public class TripSchedule implements Serializable{
         } catch (ParseException e) {
             e.printStackTrace();
         }
+//<<<<<<< HEAD
+//        courseList = new Course[difdays];
+        this.startPoss = new ArrayList<String>();
+        this.endPoss = new ArrayList<String>();
+        for(int i=0; i<difdays; ++i){
+            this.startPoss.add("");
+            this.endPoss.add("");
+        }
+//=======
         courseManager = new CourseManager(difdays, startTime, endTime);
 
+//>>>>>>> e0c04da052e7c5e8056f596d75eb26ae5b2e6f64
     }
     public void makeCourse(){
 
