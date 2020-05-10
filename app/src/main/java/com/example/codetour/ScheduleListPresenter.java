@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ScheduleListPresenter implements ScheduleListContract.Presenter {
 
-    private ScheduleListContract.View scheduleView;
+    private ScheduleListContract.View scheduleListView;
     //모델 결정 후 모델연결
 
 
@@ -13,7 +13,7 @@ public class ScheduleListPresenter implements ScheduleListContract.Presenter {
 
     public ScheduleListPresenter(ScheduleListContract.View view){
         // View 연결
-        scheduleView = view;
+        scheduleListView = view;
         // Model 연결
 
 
@@ -30,12 +30,21 @@ public class ScheduleListPresenter implements ScheduleListContract.Presenter {
         trip_schdule_list.add(new TripSchedule("일정8입니다.","2020-07-03","2020-07-05"));
     }
 
+
+    @Override
+    public void setView(ScheduleListContract.View scheduleView){
+        this.scheduleListView =scheduleView;
+    }
+
+    @Override
+    public void releaseView(){this.scheduleListView =null;}
+
     @Override
     public void getScheduleList(){
 
         //모델에서 schduleList전체를 받아옵니다.
 
-        scheduleView.showScheduleList(trip_schdule_list);
+        scheduleListView.showScheduleList(trip_schdule_list);
 
     }
 
@@ -43,7 +52,7 @@ public class ScheduleListPresenter implements ScheduleListContract.Presenter {
     public void getSchdule(int position){
         //tripSchduleList에서 position위치의 tripSchdule을 가져옵니다.
 
-        scheduleView.showSchedule(trip_schdule_list.get(position));
+        scheduleListView.showSchedule(trip_schdule_list.get(position));
 
     }
 }

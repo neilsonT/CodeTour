@@ -1,12 +1,11 @@
 package com.example.codetour;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,15 +14,15 @@ import com.example.codetour.fragment.ScheduleListAdapter;
 
 public class ScheduleList extends AppCompatActivity implements ScheduleListContract.View {   //ScheduleListView의 생성(+Data받아오기, 전달 추가 필요)
 
-    ScheduleListContract.Presenter presenter;
+    ScheduleListContract.Presenter scheduleListPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_list);
-        presenter = new ScheduleListPresenter(this);
+        scheduleListPresenter = new ScheduleListPresenter(this);
 
-        presenter.getScheduleList();
+        scheduleListPresenter.getScheduleList();
 
     }
 
@@ -38,7 +37,7 @@ public class ScheduleList extends AppCompatActivity implements ScheduleListContr
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
                 @Override
                 public void onItemClick(AdapterView parent, View v, int position, long id){ //item click시 동작
-                   presenter.getSchdule(position);
+                   scheduleListPresenter.getSchdule(position);
                 }
             });
         }
