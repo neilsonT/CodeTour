@@ -8,13 +8,11 @@ import java.util.List;
 public class TripSchedule implements Serializable{
     CourseManager courseManager;
     String name;
-    Course[] courseList;
     String startDate;
     String endDate;
     Date sd;
     Date ed;
     int difdays;
-    String destination;
     int pNum;
     int tourBudget;
     int accBudget;
@@ -50,7 +48,7 @@ public class TripSchedule implements Serializable{
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        courseList = new Course[difdays];
+        courseManager = new CourseManager(difdays, startTime, endTime);
 
     }
     public void makeCourse(){
