@@ -14,6 +14,6 @@ public class SchedulePresenter implements ScheduleContract.Presenter {
 
     @Override
     public void saveSchedule(TripSchedule tripSchedule) {
-        
+
     }
 }
