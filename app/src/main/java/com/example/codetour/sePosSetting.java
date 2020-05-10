@@ -55,6 +55,7 @@ public class sePosSetting extends AppCompatActivity implements SePosSettingContr
         catch(Exception e){
             sepos = new sePos();
         }
+        sepos = new sePos();
     }
 
     public void  FillseEdit(){

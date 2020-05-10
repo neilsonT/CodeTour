@@ -22,6 +22,8 @@ public class TripSchedule implements Serializable{
     List<String> theme_selection;
     int[] startTime;
     int[] endTime;
+    List<String> startPoss;
+    List<String> endPoss;
 
     public TripSchedule(String name,String startDate,String endDate){   //임시생성자입니다 SchduleListPresenter에서 사용합니다.
         this.name=name;
@@ -49,6 +51,9 @@ public class TripSchedule implements Serializable{
             e.printStackTrace();
         }
         courseList = new Course[difdays];
+
+    }
+    public void makeCourse(){
 
     }
     public void AddCourse(){
