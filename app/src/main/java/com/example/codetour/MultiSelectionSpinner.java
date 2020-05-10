@@ -13,13 +13,13 @@ import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 public class MultiSelectionSpinner extends androidx.appcompat.widget.AppCompatSpinner implements DialogInterface.OnMultiChoiceClickListener{
     String[] _items = null;
     boolean[] mSelection = null;
-
     ArrayAdapter<String> simple_adapter;
 
     public MultiSelectionSpinner(Context context)
