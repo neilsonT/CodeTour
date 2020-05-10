@@ -89,10 +89,16 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
         food_spinner.setItems(food_list);
         List<String> theme_list = new ArrayList<String>();
         food_list.add("선택하세요");
-        theme_list.add("이거");
-        theme_list.add("저거");
-        theme_list.add("요거");
-        theme_list.add("그거");
+        theme_list.add("자연관광지");
+        theme_list.add("관광자원");
+        theme_list.add("역사관광지");
+        theme_list.add("휴양관광지");
+        theme_list.add("체험관광지");
+        theme_list.add("산업관광지");
+        theme_list.add("건축/조형물");
+        theme_list.add("문화시설");
+        theme_list.add("축제");
+        theme_list.add("공연/행사");
         theme_spinner.setItems(theme_list);
     }
     public void InitializeListener() //날짜, 시간 입력 Listener 설정
@@ -196,7 +202,12 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
     public void SubmitInput(View view){ //여행 코스 추천 버튼을 눌렀을 때(미완)
         tourBudget = Integer.parseInt( "" + tour_budget.getText() );
         accBudget = Integer.parseInt( "" + acc_budget.getText() );
+
         //모델을 호출하는 부분
+        List<String> food_selection = food_spinner.getSelectedStrings();
+        List<String> theme_selection = theme_spinner.getSelectedStrings();
+        presenter.makeTripSchedule("",startDate,endDate,num,tourBudget,accBudget,startTime,endTime,food_selection,theme_selection);
+
         presenter.makeTripSchedule("",startDate,endDate,num,tourBudget,accBudget,startTime,endTime);
         Intent intent=new Intent(getApplicationContext(),sePosSetting.class);
         intent.putExtra("class", presenter.getTripSchedule());
