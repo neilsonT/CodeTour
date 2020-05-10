@@ -2,6 +2,7 @@ package com.example.codetour;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -51,7 +52,12 @@ public class TripSchedule implements Serializable{
             e.printStackTrace();
         }
         courseList = new Course[difdays];
-
+        this.startPoss = new ArrayList<String>();
+        this.endPoss = new ArrayList<String>();
+        for(int i=0; i<difdays; ++i){
+            this.startPoss.add("");
+            this.endPoss.add("");
+        }
     }
     public void makeCourse(){
 

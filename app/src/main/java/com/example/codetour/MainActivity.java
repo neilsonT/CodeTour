@@ -1,6 +1,5 @@
 package com.example.codetour;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,7 +14,7 @@ import android.widget.Button;
 
         //사용되는 객체 선언
         Button btn_temp;
-        sePos se;
+        SePos se;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +24,10 @@ import android.widget.Button;
         //se가 내부적으로 Exception을 throw하므로 try-catch를 사용
         //sePos는 이후 일정에 해당하는 class로 대체될 예정
         try{
-            se = new sePos(days);
+            se = new SePos(days);
         }
         catch(Exception e){
-            se = new sePos();
+            se = new SePos();
         }
 
         //출발지 & 도착지 설정 페이지로 가는 버튼
