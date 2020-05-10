@@ -43,6 +43,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
     // 장소의 마커 리스트
     private List<TMapMarkerItem> locationList;
+    private List<TMapMarkerItem> recommendedPlaceList;
 
     // 티맵 지도
     private TMapView tMapView;
@@ -129,7 +130,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     }
 
     // 마커 지도에 표시
-    public void showMarker(){
+    public void showMarker(List<TMapMarkerItem> markerList){
         // 마커 리스트 테스트용도
         locationList = new ArrayList<>();
         for(int i=0; i<10; i++){
@@ -148,10 +149,14 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
             locationList.add(markerItem);
         }
         tMapView.setCenterPoint(126.985302,37.570841);
-    }
+}
 
-    public void hideMarker() {
+    public void hideMarker(List<TMapMarkerItem> markerList) {
 
+        // 삭제 테스트
+        for(int i=0; i<locationList.size(); i++){
+            tMapView.removeMarkerItem(locationList.get(i).getID());
+        }
     }
 
     public void showMarkerOverlay(TMapPoint tMapPoint){
