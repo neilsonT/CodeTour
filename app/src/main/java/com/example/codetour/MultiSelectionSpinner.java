@@ -115,7 +115,7 @@ public class MultiSelectionSpinner extends androidx.appcompat.widget.AppCompatSp
         for (int i = 0; i < mSelection.length; i++) {
             mSelection[i] = false;
         }
-        if (index >= 0 && index < mSelection.length) {
+        if (index >= 1 && index < mSelection.length) {
             mSelection[index] = true;
         } else {
             throw new IllegalArgumentException("Index " + index

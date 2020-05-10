@@ -1,7 +1,9 @@
 package com.example.codetour;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -30,13 +32,15 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
     private int DataPickerCalled; //가는날/오는날 중에 어떤 버튼을 클릭한 것인지 저장
     private String startDate;
     private String endDate;
+    private int[] startD;
+    private int[] endD;
     //시간 설정을 위한 변수
     private TimePickerDialog.OnTimeSetListener callbackMethodT;
     private Button start_time_B;
     private Button end_time_B;
     private int TimePickerCalled;
-    private int[] startTime=new int[2];
-    private int[] endTime=new int[2];
+    private int[] startTime;
+    private int[] endTime;
     //spinner
     private MultiSelectionSpinner food_spinner;
     private MultiSelectionSpinner theme_spinner;
@@ -82,7 +86,7 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
         food_list.add("양식");
         food_spinner.setItems(food_list);
         List<String> theme_list = new ArrayList<String>();
-        food_list.add("선택하세요");
+        theme_list.add("선택하세요");
         theme_list.add("자연관광지");
         theme_list.add("관광자원");
         theme_list.add("역사관광지");
@@ -116,6 +120,10 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
                         day=dayOfMonth+"";
                     startDate = year+"-"+month+"-"+day;
                     start_date_B.setText(startDate);
+                    startD = new int[3];
+                    startD[0] = year;
+                    startD[1] = monthOfYear;
+                    startD[2] = dayOfMonth;
                 }
 
                 else if (DataPickerCalled == R.id.end_date_B) {
@@ -131,6 +139,10 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
                         day=dayOfMonth+"";
                     endDate = year+"-"+month+"-"+day;
                     end_date_B.setText(endDate);
+                    endD = new int[3];
+                    endD[0] = year;
+                    endD[1] = monthOfYear;
+                    endD[2] = dayOfMonth;
                 }
             }
         };
@@ -142,6 +154,7 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
                 //이 TimePicker를 부른 것이 활동시간인지, 종료시간인지 확인해서 해당 text를 바꿔준다
                 if (TimePickerCalled==R.id.start_time_B){
                     m=Integer.toString(minute);
+                    startTime=new int[2];
                     startTime[0]=hourOfDay;
                     startTime[1]=minute;
                     if (minute<10){ //분이 한자리수 이면 앞에 0을 붙여서 두 자리로 만들어서 출력
@@ -152,6 +165,7 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
                 }
                 else if (TimePickerCalled==R.id.end_time_B){
                     m=Integer.toString(minute);
+                    endTime=new int[2];
                     endTime[0]=hourOfDay;
                     endTime[1]=minute;
                     if (minute<10){ //분이 한자리수 이면 앞에 0을 붙여서 두 자리로 만들어서 출력
@@ -194,16 +208,44 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
         }
     }
     public void SubmitInput(View view){ //여행 코스 추천 버튼을 눌렀을 때(미완)
-        tourBudget = Integer.parseInt( "" + tour_budget.getText() );
-        accBudget = Integer.parseInt( "" + acc_budget.getText() );
+        AlertDialog.Builder alert = new AlertDialog.Builder(InputActivity.this);
+        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();     //닫기
+            }
+        });
+        //예외처리
+        try{
+            tourBudget = Integer.parseInt( "" + tour_budget.getText() );
+            accBudget = Integer.parseInt( "" + acc_budget.getText() );
 
-        //모델을 호출하는 부분
-        List<String> food_selection = food_spinner.getSelectedStrings();
-        List<String> theme_selection = theme_spinner.getSelectedStrings();
-        presenter.makeTripSchedule("",startDate,endDate,num,tourBudget,accBudget,startTime,endTime,food_selection,theme_selection);
+            for(int i=0;i<startDate.length();i++){
+                if (startDate.charAt(i)>endDate.charAt(i)){
+                    throw new Exception("출발/도착날짜를 다시 입력해주세요");
+                }
+            }
+            if (startTime[0]>endTime[0] || startTime[1]>endTime[1]){
+                throw new Exception("활동시간을 다시 입력해주세요");
+            }
+            List<String> food_selection = food_spinner.getSelectedStrings();
+            List<String> theme_selection = theme_spinner.getSelectedStrings();
+            presenter.makeTripSchedule("",startDate,endDate,num,tourBudget,accBudget,startTime,endTime,food_selection,theme_selection);
 
-        Intent intent=new Intent(getApplicationContext(),sePosSetting.class);
-        intent.putExtra("class", presenter.getTripSchedule());
-        startActivity(intent);
+            Intent intent=new Intent(getApplicationContext(),sePosSetting.class);
+            intent.putExtra("class", presenter.getTripSchedule());
+            startActivity(intent);
+        } catch (NumberFormatException e) {
+            alert.setMessage("모두 입력해주세요");
+
+            alert.show();
+            //e.printStackTrace();
+        } catch (NullPointerException e) {
+            alert.setMessage("모두 입력해주세요");
+            alert.show();
+        } catch (Exception e){
+                alert.setMessage("출발/도착 날짜를 확인하세요");
+                alert.show();
+        }
     }
 }
