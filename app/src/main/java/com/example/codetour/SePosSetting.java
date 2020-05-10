@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 public class SePosSetting extends AppCompatActivity implements SePosSettingContract.View {
     //사용되는 객체. sePos는 이후 일정에 대한 클래스로 대체 예정
-    SePos sepos;
     SePosSettingContract.Presenter presenter;
     Intent seIntent;
     int[] stPosID;
@@ -46,16 +45,16 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
             @Override
             public void onClick(View view){
                 EditText tmp;
-                for(int i=0; i<sepos.days; ++i){
+                for(int i=0; i<tour.difdays; ++i){
                     tmp = (EditText)findViewById(stPosID[i]);
-                    sepos.startPos.set(i, tmp.getText().toString());
+                    tour.startPoss.set(i, tmp.getText().toString());
 
                     tmp = (EditText)findViewById(edPosID[i]);
-                    sepos.endPos.set(i, tmp.getText().toString());
+                    tour.endPoss.set(i, tmp.getText().toString());
                 }
 
                 Intent intent = new Intent(getApplicationContext(), RouteCheck.class);
-                intent.putExtra("sepos", sepos);
+                intent.putExtra("tour", tour);
                 startActivity(intent);
             }
         });
@@ -66,23 +65,15 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
         seIntent = getIntent();
         tour=(TripSchedule) seIntent.getSerializableExtra("class");
 
-        //sePos가 내부적으로 Exception을 throw하므로, try-catch를 사용
-        try {
-            //정보들을 따로 getExtra로 안건넨받고 Tour class에 담아서 객체를 위에서 받았다. 따라서 여기부터 tour의 필드값 이용하면 된다.
-            sepos = new SePos(tour.difdays, tour.startPoss, tour.endPoss);
-        }
-        catch(Exception e){
-            sepos = new SePos();
-        }
-        stPosID = new int[sepos.days];
-        edPosID = new int[sepos.days];
+        stPosID = new int[tour.difdays];
+        edPosID = new int[tour.difdays];
     }
 
     public void  MakeTable(){
         int tmpID;
         //InitializeView()에서 생성해 둔 테이블 틀을 채움;
         //날짜 만큼 row를 생성해서 위에 만든 테이블에 추가함
-        for(int i=0; i<sepos.days; ++i){
+        for(int i=0; i<tour.difdays; ++i){
             //row 생성
             TableRow tr = new TableRow(this);
             TableLayout.LayoutParams tmpRowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, 4);
@@ -98,7 +89,7 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
 
             //i번째날 출발지 입력칸을 row에 추가
             EditText stPos = new EditText(this);
-            stPos.setText(sepos.startPos.get(i));
+            stPos.setText(tour.startPoss.get(i));
             tmpID = View.generateViewId();
             stPos.setId(tmpID);
             stPosID[i] = tmpID;
@@ -106,7 +97,7 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
 
             //i번째날 도착지 입력칸을 row에 추가
             EditText edPos = new EditText(this);
-            edPos.setText(sepos.endPos.get(i));
+            edPos.setText(tour.endPoss.get(i));
             tmpID = View.generateViewId();
             edPos.setId(tmpID);
             edPosID[i] = tmpID;
