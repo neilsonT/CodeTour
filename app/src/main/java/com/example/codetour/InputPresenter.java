@@ -10,6 +10,9 @@ public class InputPresenter implements InputContract.Presenter{
     InputContract.View view;
     ScheduleService scheduleService;
     TripSchedule tour;
+
+    public InputPresenter(){}
+
     @Override
     public void setView(InputContract.View view) {
         this.view = view;
