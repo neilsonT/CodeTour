@@ -28,8 +28,6 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
     private Button end_date_B;
     private DatePickerDialog.OnDateSetListener callbackMethodD;
     private int DataPickerCalled; //가는날/오는날 중에 어떤 버튼을 클릭한 것인지 저장
-    //private int[] startDate=new int[3];
-    //private int[] endDate=new int[3];
     private String startDate;
     private String endDate;
     //시간 설정을 위한 변수
@@ -50,10 +48,6 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
     //인원 설정
     private TextView pNum;
     int num=1;
-    //다음 화면에게 input정보를 넘겨주기 위한 변수들(어떤 형태로 넘겨야 할지 정하지 않아 미완)
-    int[] start_date=new int[3];
-    int[] end_date=new int[3];
-    int[] start_time=new int[2];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) { //처음에 실행되는 함수
@@ -208,7 +202,6 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
         List<String> theme_selection = theme_spinner.getSelectedStrings();
         presenter.makeTripSchedule("",startDate,endDate,num,tourBudget,accBudget,startTime,endTime,food_selection,theme_selection);
 
-        presenter.makeTripSchedule("",startDate,endDate,num,tourBudget,accBudget,startTime,endTime);
         Intent intent=new Intent(getApplicationContext(),sePosSetting.class);
         intent.putExtra("class", presenter.getTripSchedule());
         startActivity(intent);
