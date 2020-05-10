@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -36,7 +38,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     private PlaceItemFragment placeItemFragment;
 
     // 장소 리스트
-    private List<Place> placeList;
+    private List<Parcelable> placeList;
 
     // 여행 날짜 리스트
     private List<String> dayList;
@@ -77,6 +79,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         fm.beginTransaction().addToBackStack(null);
         hideFragment(placeItemFragment);
 
+        // 여행 날짜 List 초기화
         dayList = new ArrayList<>();
 
         // 여행 날짜 선택 spinnner
@@ -85,6 +88,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         daySpinner.setAdapter(adapter);
 
+        // 여행 날짜 선택 이벤트
         daySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
 
             @Override
@@ -103,6 +107,9 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         for(int i=0; i<10; i++){
             placeList.add(new Place("시립대"+i));
         }
+
+        // 이전 페이지에서 넘겨준 정보 받기
+        Intent intent = new Intent();
 
     }
 
@@ -125,12 +132,12 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
 
     // 경로의 정보가 fragment에 표시될수 있도록 세팅된다
-    public void setPlaceDetail(List<Place> placeList){
+    public void setPlaceDetail(List<Parcelable> placeList){
         placeItemFragment.showPlaceList(placeList);
     }
 
     // 마커 지도에 표시
-    public void showMarker(List<TMapMarkerItem> markerList){
+    public void showMarker(List<Parcelable> placeList){
         // 마커 리스트 테스트용도
         locationList = new ArrayList<>();
         for(int i=0; i<10; i++){
@@ -151,7 +158,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         tMapView.setCenterPoint(126.985302,37.570841);
 }
 
-    public void hideMarker(List<TMapMarkerItem> markerList) {
+    public void hideMarker(List<Parcelable> placeList) {
 
         // 삭제 테스트
         for(int i=0; i<locationList.size(); i++){
@@ -170,6 +177,19 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
     public void hideMarkerOverlay(MarkerOverlay markerOverlay){
         tMapView.removeMarkerItem2(markerOverlay.getID());
+    }
+
+    // 일정 저장하기
+    public void saveSchedule(View view) {
+        Intent intent = new Intent(this,ScheduleList.class);
+        // intent에 저장할 일정 데이터 저장해서 다음 페이지로 보내기
+        startActivityForResult(intent,0);
+    }
+
+    // 일정 취소하기
+    public void cancel(View view) {
+        Intent intent = new Intent (this, MainActivity.class);
+        startActivityForResult(intent,0);
     }
 
 

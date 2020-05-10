@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +70,7 @@ public class PlaceItemFragment extends Fragment implements PlaceItemContract.Vie
 
     // 장소의 리스트를 보여주는 메소드
     // 변경된 장소가 매개변수로 들어오면 해당 placeList가 dataset에 추가된다
-    public void showPlaceList(List<Place> placeList) {
+    public void showPlaceList(List<Parcelable> placeList) {
         dataset.clear();
         for(android.os.Parcelable p : placeList){
             dataset.add((Place) p);
