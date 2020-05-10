@@ -11,4 +11,9 @@ public class SchedulePresenter implements ScheduleContract.Presenter {
         this. scheduleView = view;
         // scheduleService 객체 생성 혹은 가져오기
     }
+
+    @Override
+    public void saveSchedule(TripSchedule tripSchedule) {
+        
+    }
 }

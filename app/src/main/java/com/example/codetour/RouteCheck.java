@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
@@ -136,8 +137,30 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         placeItemFragment.showPlaceList(placeList);
     }
 
-    // 마커 지도에 표시
-    public void showMarker(List<Parcelable> placeList){
+    // 마커 하나 추가
+    public void showMarker(Parcelable place){
+        TMapMarkerItem markerItem = new TMapMarkerItem();
+
+        TMapPoint tMapPoint = new TMapPoint(37.570841, 126.985302);
+        // 마커 아이콘
+        Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.marker);
+
+        markerItem.setIcon(bitmap);
+        markerItem.setPosition(0.5f,1.0f);
+        markerItem.setTMapPoint(tMapPoint);
+        markerItem.setName("marker");
+        tMapView.addMarkerItem("markerItem",markerItem);
+
+        locationList.add(markerItem);
+    }
+
+    // 마커 하나 삭제
+    public void hideMarker(Parcelable place){
+        tMapView.removeMarkerItem(((Place)place).getName());
+    }
+
+    // 마커 여러개 지도에 표시
+    public void showMarkers(List<Parcelable> placeList){
         // 마커 리스트 테스트용도
         locationList = new ArrayList<>();
         for(int i=0; i<10; i++){
@@ -156,9 +179,10 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
             locationList.add(markerItem);
         }
         tMapView.setCenterPoint(126.985302,37.570841);
-}
+    }
 
-    public void hideMarker(List<Parcelable> placeList) {
+    // 마커 여러개 삭제
+    public void hideMarkers(List<Parcelable> placeList) {
 
         // 삭제 테스트
         for(int i=0; i<locationList.size(); i++){
@@ -181,8 +205,11 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
     // 일정 저장하기
     public void saveSchedule(View view) {
+        // 만들어진 일정을 모델에 저장
+
+
+        // 경로 다 저장했으면 화면 전환
         Intent intent = new Intent(this,ScheduleList.class);
-        // intent에 저장할 일정 데이터 저장해서 다음 페이지로 보내기
         startActivityForResult(intent,0);
     }
 
