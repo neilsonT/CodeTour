@@ -6,6 +6,7 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -16,6 +17,8 @@ public class sePosSetting extends AppCompatActivity implements SePosSettingContr
     sePos sepos;
     SePosSettingContract.Presenter presenter;
     Intent seIntent;
+    int[] stPosID;
+    int[] edPosID;
 
     TableLayout seEdit;
     TripSchedule tour;
@@ -29,7 +32,8 @@ public class sePosSetting extends AppCompatActivity implements SePosSettingContr
 
         this.InitializeView();
         this.GetDataFromPrevView();
-        this.FillseEdit();
+        this.MakeTable();
+        this.FillTable();
     }
 
     public void InitializeView() {
@@ -45,20 +49,17 @@ public class sePosSetting extends AppCompatActivity implements SePosSettingContr
         //sePos가 내부적으로 Exception을 throw하므로, try-catch를 사용
         try {
             //정보들을 따로 getExtra로 안건넨받고 Tour class에 담아서 객체를 위에서 받았다. 따라서 여기부터 tour의 필드값 이용하면 된다.
-            sepos = new sePos(tour.difdays);
-            //startPos 랑 endPos도 tour 인스턴스 필드 참조하면 되는데 아직 어떤 타입으로 필드 채울지 안정함
-            //바다 : startPos와 endPos 전 화면에서 받는게 아니라 이 화면에서 받는겅 아녀?
-            //대양 : 이미 저장된 startPos, endPos가 있을 때 불러오지 않고 새로 만들어서 하면 이미 저장된 것이 날아갈 가능성이 있기 때문에 이렇게 함.
-            sepos.startPos = seIntent.getStringArrayExtra("stPos");
-            sepos.endPos = seIntent.getStringArrayExtra("edPos");
+            sepos = new sePos(tour.difdays, tour.startPoss, tour.endPoss);
         }
         catch(Exception e){
             sepos = new sePos();
         }
-        sepos = new sePos();
+        stPosID = new int[sepos.days];
+        edPosID = new int[sepos.days];
     }
 
-    public void  FillseEdit(){
+    public void  MakeTable(){
+        int tmpID;
         //InitializeView()에서 생성해 둔 테이블 틀을 채움;
         //날짜 만큼 row를 생성해서 위에 만든 테이블에 추가함
         for(int i=0; i<sepos.days; ++i){
@@ -77,18 +78,50 @@ public class sePosSetting extends AppCompatActivity implements SePosSettingContr
 
             //i번째날 출발지 입력칸을 row에 추가
             EditText stPos = new EditText(this);
-            stPos.setText(sepos.startPos[i]);
-            stPos.setId(2*i);
+            stPos.setText(sepos.startPos.get(i));
+            tmpID = View.generateViewId();
+            stPos.setId(tmpID);
+            stPosID[i] = tmpID;
             tr.addView(stPos, new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 3));
 
             //i번째날 도착지 입력칸을 row에 추가
             EditText edPos = new EditText(this);
-            edPos.setText(sepos.endPos[i]);
-            edPos.setId(2*i+1);
+            edPos.setText(sepos.endPos.get(i));
+            tmpID = View.generateViewId();
+            edPos.setId(tmpID);
+            edPosID[i] = tmpID;
             tr.addView(edPos, new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 3));
 
             //row를 테이블에 추가
             seEdit.addView(tr);
+        }
+    }
+
+    public void FillTable(){
+        EditText tmp;
+        for(int i=0; i<this.tour.difdays; ++i){
+            tmp = (EditText)findViewById(stPosID[i]);
+            tmp.setText(tour.startPoss.get(i));
+
+            tmp = (EditText)findViewById(edPosID[i]);
+            tmp.setText(tour.endPoss.get(i));
+        }
+    }
+
+    public void onClick(View view){
+        if(view.getId()==R.id.sePosSettingConfirm){
+            EditText tmp;
+            for(int i=0; i<sepos.days; ++i){
+                tmp = (EditText)findViewById(stPosID[i]);
+                sepos.startPos.set(i, tmp.getText().toString());
+
+                tmp = (EditText)findViewById(edPosID[i]);
+                sepos.endPos.set(i, tmp.getText().toString());
+            }
+
+            Intent intent = new Intent(getApplicationContext(), RouteCheck.class);
+            intent.putExtra("sepos", sepos);
+            startActivity(intent);
         }
     }
 }
