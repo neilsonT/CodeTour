@@ -3,7 +3,6 @@ package com.example.codetour.vo;
 import android.media.Image;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.ImageView;
 
 // 장소 클래스
 public class Place implements Parcelable {

@@ -23,6 +23,11 @@ public class TripSchedule implements Serializable{
     int[] startTime;
     int[] endTime;
 
+    public TripSchedule(String name,String startDate,String endDate){   //임시생성자입니다 SchduleListPresenter에서 사용합니다.
+        this.name=name;
+        this.startDate=startDate;
+        this.endDate=endDate;
+    }
     public TripSchedule(String name, String startDate, String endDate, int pNum,
                 int tourBudget, int accBudget, int[] startTime, int[] endTime, List<String> food_selection, List<String> theme_selection){
         this.name=name;
@@ -52,4 +57,8 @@ public class TripSchedule implements Serializable{
     public void DeleteCourse(){
 
     }
+
+    public String getName(){return name;}
+    public String getStartDate(){return startDate;}
+    public String getEndDate(){return endDate;}
 }

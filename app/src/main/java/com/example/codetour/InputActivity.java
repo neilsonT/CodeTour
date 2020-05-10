@@ -21,7 +21,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Date;
 
-public class InputActivity extends AppCompatActivity {
+public class InputActivity extends AppCompatActivity implements InputContract.View{
+    InputContract.Presenter presenter;
     //날짜 설정을 위한 변수
     private Button start_date_B;
     private Button end_date_B;
@@ -58,7 +59,9 @@ public class InputActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) { //처음에 실행되는 함수
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_input);
-
+        presenter=new InputPresenter();
+        presenter.setView(this);
+        presenter.clear();
         this.InitializeView();
         this.InitializeListener();
         this.FillSpinner();
@@ -199,17 +202,15 @@ public class InputActivity extends AppCompatActivity {
     public void SubmitInput(View view){ //여행 코스 추천 버튼을 눌렀을 때(미완)
         tourBudget = Integer.parseInt( "" + tour_budget.getText() );
         accBudget = Integer.parseInt( "" + acc_budget.getText() );
-<<<<<<< Updated upstream
-        TripSchedule tour = new TripSchedule("null",startDate,endDate,num,tourBudget,accBudget,startTime,endTime);
-=======
+
         //모델을 호출하는 부분
         List<String> food_selection = food_spinner.getSelectedStrings();
         List<String> theme_selection = theme_spinner.getSelectedStrings();
         presenter.makeTripSchedule("",startDate,endDate,num,tourBudget,accBudget,startTime,endTime,food_selection,theme_selection);
->>>>>>> Stashed changes
+
+        presenter.makeTripSchedule("",startDate,endDate,num,tourBudget,accBudget,startTime,endTime);
         Intent intent=new Intent(getApplicationContext(),sePosSetting.class);
-        intent.putExtra("class", tour);
-        //intent.putExtra("name","안녕");
+        intent.putExtra("class", presenter.getTripSchedule());
         startActivity(intent);
     }
 }
