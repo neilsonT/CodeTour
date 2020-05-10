@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class TripSchedule implements Serializable{
     CourseManager courseManager;
@@ -17,13 +18,13 @@ public class TripSchedule implements Serializable{
     int pNum;
     int tourBudget;
     int accBudget;
-    //음식 취향
-    //여행 테마
+    List<String> food_selection;
+    List<String> theme_selection;
     int[] startTime;
     int[] endTime;
 
     public TripSchedule(String name, String startDate, String endDate, int pNum,
-                int tourBudget, int accBudget, int[] startTime, int[] endTime){
+                int tourBudget, int accBudget, int[] startTime, int[] endTime, List<String> food_selection, List<String> theme_selection){
         this.name=name;
         this.startDate=startDate;
         this.endDate=endDate;
@@ -32,6 +33,8 @@ public class TripSchedule implements Serializable{
         this.accBudget=accBudget;
         this.startTime=startTime;
         this.endTime=endTime;
+        this.food_selection=food_selection;
+        this.theme_selection=theme_selection;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try{
             sd=sdf.parse(startDate);
