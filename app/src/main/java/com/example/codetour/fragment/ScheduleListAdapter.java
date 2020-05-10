@@ -17,13 +17,13 @@ public class ScheduleListAdapter extends BaseAdapter implements ScheduleListItem
     Context mContext = null;
     LayoutInflater mLayoutInflater = null;
     List<TripSchedule> sample;
-    ScheduleListItemContract.Presenter presenter;
+    ScheduleListItemContract.Presenter scheduleListItemPresenter;
 
     public ScheduleListAdapter(Context context, List<TripSchedule> data) {
         mContext = context;
         sample = data;
         mLayoutInflater = LayoutInflater.from(mContext);
-        presenter = new ScheduleListItemPresenter(this);
+        scheduleListItemPresenter = new ScheduleListItemPresenter(this);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class ScheduleListAdapter extends BaseAdapter implements ScheduleListItem
 
         delete_btn.setOnClickListener(new Button.OnClickListener(){
                 public void onClick(View v){
-                    presenter.Delete_Schedule(position);
+                    scheduleListItemPresenter.Delete_Schedule(position);
                 }
         });
 
