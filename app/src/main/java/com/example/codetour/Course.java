@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Course {
     SpotManager spotManager;
-    int num;
+    int order;
     int[] timeList; //소요시간 list
     List<Spot> spotList;
     int[] startTime;
@@ -13,8 +13,11 @@ public class Course {
     int[] endPos;
     int countSpot;
 
-    public Course(){
-
+    public Course(int num, int[] startTime, int[] endTime){
+        this.order=num;
+        this.startTime=startTime;
+        this.endTime=endTime;
+        spotManager = new SpotManager();
     }
     public void addSpot(){
 

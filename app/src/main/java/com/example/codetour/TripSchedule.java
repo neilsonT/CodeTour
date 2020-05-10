@@ -9,13 +9,11 @@ import java.util.List;
 public class TripSchedule implements Serializable{
     CourseManager courseManager;
     String name;
-    Course[] courseList;
     String startDate;
     String endDate;
     Date sd;
     Date ed;
     int difdays;
-    String destination;
     int pNum;
     int tourBudget;
     int accBudget;
@@ -51,13 +49,18 @@ public class TripSchedule implements Serializable{
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        courseList = new Course[difdays];
+//<<<<<<< HEAD
+//        courseList = new Course[difdays];
         this.startPoss = new ArrayList<String>();
         this.endPoss = new ArrayList<String>();
         for(int i=0; i<difdays; ++i){
             this.startPoss.add("");
             this.endPoss.add("");
         }
+//=======
+        courseManager = new CourseManager(difdays, startTime, endTime);
+
+//>>>>>>> e0c04da052e7c5e8056f596d75eb26ae5b2e6f64
     }
     public void makeCourse(){
 
