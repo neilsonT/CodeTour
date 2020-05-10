@@ -28,19 +28,19 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/sePosSettingConfirm"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="뒤로가기" />
-
+                android:text="확인" />
+<!--
             <Button
                 android:id="@+id/button2"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="메인화면" />
-
+-->
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
