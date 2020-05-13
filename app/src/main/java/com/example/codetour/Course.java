@@ -1,8 +1,9 @@
 package com.example.codetour;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Course {
+public class Course implements Serializable {
     SpotManager spotManager;
     int order;
     int[] timeList; //소요시간 list
@@ -13,6 +14,7 @@ public class Course {
     int[] endPos;
     int countSpot;
 
+    public Course(){}
     public Course(int num, int[] startTime, int[] endTime){
         this.order=num;
         this.startTime=startTime;

@@ -213,41 +213,34 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
         });
         //예외처리
         try{
-            tourBudget = Integer.parseInt( "" + tour_budget.getText() );
-            accBudget = Integer.parseInt( "" + acc_budget.getText() );
-
             for(int i=0;i<startDate.length();i++){
                 if (startDate.charAt(i)>endDate.charAt(i)){
-                    throw new Exception("출발/도착날짜를 다시 입력해주세요");
+                    alert.setMessage("출발/도착 날짜를 확인해주세요");
+                    alert.show();
+                    return;
                 }
             }
             if (startTime[0]>endTime[0] || startTime[1]>endTime[1]){
-                throw new Exception("활동시간을 다시 입력해주세요");
+                alert.setMessage("활동 시작/종료시간을 확인해주세요");
+                alert.show();
+                return;
             }
+            tourBudget = Integer.parseInt( "" + tour_budget.getText() );
+            accBudget = Integer.parseInt( "" + acc_budget.getText() );
+
             List<String> food_selection = food_spinner.getSelectedStrings();
             List<String> theme_selection = theme_spinner.getSelectedStrings();
             presenter.makeTripSchedule("",startDate,endDate,num,tourBudget,accBudget,startTime,endTime,food_selection,theme_selection);
-
             Intent intent=new Intent(getApplicationContext(),SePosSetting.class);
             intent.putExtra("class", presenter.getTripSchedule());
             startActivity(intent);
         } catch (NumberFormatException e) {
             alert.setMessage("모두 입력해주세요");
-
-//<<<<<<< HEAD
-        Intent intent=new Intent(getApplicationContext(), SePosSetting.class);
-        intent.putExtra("class", presenter.getTripSchedule());
-        startActivity(intent);
-//=======
             alert.show();
             //e.printStackTrace();
         } catch (NullPointerException e) {
             alert.setMessage("모두 입력해주세요");
             alert.show();
-        } catch (Exception e){
-                alert.setMessage("출발/도착 날짜를 확인하세요");
-                alert.show();
         }
-//>>>>>>> e0c04da052e7c5e8056f596d75eb26ae5b2e6f64
     }
 }

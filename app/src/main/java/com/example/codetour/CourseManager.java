@@ -1,9 +1,10 @@
 package com.example.codetour;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseManager {
+public class CourseManager implements Serializable {
     List<Course> courseList;
 
     public CourseManager() {

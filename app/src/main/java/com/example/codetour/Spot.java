@@ -1,6 +1,8 @@
 package com.example.codetour;
 
-public class Spot {
+import java.io.Serializable;
+
+public class Spot implements Serializable {
     double[] pos;
     String title;//관광지 이름
     String tel;  //전화번호
