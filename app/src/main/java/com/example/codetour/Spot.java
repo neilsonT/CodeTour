@@ -1,5 +1,7 @@
 package com.example.codetour;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 public class Spot implements Serializable {
@@ -20,7 +22,6 @@ public class Spot implements Serializable {
 
     }
     //임의 생성자는 field값을 pos만 채우는 생성자를 만들엉서 해결하면 될듯
-
 
     public String getAddr1(){
         return address;
@@ -64,6 +65,43 @@ public class Spot implements Serializable {
     }
     public void setContentid(Object contentid){
         this.contentid=contentid.toString();
+    }
+
+    //생성자는 load를 위해, toJSONObj는 save를 위해 사용.
+    public Spot(JSONObject obj){
+        try {
+            pos = new double[2];
+            pos[0] = obj.getDouble("posX");
+            pos[1] = obj.getDouble("posY");
+
+            title = obj.getString("title");
+            tel = obj.getString("tel");
+            contentTypeId = obj.getString("contentTypeId");
+            contentid = obj.getString("contentid");
+            explain = obj.getString("explain");
+            address = obj.getString("address");
+            RorT = obj.getBoolean("RorT");
+
+            //openTime = new int[ ?? ];
+            //closedTime = new int[ ?? ];
+        }
+        catch(Exception e){}
+    }
+    public JSONObject toJSONObj(){
+        JSONObject ret = new JSONObject();
+        try{
+            ret.put("posX", pos[0]);
+            ret.put("posY", pos[1]);
+            ret.put("title", title);
+            ret.put("tel", tel);
+            ret.put("contentTypeId", contentTypeId);
+            ret.put("contentid", contentid);
+            ret.put("explain", explain);
+            ret.put("address", address);
+            ret.put("RorT", RorT);
+        }
+        catch(Exception e){}
+        return ret;
     }
 }
 
