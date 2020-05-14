@@ -35,8 +35,14 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     // presenter
     private ScheduleContract.Presenter schedulePresenter;
 
+    // fragment
     private FragmentManager fm;
     private PlaceItemFragment placeItemFragment;
+
+    // 티맵 지도
+    private TMapView tMapView;
+
+    private TripSchedule tripSchedule;
 
     // 장소 리스트
     private List<Parcelable> placeList;
@@ -47,9 +53,6 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     // 장소의 마커 리스트
     private List<TMapMarkerItem> locationList;
     private List<TMapMarkerItem> recommendedPlaceList;
-
-    // 티맵 지도
-    private TMapView tMapView;
 
     // 마커 풍선
     private MarkerOverlay markerOverlay;
@@ -80,6 +83,10 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         fm.beginTransaction().addToBackStack(null);
         hideFragment(placeItemFragment);
 
+        // 완성된 여행 일정
+        Intent intent = new Intent();
+        tripSchedule = (TripSchedule)intent.getSerializableExtra("tour");
+
         // 여행 날짜 List 초기화
         dayList = new ArrayList<>();
 
@@ -108,10 +115,6 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         for(int i=0; i<10; i++){
             placeList.add(new Place("시립대"+i));
         }
-
-        // 이전 페이지에서 넘겨준 정보 받기
-        Intent intent = new Intent();
-
     }
 
     // 경로 보기 설명 버튼 누르면 작동. 경로의 정보가 설정되고 fragment가 표시된다
@@ -210,6 +213,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
         // 경로 다 저장했으면 화면 전환
         Intent intent = new Intent(this,ScheduleList.class);
+        intent.putExtra("tour",tripSchedule);
         startActivityForResult(intent,0);
     }
 
