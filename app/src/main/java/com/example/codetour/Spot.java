@@ -5,13 +5,11 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 public class Spot implements Serializable {
-    double[] pos;
+    double[] pos= new double[2];
     String title;//관광지 이름
     String tel;  //전화번호
     String contentTypeId;   //설명 받아오기 위해 필요합니다
     String contentid;       //설명 받아오기 위해 필요합니다
-    int[] openTime;
-    int[] closedTime;
     //이미지
     String explain;//설명
     String address;//주소
@@ -19,6 +17,15 @@ public class Spot implements Serializable {
     //카테고리
 
     public Spot(){
+        pos[0]=0;
+        pos[1]=0;
+        title="";
+        tel="";
+        contentTypeId="";
+        contentid="";
+        explain="";
+        address="";
+        RorT=false;
 
     }
     //임의 생성자는 field값을 pos만 채우는 생성자를 만들엉서 해결하면 될듯
