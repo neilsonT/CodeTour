@@ -43,6 +43,7 @@ public class Spot implements Serializable {
     public String getContentid(){
         return contentid;
     }
+    public String getExplain(){return explain;}
 
     public void setAddr1(Object address){
         this.address=address.toString();
@@ -50,6 +51,7 @@ public class Spot implements Serializable {
     public void setTitle(Object title){
         this.title=title.toString();
     }
+    public void setExplain(Object explain){this.explain=explain.toString();}
 
     //public void setFirstimage(Object firstimage){this.firstimage=firstimage.toString();}
 
