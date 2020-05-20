@@ -8,6 +8,7 @@ import com.example.codetour.TmapOverlay.MarkerOverlay;
 import com.example.codetour.vo.Place;
 import com.skt.Tmap.TMapPoint;
 
+import java.io.Serializable;
 import java.util.List;
 
 public interface ScheduleContract {
@@ -17,8 +18,8 @@ public interface ScheduleContract {
         void setPlaceDetail(List<Parcelable> placeList);
         void showMarker(Parcelable place);
         void hideMarker(Parcelable place);
-        void showMarkers(List<Parcelable> placeList);
-        void hideMarkers(List<Parcelable> placeList);
+        void showMarkers(List<Spot> placeList);
+        void hideMarkers(List<Spot> placeList);
         void showMarkerOverlay(TMapPoint tMapPoint);
         void hideMarkerOverlay(MarkerOverlay markerOverlay);
     }

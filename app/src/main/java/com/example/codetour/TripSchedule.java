@@ -177,4 +177,8 @@ public class TripSchedule implements Serializable{
         catch(Exception e){}
         return ret;
     }
+
+    public List<Course> getCourseList() {
+        return courseManager.getCourseList();
+    }
 }

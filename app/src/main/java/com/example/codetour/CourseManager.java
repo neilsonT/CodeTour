@@ -46,4 +46,8 @@ public class CourseManager implements Serializable {
         catch(Exception e){}
         return ret;
     }
+
+    public List<Course> getCourseList() {
+        return courseList;
+    }
 }

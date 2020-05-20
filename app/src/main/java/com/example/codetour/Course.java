@@ -93,4 +93,7 @@ public class Course implements Serializable {
         catch(Exception e){}
         return ret;
     }
+    public List<Spot> getSpotList(){
+        return spotList;
+    }
 }

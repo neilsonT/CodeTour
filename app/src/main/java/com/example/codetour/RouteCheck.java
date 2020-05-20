@@ -21,11 +21,13 @@ import android.widget.Spinner;
 import com.example.codetour.TmapOverlay.MarkerOverlay;
 import com.example.codetour.fragment.PlaceItemFragment;
 import com.example.codetour.vo.Place;
+import com.skt.Tmap.TMapInfo;
 import com.skt.Tmap.TMapMarkerItem;
 import com.skt.Tmap.TMapPOIItem;
 import com.skt.Tmap.TMapPoint;
 import com.skt.Tmap.TMapView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,15 +52,19 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     // 여행 날짜 리스트
     private List<String> dayList;
 
-    // 장소의 마커 리스트
+    // 장소, 경로 관련
     private List<TMapMarkerItem> locationList;
-    private List<TMapMarkerItem> recommendedPlaceList;
-
+    private List<TMapMarkerItem> recommendedPlaceList;  // 장소 추가 할때 추천 장소 리스트
+    private ArrayList<TMapPoint> tMapPointList; // 지도 위치를 조정하기 위한, TMapPoint의 위도 경도 집합
+    private List<Course> courseList;
     // 마커 풍선
     private MarkerOverlay markerOverlay;
 
     // 마커 선택시 해당 장소 저장용도
     private Place selectedPlace;
+
+    // 현재 날짜 번호( 1일차, 2일차 )
+    private int day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +107,9 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+                tMapView.removeAllMarkerItem();
+//                hideMarkers(courseList.get(day).getSpotList());
+                showTripSchedule(i);
             }
 
             @Override
@@ -115,6 +123,10 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         for(int i=0; i<10; i++){
             placeList.add(new Place("시립대"+i));
         }
+        tMapPointList = new ArrayList<>();
+        courseList = tripSchedule.getCourseList();
+
+        showTripSchedule(0);
     }
 
     // 경로 보기 설명 버튼 누르면 작동. 경로의 정보가 설정되고 fragment가 표시된다
@@ -133,7 +145,9 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         fm.beginTransaction().show(fragment).commit();
     }
 
-
+    public void showTripSchedule(int i){
+        showMarkers( courseList.get(i).getSpotList());
+    }
 
     // 경로의 정보가 fragment에 표시될수 있도록 세팅된다
     public void setPlaceDetail(List<Parcelable> placeList){
@@ -163,35 +177,38 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     }
 
     // 마커 여러개 지도에 표시
-    public void showMarkers(List<Parcelable> placeList){
+    public void showMarkers(List<Spot> placeList){
         // 마커 리스트 테스트용도
         locationList = new ArrayList<>();
-        for(int i=0; i<10; i++){
+        for(int i=0; i<placeList.size(); i++){
             TMapMarkerItem markerItem = new TMapMarkerItem();
 
-            TMapPoint tMapPoint = new TMapPoint(37.570841+0.001*i, 126.985302-0.001*i);
+            TMapPoint tMapPoint = new TMapPoint(placeList.get(i).getPos()[0],placeList.get(i).getPos()[1]);
             // 마커 아이콘
             Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.marker);
 
             markerItem.setIcon(bitmap);
             markerItem.setPosition(0.5f,1.0f);
             markerItem.setTMapPoint(tMapPoint);
-            markerItem.setName("marker");
-            tMapView.addMarkerItem("markerItem"+i,markerItem);
-
+            markerItem.setName(placeList.get(i).getTitle());
+            tMapView.addMarkerItem(placeList.get(i).getTitle(),markerItem);
+            tMapPointList.add(tMapPoint);
             locationList.add(markerItem);
         }
-        tMapView.setCenterPoint(126.985302,37.570841);
+        // 지도 위치를 경로에 맞게 바꿔주기
+        TMapInfo tMapInfo = tMapView.getDisplayTMapInfo(tMapPointList);
+        tMapView.setZoomLevel(tMapInfo.getTMapZoomLevel());
+        tMapView.setCenterPoint(tMapInfo.getTMapPoint().getLongitude(),tMapInfo.getTMapPoint().getLatitude());
     }
 
     // 마커 여러개 삭제
-    public void hideMarkers(List<Parcelable> placeList) {
+    public void hideMarkers(List<Spot> placeList) {
 
-        // 삭제 테스트
-        for(int i=0; i<locationList.size(); i++){
-            tMapView.removeMarkerItem(locationList.get(i).getID());
+        for(int i=0; i<placeList.size(); i++){
+            tMapView.removeMarkerItem(placeList.get(i).getTitle());
         }
     }
+
 
     public void showMarkerOverlay(TMapPoint tMapPoint){
         Bitmap image = null;
