@@ -15,8 +15,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.codetour.R;
+import com.example.codetour.Spot;
 import com.example.codetour.vo.Place;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class PlaceItemFragment extends Fragment implements PlaceItemContract.Vie
 
     private PlaceItemContract.Presenter placeItemPresenter ; // presenter
 
-    private List<Place> dataset;    // 장소들의 List
+    private List<Spot> dataset;    // 장소들의 List
     private ListView listView;
     private PlaceItemViewAdapter placeItemViewAdapter;
 
@@ -39,7 +41,7 @@ public class PlaceItemFragment extends Fragment implements PlaceItemContract.Vie
 
         placeItemPresenter = new PlaceItemPresenter(this);
 
-        dataset = new ArrayList<Place>();
+        dataset = new ArrayList<Spot>();
         listView = rootView.findViewById(R.id.placeItemList);
         placeItemViewAdapter = new PlaceItemViewAdapter(dataset,getActivity().getApplicationContext());
         listView.setAdapter(placeItemViewAdapter);
@@ -70,10 +72,10 @@ public class PlaceItemFragment extends Fragment implements PlaceItemContract.Vie
 
     // 장소의 리스트를 보여주는 메소드
     // 변경된 장소가 매개변수로 들어오면 해당 placeList가 dataset에 추가된다
-    public void showPlaceList(List<Parcelable> placeList) {
+    public void showPlaceList(List<Serializable> placeList) {
         dataset.clear();
-        for(android.os.Parcelable p : placeList){
-            dataset.add((Place) p);
+        for(Serializable s : placeList){
+            dataset.add((Spot) s);
         }
     }
 
