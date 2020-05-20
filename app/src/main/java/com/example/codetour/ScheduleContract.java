@@ -15,11 +15,11 @@ public interface ScheduleContract {
     interface View{
         void showFragment(Fragment fragment);
         void hideFragment(Fragment fragment);
-        void setPlaceDetail(List<Parcelable> placeList);
+        void setPlaceDetail(List<Serializable> placeList);
         void showMarker(Parcelable place);
         void hideMarker(Parcelable place);
-        void showMarkers(List<Spot> placeList);
-        void hideMarkers(List<Spot> placeList);
+        void showMarkers(List<Serializable> placeList);
+        void hideMarkers(List<Serializable> placeList);
         void showMarkerOverlay(TMapPoint tMapPoint);
         void hideMarkerOverlay(MarkerOverlay markerOverlay);
     }

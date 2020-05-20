@@ -112,5 +112,45 @@ public class Spot implements Serializable {
         catch(Exception e){}
         return ret;
     }
+
+    public void setPos(double[] pos) {
+        this.pos = pos;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public void setContentTypeId(String contentTypeId) {
+        this.contentTypeId = contentTypeId;
+    }
+
+    public void setContentid(String contentid) {
+        this.contentid = contentid;
+    }
+
+    public void setExplain(String explain) {
+        this.explain = explain;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public boolean isRorT() {
+        return RorT;
+    }
+
+    public void setRorT(boolean rorT) {
+        RorT = rorT;
+    }
 }
 

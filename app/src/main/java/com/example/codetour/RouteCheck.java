@@ -44,10 +44,8 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     // 티맵 지도
     private TMapView tMapView;
 
+    // 사용자가 입력한 조건에 의해 완성된 여행 일정
     private TripSchedule tripSchedule;
-
-    // 장소 리스트
-    private List<Parcelable> placeList;
 
     // 여행 날짜 리스트
     private List<String> dayList;
@@ -118,11 +116,6 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
             }
         });
 
-        // 장소 리스트 테스트용도
-        placeList = new ArrayList<>();
-        for(int i=0; i<10; i++){
-            placeList.add(new Place("시립대"+i));
-        }
         tMapPointList = new ArrayList<>();
         courseList = tripSchedule.getCourseList();
 
@@ -131,7 +124,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
     // 경로 보기 설명 버튼 누르면 작동. 경로의 정보가 설정되고 fragment가 표시된다
     public void openPlaceList(View view) {
-        setPlaceDetail(placeList);
+        setPlaceDetail(courseList.get(day).getSpotList());
         showFragment(placeItemFragment);
     }
 
@@ -150,8 +143,8 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     }
 
     // 경로의 정보가 fragment에 표시될수 있도록 세팅된다
-    public void setPlaceDetail(List<Parcelable> placeList){
-        placeItemFragment.showPlaceList(placeList);
+    public void setPlaceDetail(List<Serializable> spotList){
+        placeItemFragment.showPlaceList(spotList);
     }
 
     // 마커 하나 추가
@@ -177,21 +170,21 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     }
 
     // 마커 여러개 지도에 표시
-    public void showMarkers(List<Spot> placeList){
+    public void showMarkers(List<Serializable> placeList){
         // 마커 리스트 테스트용도
         locationList = new ArrayList<>();
         for(int i=0; i<placeList.size(); i++){
             TMapMarkerItem markerItem = new TMapMarkerItem();
-
-            TMapPoint tMapPoint = new TMapPoint(placeList.get(i).getPos()[0],placeList.get(i).getPos()[1]);
+            Spot spot  = (Spot)placeList.get(i);
+            TMapPoint tMapPoint = new TMapPoint(spot.getPos()[0],spot.getPos()[1]);
             // 마커 아이콘
             Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.marker);
 
             markerItem.setIcon(bitmap);
             markerItem.setPosition(0.5f,1.0f);
             markerItem.setTMapPoint(tMapPoint);
-            markerItem.setName(placeList.get(i).getTitle());
-            tMapView.addMarkerItem(placeList.get(i).getTitle(),markerItem);
+            markerItem.setName(spot.getTitle());
+            tMapView.addMarkerItem(spot.getTitle(),markerItem);
             tMapPointList.add(tMapPoint);
             locationList.add(markerItem);
         }
@@ -202,10 +195,10 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     }
 
     // 마커 여러개 삭제
-    public void hideMarkers(List<Spot> placeList) {
+    public void hideMarkers(List<Serializable> placeList) {
 
         for(int i=0; i<placeList.size(); i++){
-            tMapView.removeMarkerItem(placeList.get(i).getTitle());
+            tMapView.removeMarkerItem(((Spot)placeList.get(i)).getTitle());
         }
     }
 
