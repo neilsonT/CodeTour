@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TripScheduleManager {
-    List<TripSchedule> tripScheduleList;
+        List<TripSchedule> tripScheduleList;
 
     public TripScheduleManager(){}
 
-    public void initSchedule(){}
-    public void addSchedule(TripSchedule tripSchedule){
-        tripScheduleList.add(tripSchedule);
-    }
+        public void initSchedule(){}
+        public void addSchedule(TripSchedule tripSchedule){
+            tripScheduleList.add(tripSchedule);
+        }
     public void deleteSchedule(){}
     public void loadSchedule(){}
 
