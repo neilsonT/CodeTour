@@ -59,6 +59,7 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
                 }
 
                 TEMP();
+                //TODO: 현재 TEMP() 함수를 이용하여 areacode와 contentTypeID를 강제로 넘겨 주고 있으므로, 받아온 값을 넘겨주도록 
 
                 Recommend rec = new Recommend();
                 rec.setTripSchedule(tour);
