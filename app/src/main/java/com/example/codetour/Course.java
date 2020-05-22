@@ -97,7 +97,7 @@ public class Course implements Serializable {
     }
     public List<Serializable> getSpotList(){
         List<Serializable> s = new ArrayList<>();
-        //s.addAll(spotList);
+        s.addAll(spotList);
         return s;
     }
 }
