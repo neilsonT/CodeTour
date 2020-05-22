@@ -23,6 +23,11 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
     TableLayout seEdit;
     TripSchedule tour;
 
+    public void TEMP(){
+        tour.areacode = 1;
+        tour.contentTypeID = "12";
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +58,16 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
                     tour.endPoss.set(i, tmp.getText().toString());
                 }
 
+                TEMP();
+                //TODO: 현재 TEMP() 함수를 이용하여 areacode와 contentTypeID를 강제로 넘겨 주고 있으므로, 받아온 값을 넘겨주도록 
+
+                Recommend rec = new Recommend();
+                rec.setTripSchedule(tour);
+                rec.setRecommendSpotList();
+                rec.makeCourses();
+
                 Intent intent = new Intent(getApplicationContext(), RouteCheck.class);
-                intent.putExtra("tour", tour);
+                intent.putExtra("rec", rec);
                 startActivity(intent);
             }
         });

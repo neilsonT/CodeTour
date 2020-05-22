@@ -47,6 +47,8 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     // 사용자가 입력한 조건에 의해 완성된 여행 일정
     private TripSchedule tripSchedule;
 
+    private Recommend rec; //added by 대양; 위의 tripSchedule 외에 추천 Spot들의 리스트들을 같이 받기 위해 작성
+
     // 여행 날짜 리스트
     private List<String> dayList;
 
@@ -87,9 +89,11 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         fm.beginTransaction().addToBackStack(null);
         hideFragment(placeItemFragment);
 
-        // 완성된 여행 일정
-        Intent intent = new Intent();
-        tripSchedule = (TripSchedule)intent.getSerializableExtra("tour");
+        // 완성된 여행 일정; edited by 대양; tripSchedule 클래스를 직접 받는 대신, recommend 클래스 안에 있는 것을 갖도록 함.
+        Intent intent = getIntent();
+        rec = (Recommend) intent.getSerializableExtra("rec");
+        tripSchedule = rec.tripSchedule;
+        //List<Spot> recommendSpotList = rec.recommendSpotList;
 
         // 여행 날짜 List 초기화
         dayList = new ArrayList<>();

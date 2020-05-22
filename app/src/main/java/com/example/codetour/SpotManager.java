@@ -12,10 +12,14 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 public class SpotManager implements Serializable {
-    List<Spot> SpotList;
+    List<Spot> spotList;
 
     public SpotManager(){
+        spotList = new ArrayList<Spot>();
+    }
 
+    public void addSpotAt(int idx, Spot spot){
+        spotList.add(idx, spot);
     }
 
     //생성자는 load를 위해, toJSONObj는 save를 위해 사용.

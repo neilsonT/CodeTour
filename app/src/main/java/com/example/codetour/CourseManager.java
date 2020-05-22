@@ -47,6 +47,10 @@ public class CourseManager implements Serializable {
         return ret;
     }
 
+    public void addSpotAt(int dIdx, int sIdx, Spot spot){
+        courseList.get(dIdx).addSpotAt(sIdx, spot);
+    }
+
     public List<Course> getCourseList() {
         return courseList;
     }
