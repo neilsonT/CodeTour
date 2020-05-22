@@ -16,6 +16,8 @@ public class TripSchedule implements Serializable{
     String endDate;
     Date sd;
     Date ed;
+    int areacode;
+    String contentTypeID;
     int difdays;
     int pNum;
     int tourBudget;

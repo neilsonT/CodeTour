@@ -23,6 +23,11 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
     TableLayout seEdit;
     TripSchedule tour;
 
+    public void TEMP(){
+        tour.areacode = 1;
+        tour.contentTypeID = "12";
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +58,15 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
                     tour.endPoss.set(i, tmp.getText().toString());
                 }
 
+                TEMP();
+
+                Recommend rec = new Recommend();
+                rec.setTripSchedule(tour);
+                rec.setRecommendSpotList();
+                rec.makeCourses();
+
                 Intent intent = new Intent(getApplicationContext(), RouteCheck.class);
-                intent.putExtra("tour", tour);
+                intent.putExtra("rec", rec);
                 startActivity(intent);
             }
         });
