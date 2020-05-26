@@ -20,7 +20,7 @@ public class TourApi {
 
 
     public TourApi() {
-        ServiceKey = "7MuLFocxJtu7I1bf8JWQrKsLl%2FAEwkKk1U0nGGDRHkCSX1%2Bxp7mB38%2FRIjMwrB%2F6x8rRBQ3Le2dUuVFHBhBbtQ%3D%3D";
+       //ServiceKey = "7MuLFocxJtu7I1bf8JWQrKsLl%2FAEwkKk1U0nGGDRHkCSX1%2Bxp7mB38%2FRIjMwrB%2F6x8rRBQ3Le2dUuVFHBhBbtQ%3D%3D";
     }
 
     public List<Spot> getData(String contentTypeId, int areaCode, int sigunguCode, String cat1, String cat2) {
@@ -94,14 +94,26 @@ public class TourApi {
         try {
             return (myAsyncTask.execute().get());
         } catch (Exception e) {
-            System.out.println("웨 null이야...?");
+            System.out.println(e);
             return null;
         }
     }
-    public void getexplain(Spot spot) {
+    public List<Spot> getRestaurant(Spot spot,String classifi){ //음식점을 받아옵니다.
+        GetRestaurantAsyncTask asynctask = new GetRestaurantAsyncTask();
+        cat2=classifi;
+        try {
+            return asynctask.execute(spot).get();
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return null;
+        }
+    }
+    public void getExplain(Spot spot) {
         GetExplainAsyntaskTask asynctask = new GetExplainAsyntaskTask();
         asynctask.execute(spot);
     }
+
 
     protected String getUrl(int num) { //URL가져오기
         String urlstr = "";
@@ -130,7 +142,6 @@ public class TourApi {
         return urlstr;
     }
     protected List<Spot> dataParse(JSONArray jarray, List<Spot> spotlist) {
-        System.out.println(0);
         for (int i = 0; i < jarray.size(); i++) {
             //TourAPI 필수제공data title, contentID, contenttypeid
             //contentID, contenttypeid 장소 세부설명 받아오는데 필요합니다.
@@ -158,6 +169,40 @@ public class TourApi {
         }
 
         return spotlist;
+    }
+    protected List<Spot> dataParse_restaurant(JSONArray jarray,List<Spot> spotlist){
+
+        for (int i = 0; i < jarray.size(); i++) {
+            //TourAPI 필수제공data title, contentID, contenttypeid
+            //contentID, contenttypeid 장소 세부설명 받아오는데 필요합니다.
+            Spot bus = new Spot();
+            JSONObject jObject = (JSONObject) jarray.get(i);
+
+            if(jObject.get("cat2")!=cat2)
+                continue;
+
+            bus.setContentTypeId(jObject.get("contenttypeid"));
+            bus.setTitle(jObject.get("title"));
+            bus.setContentid(jObject.get("contentid"));
+
+            if (jObject.containsKey("addr1")) {
+                bus.setAddr1(jObject.get("addr1"));
+            }
+
+            //if (jObject.containsKey("firstimage")) {bus.setFirstimage(jObject.get("firstimage"));}
+
+            if (jObject.containsKey("mapx") && jObject.containsKey("mapy")) {
+                bus.setPos(jObject.get("mapx"), jObject.get("mapy"));
+            }
+            if (jObject.containsKey("tel")) {
+                bus.setTel(jObject.get("tel"));
+            }
+
+            spotlist.add(bus);
+        }
+
+        return spotlist;
+
     }
 
     public class GetDataAsyncTask extends AsyncTask<String, Void, List<Spot>> {
@@ -273,5 +318,61 @@ public class TourApi {
             return null;
         }
     }
+    public class GetRestaurantAsyncTask extends AsyncTask<Spot, Void, List<Spot>> {    //SpotList를 가져올까요?
+        @Override
+        protected List<Spot> doInBackground(Spot... spot) {    //url 연결, Json Data 받아온 후 파싱.
+            String str, receiveMsg;
+            List<Spot> tmp_list=null;
+            URL url = null;
 
+            try {
+                for (int num = 1; num <= 3; num++) {  //한번에 5개 장소 가져옵니다. page=3
+                    String urlstr = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/locationBasedList?"
+                            + "ServiceKey=" + ServiceKey
+                            + "&pageNo="+num
+                            + "&numOfRows=5&listYN=Y&contentTypeId=39&arrange=P"
+                            + "&mapX="+spot[0].getPos()[0]
+                            + "&mapY="+spot[0].getPos()[1]
+                            + "radius=2000" //단위 m
+                            + "&MobileOS=AND&MobileApp=TestParsing&_type=json";
+
+                    url = new URL(urlstr);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    if (conn.getResponseCode() == conn.HTTP_OK) {
+                        InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                        BufferedReader reader = new BufferedReader(tmp);
+                        StringBuffer buffer = new StringBuffer();
+                        while ((str = reader.readLine()) != null) {
+                            buffer.append(str);
+                        }
+                        receiveMsg = buffer.toString();
+                        reader.close();
+
+                        System.out.println(receiveMsg);
+
+                        JSONParser jsonParser = new JSONParser();
+                        JSONObject jsonObjtmp = (JSONObject) jsonParser.parse(receiveMsg);
+                        JSONObject parse_response = (JSONObject) jsonObjtmp.get("response");
+                        JSONObject parse_body = (JSONObject) parse_response.get("body");
+
+                        if (parse_body.get("items").equals("")) { //정보 없을경우
+                            return tmp_list;
+                        }
+
+                        JSONObject parse_items = (JSONObject) parse_body.get("items");
+                        JSONArray jarray = (JSONArray) parse_items.get("item");
+
+                        tmp_list = dataParse_restaurant(jarray,tmp_list);
+
+                    } else {
+                        System.out.println("error");
+                    }
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+
+            return tmp_list;
+        }
+    }
 }
