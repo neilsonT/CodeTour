@@ -41,6 +41,23 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
         this.FillTable();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            if(requestCode>0 && requestCode<=tour.difdays){
+                if(requestCode%2 == 1){
+                    ((TextView)findViewById(stPosID[(requestCode-1)/2])).setText(data.getStringExtra("title"));
+                    // TODO: address를 받아와서 어디에 저장할지? 나중에 넘겨줄땐 어떻게 넘겨줄지?
+                }
+                else{
+                    ((TextView)findViewById(edPosID[(requestCode-1)/2])).setText(data.getStringExtra("title"));
+                    // TODO: 위와 같음
+                }
+            }
+        }
+    }
+
     public void InitializeView() {
         //테이블 틀 생성
         seEdit = (TableLayout) findViewById(R.id.seEdit);
@@ -49,12 +66,12 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
         sePosSettingConfirm.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                EditText tmp;
+                TextView tmp;
                 for(int i=0; i<tour.difdays; ++i){
-                    tmp = (EditText)findViewById(stPosID[i]);
+                    tmp = (TextView)findViewById(stPosID[i]);
                     tour.startPoss.set(i, tmp.getText().toString());
 
-                    tmp = (EditText)findViewById(edPosID[i]);
+                    tmp = (TextView)findViewById(edPosID[i]);
                     tour.endPoss.set(i, tmp.getText().toString());
                 }
 
@@ -87,6 +104,8 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
         //InitializeView()에서 생성해 둔 테이블 틀을 채움;
         //날짜 만큼 row를 생성해서 위에 만든 테이블에 추가함
         for(int i=0; i<tour.difdays; ++i){
+            final int finalI = 2*i;
+
             //row 생성
             TableRow tr = new TableRow(this);
             TableLayout.LayoutParams tmpRowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, 4);
@@ -101,19 +120,31 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
             //아직 위치값을 넣지 않았기 때문에 실행해보기 위해서 주석처리 해놓음
 
             //i번째날 출발지 입력칸을 row에 추가
-            EditText stPos = new EditText(this);
+            TextView stPos = new TextView(this);
             stPos.setText(tour.startPoss.get(i));
             tmpID = View.generateViewId();
             stPos.setId(tmpID);
             stPosID[i] = tmpID;
+            stPos.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View view){
+                    Intent intent = new Intent(getApplicationContext(), SearchView.class);
+                    startActivityForResult(intent, finalI +1);
+                }
+            });
             tr.addView(stPos, new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 3));
 
             //i번째날 도착지 입력칸을 row에 추가
-            EditText edPos = new EditText(this);
+            TextView edPos = new TextView(this);
             edPos.setText(tour.endPoss.get(i));
             tmpID = View.generateViewId();
             edPos.setId(tmpID);
             edPosID[i] = tmpID;
+            edPos.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View view){
+                    Intent intent = new Intent(getApplicationContext(), SearchView.class);
+                    startActivityForResult(intent, finalI +2);
+                }
+            });
             tr.addView(edPos, new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 3));
 
             //row를 테이블에 추가
