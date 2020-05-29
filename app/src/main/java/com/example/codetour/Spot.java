@@ -10,7 +10,7 @@ public class Spot implements Serializable {
     String tel;  //전화번호
     String contentTypeId;   //설명 받아오기 위해 필요합니다
     String contentid;       //설명 받아오기 위해 필요합니다
-    //이미지
+    String firstImage2;     //이미지
     String explain;//설명
     String address;//주소
     boolean RorT; // 식당인지 관광지인지
@@ -26,6 +26,7 @@ public class Spot implements Serializable {
         explain="";
         address="";
         RorT=false;
+        firstImage2 ="";
 
     }
     //임의 생성자는 field값을 pos만 채우는 생성자를 만들엉서 해결하면 될듯
@@ -52,6 +53,14 @@ public class Spot implements Serializable {
         this.title=title.toString();
     }
     public void setExplain(Object explain){this.explain=explain.toString();}
+
+    public String getFirstImage2() {
+        return firstImage2;
+    }
+
+    public void setFirstImage2(String firstImage2) {
+        this.firstImage2 = firstImage2;
+    }
 
     //public void setFirstimage(Object firstimage){this.firstimage=firstimage.toString();}
 
@@ -90,7 +99,7 @@ public class Spot implements Serializable {
             explain = obj.getString("explain");
             address = obj.getString("address");
             RorT = obj.getBoolean("RorT");
-
+            firstImage2 = obj.getString("firstImage2");
             //openTime = new int[ ?? ];
             //closedTime = new int[ ?? ];
         }
@@ -108,6 +117,7 @@ public class Spot implements Serializable {
             ret.put("explain", explain);
             ret.put("address", address);
             ret.put("RorT", RorT);
+            ret.put("firstImage2",firstImage2);
         }
         catch(Exception e){}
         return ret;

@@ -32,8 +32,8 @@ public class PlaceItemFragment extends Fragment implements PlaceItemContract.Vie
     private ListView listView;
     private PlaceItemViewAdapter placeItemViewAdapter;
 
-    private TextView placeAdd;  // 장소 추가 버튼
-    private ImageButton placeDeleteButton;  // 장소 삭제 버튼
+//    private TextView placeAdd;  // 장소 추가 버튼
+//    private ImageButton placeDeleteButton;  // 장소 삭제 버튼
 
     @Nullable
     @Override
@@ -48,39 +48,39 @@ public class PlaceItemFragment extends Fragment implements PlaceItemContract.Vie
         listView.setAdapter(placeItemViewAdapter);
 
         View v = inflater.inflate(R.layout.fragment_placeitem,container,false);
-        placeAdd = v.findViewById(R.id.placeAddButton);
-        placeDeleteButton = v.findViewById(R.id.placeDeleteButton);
+//        placeAdd = v.findViewById(R.id.placeAddButton);
+//        placeDeleteButton = v.findViewById(R.id.placeDeleteButton);
 
         // 장소 추가 버튼 이벤트 핸들러
-        placeAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                placeItemPresenter.loadRecommendPlace();
-            }
-        });
+//        placeAdd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                placeItemPresenter.loadRecommendPlace();
+//            }
+//        });
+//
+//        // 장소 삭제 버튼 이벤트 핸들러
+//        placeDeleteButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                dataset.remove(0);
+//                Spot place = null;
+//                placeItemPresenter.deletePlace(place);
+//            }
+//        });
 
-        // 장소 삭제 버튼 이벤트 핸들러
-        placeDeleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                dataset.remove(0);
-                Spot place = null;
-                placeItemPresenter.deletePlace(place);
-            }
-        });
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            // adapterView : 아이템이 포함된 부모 뷰: 리스트뷰
-            // view : 클릭된 아이템
-            // i : 선택된 항목의 번호 ( position )
-            // l : 일반적으로 position과 같은 개념 ( id )
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                dataset.remove(i);
-                placeItemPresenter.deletePlace(i);
-            }
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            // adapterView : 아이템이 포함된 부모 뷰: 리스트뷰
+//            // view : 클릭된 아이템
+//            // i : 선택된 항목의 번호 ( position )
+//            // l : 일반적으로 position과 같은 개념 ( id )
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                dataset.remove(i);
+//                placeItemPresenter.deletePlace(i);
+//            }
+//        });
 
         return rootView;
     }
@@ -92,6 +92,7 @@ public class PlaceItemFragment extends Fragment implements PlaceItemContract.Vie
         for(Serializable s : placeList){
             dataset.add((Spot) s);
         }
+        placeItemViewAdapter.notifyDataSetChanged();
     }
 
     // 추천장소를 화면에 표시하는 메서드
