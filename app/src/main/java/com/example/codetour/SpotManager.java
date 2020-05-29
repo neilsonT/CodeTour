@@ -3,6 +3,7 @@ package com.example.codetour;
 import java.io.Serializable;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.net.URL;
@@ -33,5 +34,9 @@ public class SpotManager implements Serializable {
         }
         catch(Exception e){}
         return ret;
+    }
+
+    public List<Spot> getSpotList() {
+        return spotList;
     }
 }
