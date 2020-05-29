@@ -1,6 +1,8 @@
 package com.example.codetour;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,17 +12,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
+import static android.app.Activity.RESULT_OK;
+
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.CustomViewHolder> {
 
     private ArrayList<PosItem> itemLists = new ArrayList<>();
-
+    private SearchView searchView;
     //ViewHolder가 RecyclerView가 갱신될 때 마다 View를 설정해주는 친구인 것 같습니다
     public class CustomViewHolder extends RecyclerView.ViewHolder {
         //검색된 장소 하나를 보여줄 때 아직은 장소이름이랑 주소만 보여주기 때문에 두개 있습니다.
         //추가적인 정보를 보여주고 싶으면 추가하면 됩니다.
         public TextView title;
         public TextView address;
-
+        public Activity mActivity;
         public CustomViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(new View.OnClickListener(){
@@ -30,24 +34,34 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     if (pos != RecyclerView.NO_POSITION) {
                         PosItem clicked = itemLists.get(pos);
                         //선택한 장소의 주소를 스트링 형태로 받아온 뒤, 스페이스바 기준으로 잘라서 맨 앞에 대분류 중분류 선택합니다.
-                        String[] splited =clicked.getAddress().toString().split(" ");
+                        String[] splited =clicked.getAddress().split(" ");
                         String add1=splited[0]; //도,시
                         String add2=splited[1]; //시군구
-
+                        String[] result = {clicked.getTitle(),clicked.getAddress()};
                         //SePosSetting화면으로 넘겨줘야 할듯!!
                         //intent보다는 http://zeany.net/54 이 링크에 나와있는 방법으로 하는게 나을 것 같은데 확인하고 알려줘줭
-
+                        /*
                         //일단 AlterDialog로 선택된 장소의 내용 확인
                         AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                         builder.setTitle("선택된 장소 :"+Integer.toString(pos)).setMessage(add1+" "+add2);
                         AlertDialog alertDialog = builder.create();
                         alertDialog.show();
+                         */
+                        Intent intent = new Intent();
+                        intent.putExtra("result", result);
+                        if (v.getContext() instanceof Activity){
+                            ((Activity)v.getContext()).setResult(Activity.RESULT_OK, intent);
+                            ((Activity)v.getContext()).finish();
+                        }
+
+
                     }
                 }
 
             });
             title = (TextView) itemView.findViewById(R.id.item_title);
             address = (TextView) itemView.findViewById(R.id.item_address);
+
         }
 
     }
@@ -84,6 +98,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             try{
                 TmapPOI parser = new TmapPOI(this);
                 //getAutoComplete(string) 얘가 검색해주는 함수야
+                System.out.println("검색해줘");
                 parser.getAutoComplete(keyword);
             }
             catch (InterruptedException e){

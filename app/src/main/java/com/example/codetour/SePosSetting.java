@@ -153,12 +153,12 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
     }
 
     public void FillTable(){
-        EditText tmp;
+        TextView tmp;
         for(int i=0; i<this.tour.difdays; ++i){
-            tmp = (EditText)findViewById(stPosID[i]);
+            tmp = (TextView)findViewById(stPosID[i]);
             tmp.setText(tour.startPoss.get(i));
 
-            tmp = (EditText)findViewById(edPosID[i]);
+            tmp = (TextView) findViewById(edPosID[i]);
             tmp.setText(tour.endPoss.get(i));
         }
     }
