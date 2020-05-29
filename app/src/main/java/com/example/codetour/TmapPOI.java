@@ -18,7 +18,7 @@ public class TmapPOI  {
     public void getAutoComplete(String word) throws InterruptedException {
 
         TMapData tmapdata= new TMapData();
-
+        System.out.println("왜안돼");
         tmapdata.findAllPOI(word, new TMapData.FindAllPOIListenerCallback() {
             @Override
             public void onFindAllPOI(ArrayList poiItem) {

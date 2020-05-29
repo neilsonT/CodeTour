@@ -26,10 +26,7 @@ public class SearchView extends AppCompatActivity {
         setContentView(R.layout.activity_search_view);
         TMapView tMapView = new TMapView(this);
         tMapView.setSKTMapApiKey("l7xx4620fe9b1c2445dda41257f430567fb2"); //바다 : 제가 발급받은 key 입니다
-
         layoutInit();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
         /*
         //이 주석은 tmapAPI sample 기본 코드 , 굳이 보실 필요 없어요 !
         //LinearLayout linearLayoutTmap = (LinearLayout)findViewById(R.id.linearLayoutTmap);
@@ -73,12 +70,14 @@ public class SearchView extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 //edittext에 글자가 입력되면 실행되는 함수
                 final String keyword = s.toString();
-
+                System.out.println("글자 입력 완료");
                 handler.removeCallbacks(workRunnable);
+                System.out.println("1");
                 workRunnable = new Runnable() {
                     @Override
                     public void run() {
                         //RecyclerViewAdapter.filter 함수를 실행합니다.
+                        System.out.println("2");
                         adapter.filter(keyword);
                     }
                 };
@@ -93,6 +92,8 @@ public class SearchView extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
     }
+
+
 
 }
 

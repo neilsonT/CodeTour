@@ -213,8 +213,8 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
         });
         //예외처리
         try{
-            for(int i=0;i<startDate.length();i++){
-                if (startDate.charAt(i)>endDate.charAt(i)){
+            for(int i=0;i<3;i++){
+                if (startD[i]>endD[i]){
                     alert.setMessage("출발/도착 날짜를 확인해주세요");
                     alert.show();
                     return;
