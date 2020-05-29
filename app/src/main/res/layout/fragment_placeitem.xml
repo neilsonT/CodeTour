@@ -11,7 +11,7 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
             android:layout_marginBottom="10dp">
@@ -26,7 +26,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/place_sample" />
+                 />
 
             <!-- 장소 이름 -->
             <TextView
@@ -38,9 +38,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
                 android:layout_toRightOf="@+id/placeImage"
-                android:gravity="center"
                 android:text="장소 이름"
-                android:textSize="30dp" />
+                android:textSize="25sp" />
 
 
             <!-- 장소 전화번호 -->
@@ -49,23 +48,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/placeName"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@+id/placeImage"
                 android:paddingLeft="10dp"
-                android:text="010-1111-2222"
-                android:textColor="@android:color/black"
+                android:text="010-0000-0000"
                 android:textSize="20sp" />
 
-            <!-- 장소 삭제 버튼 -->
-            <ImageButton
-                android:id="@+id/placeDeleteButton"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/close" />
+            <!-- 장소 주소 -->
+            <TextView
+                android:id="@+id/placeAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/placeName"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="42dp"
+                android:layout_toEndOf="@+id/placeImage"
+                android:paddingLeft="10dp"
+                android:text="주소"
+                android:textSize="20sp" />
+
+            <!--&lt;!&ndash; 장소 삭제 버튼 &ndash;&gt;-->
+            <!--<ImageButton-->
+                <!--android:id="@+id/placeDeleteButton"-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:layout_alignParentEnd="true"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_marginEnd="10dp"-->
+                <!--android:background="@drawable/close" />-->
 
         </RelativeLayout>
 
@@ -73,23 +84,23 @@
 
     <!--장소 상세설명-->
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="꿩의 보은 전설이 살아 있는 산, 치악산국립공원(서부) * 차령산맥의 한 봉우리인 치악산은 최고봉인 비로봉(1,288m)을 중심으로 삼봉, 향로봉, 남대봉, 천지봉 등 1,000m가 넘는 봉우리가 병풍처럼 남북으로 걸쳐 있다. 주봉인 비로봉에서 남대봉까지 남북으로 뻗은 치악 능선은 14km에 달하며, 총 면적 182.09㎢로 1984년에 국립공원이 되었다. ? 옛 부터 동악 명산이라 하여 구룡사, 상원사등 신라 천년의 역사가 서린 고찰을 비롯하여 영원산성, 해미산성등 전란사가 담긴 유서 깊은 곳으로 기암괴석과 울창한 산림이 천하절경을 이루고 있으며 적악산으로 불리우다 꿩의 보은전설이 연유되어 치악산이 되었다. ? 구룡계곡, 금대계곡, 부곡계곡 등 기이한 암석들이 이룬 아름다운 계곡과 태종대, 구룡소, 세렴폭포, 구룡사, 상원사 등의 수많은 관광명소가 곳곳에 산재해 있으며 춘하추동 계절에 따라 변화무쌍하고 봄의 진달래, 철쭉꽃과 여름철 구룡사의 울창한 숲과 깨끗한 물, 가을 단풍과 특히 겨울 설경이 장관이어서 사시사철 등산객이 많이 찾는다. ? * 치악산 추천 등산코스 * 등산은 구룡사, 입석사, 국형사, 영원사, 상원골을 기점으로 한다. 이중 구룡사 방면은 곧장 정상으로 통하는 최단코스이고 나머지는 주릉을 거쳐 정상에 오르게 된다. 하산시 남대봉에서 영원사로 내려가는 것이 편리하다. 통하는 최단코스이고 나머지는 주릉을 거쳐 정상에 오르게 된다. 하산시 남대봉에서 영원사로 내려가는 것이 편리하다. 봄철에는 야생화 복수초와 노루귀도 볼 수 있다."
-        />
-
-    <!--장소 추가 버튼-->
-    <TextView
-        android:id="@+id/placeAddButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="장소 추가"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/edge"
+        android:layout_margin="8dp"
+        android:text=""
+        />
+
+    <!--&lt;!&ndash;장소 추가 버튼&ndash;&gt;-->
+    <!--<TextView-->
+        <!--android:id="@+id/placeAddButton"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="장소 추가"-->
+        <!--android:gravity="center"-->
+        <!--android:textAlignment="center"-->
+        <!--android:textStyle="bold"-->
+        <!--android:layout_marginTop="5dp"-->
+        <!--android:layout_marginBottom="5dp"-->
+        <!--android:background="@drawable/edge"-->
         />
 </LinearLayout>

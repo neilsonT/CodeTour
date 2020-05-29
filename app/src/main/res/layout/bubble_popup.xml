@@ -37,21 +37,21 @@
             android:id="@+id/bubble_subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="10sp"
             android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/content1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="10sp"
             android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/content2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
+            android:textSize="10sp"
             android:textStyle="bold"/>
         </LinearLayout>
     </LinearLayout>

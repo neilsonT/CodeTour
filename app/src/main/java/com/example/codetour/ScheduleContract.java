@@ -20,11 +20,13 @@ public interface ScheduleContract {
         void hideMarker(Parcelable place);
         void showMarkers(List<Serializable> placeList);
         void hideMarkers(List<Serializable> placeList);
-        void showMarkerOverlay(TMapPoint tMapPoint);
+        void showMarkerOverlay(Serializable place, TMapPoint tMapPoint);
         void hideMarkerOverlay(MarkerOverlay markerOverlay);
     }
 
     interface Presenter {
         void saveSchedule(TripSchedule tripSchedule);
+
+        void setMarkerOverlay(String name);
     }
 }

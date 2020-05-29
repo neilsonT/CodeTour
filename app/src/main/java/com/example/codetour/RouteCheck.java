@@ -46,6 +46,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
     // 사용자가 입력한 조건에 의해 완성된 여행 일정
     private TripSchedule tripSchedule;
+    private List<Serializable> spotList;
 
     private Recommend rec; //added by 대양; 위의 tripSchedule 외에 추천 Spot들의 리스트들을 같이 받기 위해 작성
 
@@ -122,7 +123,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
         tMapPointList = new ArrayList<>();
         courseList = tripSchedule.getCourseList();
-
+        spotList = courseList.get(0).getSpotList();
         showTripSchedule(0);
     }
 
@@ -180,7 +181,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         for(int i=0; i<placeList.size(); i++){
             TMapMarkerItem markerItem = new TMapMarkerItem();
             Spot spot  = (Spot)placeList.get(i);
-            TMapPoint tMapPoint = new TMapPoint(spot.getPos()[0],spot.getPos()[1]);
+            TMapPoint tMapPoint = new TMapPoint(spot.getPos()[1],spot.getPos()[0]);
             // 마커 아이콘
             Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.marker);
 
@@ -194,7 +195,11 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         }
         // 지도 위치를 경로에 맞게 바꿔주기
         TMapInfo tMapInfo = tMapView.getDisplayTMapInfo(tMapPointList);
-        tMapView.setZoomLevel(tMapInfo.getTMapZoomLevel());
+        if(tMapInfo.getTMapZoomLevel()<10){
+            tMapView.setZoomLevel(10);
+        }else{
+            tMapView.setZoomLevel(tMapInfo.getTMapZoomLevel());
+        }
         tMapView.setCenterPoint(tMapInfo.getTMapPoint().getLongitude(),tMapInfo.getTMapPoint().getLatitude());
     }
 
@@ -207,13 +212,13 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     }
 
 
-    public void showMarkerOverlay(TMapPoint tMapPoint){
-        Bitmap image = null;
-        markerOverlay = new MarkerOverlay(getApplicationContext(), "https://www.dhnews.co.kr/news/photo/201807/83555_72577_634.png", "서울시립대", "123-123-123", "서울시 동대문구");
+    public void showMarkerOverlay(Serializable place,TMapPoint tmapPoint){
+        Spot spot = (Spot) place;
+        markerOverlay = new MarkerOverlay(getApplicationContext(), spot.getFirstImage2(),spot.getTitle() ,spot.getTel() , spot.getAddress());
         tMapView.addMarkerItem2("id", markerOverlay);
         markerOverlay.setID("id");
         markerOverlay.setPosition(0.0f, 0.0f);
-        markerOverlay.setTMapPoint(tMapPoint);
+        markerOverlay.setTMapPoint(tmapPoint);
     }
 
     public void hideMarkerOverlay(MarkerOverlay markerOverlay){
@@ -266,7 +271,12 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
             // 마커를 선택했다는 조건 추가해야됨
             if(true) {
-                showMarkerOverlay(tMapPoint);
+                for(Serializable a : spotList){
+                    if(((Spot)a).getTitle().equals(arrayList.get(0).getName())){
+                       showMarkerOverlay(a,tMapPoint);
+                    }
+                }
+                schedulePresenter.setMarkerOverlay(arrayList.get(0).getName());
             }
 
             return false;

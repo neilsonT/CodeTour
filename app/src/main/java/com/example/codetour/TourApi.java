@@ -165,6 +165,10 @@ public class TourApi {
                 bus.setTel(jObject.get("tel"));
             }
 
+            if(jObject.containsKey("firstimage2")){
+                bus.setFirstImage2((String)jObject.get("firstimage2"));
+            }
+
             spotlist.add(bus);
         }
 

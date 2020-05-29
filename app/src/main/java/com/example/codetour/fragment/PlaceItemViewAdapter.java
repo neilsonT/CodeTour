@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.codetour.R;
 import com.example.codetour.Spot;
 
@@ -53,10 +55,17 @@ public class PlaceItemViewAdapter extends BaseAdapter {
             itemLayout = layoutInflater.inflate(R.layout.fragment_placeitem,viewGroup, false);
         }
 
-        TextView textView = itemLayout.findViewById(R.id.placeName);
+        TextView title = itemLayout.findViewById(R.id.placeName);
+        TextView tel = itemLayout.findViewById(R.id.placeTel);
+        TextView address = itemLayout.findViewById(R.id.placeAddress);
+        ImageView image = itemLayout.findViewById(R.id.placeImage);
 
-        textView.setText(spotList.get(i).getAddress());
 
+        title.setText(spotList.get(i).getTitle());
+        tel.setText(spotList.get(i).getTel());
+        address.setText(spotList.get(i).getAddress());
+//        Glide.with(view.getContext()).load(spotList.get(i).getFirstImage2()).into(image); // nullPointerException
+        Glide.with(itemLayout.getContext()).load(spotList.get(i).getFirstImage2()).into(image);
         return itemLayout;
     }
 }

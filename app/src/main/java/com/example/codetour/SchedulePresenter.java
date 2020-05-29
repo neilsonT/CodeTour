@@ -16,4 +16,9 @@ public class SchedulePresenter implements ScheduleContract.Presenter {
     public void saveSchedule(TripSchedule tripSchedule) {
 
     }
+
+    @Override
+    public void setMarkerOverlay(String name) {
+
+    }
 }
