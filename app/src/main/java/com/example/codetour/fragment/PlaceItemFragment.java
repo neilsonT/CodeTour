@@ -10,6 +10,7 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -62,8 +63,22 @@ public class PlaceItemFragment extends Fragment implements PlaceItemContract.Vie
         placeDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Place place = null;
+
+                dataset.remove(0);
+                Spot place = null;
                 placeItemPresenter.deletePlace(place);
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            // adapterView : 아이템이 포함된 부모 뷰: 리스트뷰
+            // view : 클릭된 아이템
+            // i : 선택된 항목의 번호 ( position )
+            // l : 일반적으로 position과 같은 개념 ( id )
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                dataset.remove(i);
+                placeItemPresenter.deletePlace(i);
             }
         });
 
@@ -80,12 +95,17 @@ public class PlaceItemFragment extends Fragment implements PlaceItemContract.Vie
     }
 
     // 추천장소를 화면에 표시하는 메서드
-    public void showRecommendPlace(List<Place> placeList){
+    public void showRecommendPlace(List<Spot> placeList){
 
     }
 
     // 코스에 포함된 장소를 화면에서 삭제하는 메서드
-    public void erasePlace(Place place){
+    public void erasePlace(Spot place){
+
+    }
+
+    @Override
+    public void erasePlace(int i) {
 
     }
 }
