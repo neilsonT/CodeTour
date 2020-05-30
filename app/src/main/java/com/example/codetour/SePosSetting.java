@@ -23,6 +23,8 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
     TableLayout seEdit;
     TripSchedule tour;
 
+    String[] stAddr, edAddr;
+
     public void TEMP(){
         tour.areacode = 1;
         tour.contentTypeID = "12";
@@ -46,14 +48,8 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK){
             if(requestCode>0 && requestCode<=tour.difdays){
-                if(requestCode%2 == 1){
-                    ((TextView)findViewById(stPosID[(requestCode-1)/2])).setText(data.getStringExtra("title"));
-                    // TODO: address를 받아와서 어디에 저장할지? 나중에 넘겨줄땐 어떻게 넘겨줄지?
-                }
-                else{
-                    ((TextView)findViewById(edPosID[(requestCode-1)/2])).setText(data.getStringExtra("title"));
-                    // TODO: 위와 같음
-                }
+                ((TextView)findViewById((requestCode%2==1?stPosID:edPosID)[(requestCode-1)/2])).setText(data.getStringExtra("title"));
+                (requestCode%2==1?stAddr:edAddr)[(requestCode-1)/2] = data.getStringExtra("addr");
             }
         }
     }
@@ -70,9 +66,11 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
                 for(int i=0; i<tour.difdays; ++i){
                     tmp = (TextView)findViewById(stPosID[i]);
                     tour.startPoss.set(i, tmp.getText().toString());
+                    tour.startAddr.set(i, stAddr[i]);
 
                     tmp = (TextView)findViewById(edPosID[i]);
                     tour.endPoss.set(i, tmp.getText().toString());
+                    tour.endAddr.set(i, edAddr[i]);
                 }
 
                 TEMP();
@@ -97,6 +95,8 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
 
         stPosID = new int[tour.difdays];
         edPosID = new int[tour.difdays];
+        stAddr = new String[tour.difdays];
+        edAddr = new String[tour.difdays];
     }
 
     public void  MakeTable(){
