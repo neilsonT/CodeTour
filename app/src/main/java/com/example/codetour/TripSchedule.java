@@ -3,6 +3,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ public class TripSchedule implements Serializable{
     int[] endTime;
     List<String> startPoss;
     List<String> endPoss;
+    List<String> startAddr;
+    List<String> endAddr;
 
     public TripSchedule(){}
     public TripSchedule(String name,String startDate,String endDate){   //임시생성자입니다 SchduleListPresenter에서 사용합니다.
@@ -59,9 +62,13 @@ public class TripSchedule implements Serializable{
 //        courseList = new Course[difdays];
         this.startPoss = new ArrayList<String>();
         this.endPoss = new ArrayList<String>();
+        this.startAddr = new ArrayList<String>();
+        this.endAddr = new ArrayList<String>();
         for(int i=0; i<difdays; ++i){
             this.startPoss.add("");
             this.endPoss.add("");
+            this.startAddr.add("");
+            this.endAddr.add("");
         }
 //=======
         courseManager = new CourseManager(difdays, startTime, endTime);

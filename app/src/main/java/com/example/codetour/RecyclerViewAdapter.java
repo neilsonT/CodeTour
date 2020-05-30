@@ -33,11 +33,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     int pos = getAdapterPosition() ;
                     if (pos != RecyclerView.NO_POSITION) {
                         PosItem clicked = itemLists.get(pos);
+
+                        /*
                         //선택한 장소의 주소를 스트링 형태로 받아온 뒤, 스페이스바 기준으로 잘라서 맨 앞에 대분류 중분류 선택합니다.
                         String[] splited =clicked.getAddress().split(" ");
                         String add1=splited[0]; //도,시
                         String add2=splited[1]; //시군구
                         String[] result = {clicked.getTitle(),clicked.getAddress()};
+                        */
+
                         //SePosSetting화면으로 넘겨줘야 할듯!!
                         //intent보다는 http://zeany.net/54 이 링크에 나와있는 방법으로 하는게 나을 것 같은데 확인하고 알려줘줭
                         /*
@@ -48,7 +52,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         alertDialog.show();
                          */
                         Intent intent = new Intent();
-                        intent.putExtra("result", result);
+                        //intent.putExtra("result", result);
+                        intent.putExtra("title", clicked.getTitle());
+                        intent.putExtra("addr", clicked.getAddress());
                         if (v.getContext() instanceof Activity){
                             ((Activity)v.getContext()).setResult(Activity.RESULT_OK, intent);
                             ((Activity)v.getContext()).finish();
