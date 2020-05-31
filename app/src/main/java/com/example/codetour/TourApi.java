@@ -92,7 +92,11 @@ public class TourApi {
 
         GetDataAsyncTask myAsyncTask = new GetDataAsyncTask();
         try {
-            return (myAsyncTask.execute().get());
+            List<Spot> a=myAsyncTask.execute().get();
+            for(int i=0;i<a.size();i++)
+                System.out.println(a.get(i).getTitle());
+            return a;
+            //return (myAsyncTask.execute().get());
         } catch (Exception e) {
             System.out.println(e);
             return null;
@@ -137,7 +141,7 @@ public class TourApi {
                 + "&cat1=" + cat1
                 + "&cat2=" + cat2
                 + "&pageNo=" + num
-                + "&numOfRows=5"
+                + "&numOfRows=50"
                 + "&MobileOS=AND&MobileApp=TestParsing&_type=json";
         return urlstr;
     }
@@ -218,7 +222,7 @@ public class TourApi {
             URL url = null;
 
             try {
-                for (int num = 1; num <= 3; num++) {  //한번에 5개 장소 가져옵니다. page=3
+                for (int num = 1; num <= 1; num++) {  //한번에 5개 장소 가져옵니다. page=3
                     urlstr = getUrl(num);
 
                     url = new URL(urlstr);
