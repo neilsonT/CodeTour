@@ -1,6 +1,7 @@
 package com.example.codetour.clustering;
 
 import com.example.codetour.Spot;
+import com.example.codetour.TourApiManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,13 +9,6 @@ import java.util.List;
 public class KMeans {
     //Number of Clusters. This metric should be related to the number of points
     private int NUM_CLUSTERS = 3;   //cluster의 개수
-    //Number of Points
-    private int NUM_POINTS = 15;
-    //Min and Max X and Y
-    private static final int MIN_COORDINATE = 0;
-    private static final int MAX_COORDINATE = 10;
-
-
 
     private List<Point> points;
     private List<Cluster> clusters;
@@ -33,18 +27,32 @@ public class KMeans {
 
     //Initializes the process
     public void init() {
-        //유저에게 맞는 포인트 받아옵니다.
-        points = Point.createRandomPoints(MIN_COORDINATE, MAX_COORDINATE, NUM_POINTS);
+
+        getPointData();
+
+        if(points.size()<NUM_CLUSTERS){
+            System.out.println("충분한 point가 존재하지 않습니다.");
+        }
 
         //Create Clusters
         //Set Random Centroids
         for (int i = 0; i<NUM_CLUSTERS ;i++){
             Cluster cluster = new Cluster(i);
-            Point centroid = Point.createRandomPoint(MIN_COORDINATE, MAX_COORDINATE);
+            Point centroid = new Point(points.get(i).getX(),points.get(i).getY());
             cluster.setCentroid(centroid);
             clusters.add(cluster);
         }
         plotClusters();
+    }
+
+    public void getPointData(){
+        List<Point> tmp_list=new ArrayList<Point>();
+        /*for 가져온 소분류,중분류리스트 갯수 만큼반복시켜주세요 {*/
+        tmp_list=TourApiManager.getInstance().getPoint(1,0,"A02","A0202");
+        if(tmp_list!=null)
+            points.addAll(tmp_list);
+
+        //}
     }
 
     private void plotClusters() {   //Print
@@ -86,7 +94,7 @@ public class KMeans {
             System.out.println("Centroid distances: " + distance);
             plotClusters();
 
-            if (distance <1) { //값은 해보면서 정해봅시다.
+            if (distance ==0) {
                 finish = true;
             }
         }

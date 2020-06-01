@@ -8,7 +8,11 @@ public class Point {
 
     private double x = 0;
     private double y = 0;
+    private String contentid="";
     private int cluster_number = 0;
+
+
+    public Point(){}
 
     public Point(double x, double y)
     {
@@ -16,21 +20,30 @@ public class Point {
         this.setY(y);
     }
 
-    public void setX(double x) {
-        this.x = x;
+    public void setX(Object x) {
+        if(x instanceof String)
+            this.x=Double.parseDouble((String)x);
+        else
+            this.x=Double.parseDouble(x.toString());
     }
 
     public double getX()  {
         return this.x;
     }
 
-    public void setY(double y) {
-        this.y = y;
+    public void setY(Object y) {
+        if(y instanceof String)
+            this.y=Double.parseDouble((String)y);
+        else
+            this.y=Double.parseDouble(y.toString());
     }
-
     public double getY() {
         return this.y;
     }
+
+    public void setContentid(Object contentid){ this.contentid=contentid.toString();}
+
+    public String getContentid(){return this.contentid;}
 
     public void setCluster(int n) {
         this.cluster_number = n;
@@ -46,20 +59,6 @@ public class Point {
     }
 
     //Creates random point
-    protected static Point createRandomPoint(int min, int max) {
-        Random r = new Random();
-        double x = min + (max - min) * r.nextDouble();
-        double y = min + (max - min) * r.nextDouble();
-        return new Point(x,y);
-    }
-
-    protected static List createRandomPoints(int min, int max, int number) {
-        List points = new ArrayList(number);
-        for(int i = 0; i<number; i++) {
-            points.add(createRandomPoint(min,max));
-        }
-        return points;
-    }
 
     public String toString() {
         return "("+x+","+y+")";

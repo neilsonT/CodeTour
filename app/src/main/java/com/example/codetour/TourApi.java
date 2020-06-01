@@ -2,6 +2,8 @@ package com.example.codetour;
 
 import android.os.AsyncTask;
 
+import com.example.codetour.clustering.Point;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -12,6 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class TourApi {
 
@@ -102,6 +105,118 @@ public class TourApi {
             return null;
         }
     }
+    //클러스터링 완료 후 getData 모두 삭제 예정
+
+
+    public List<Point> getPoint(int areaCode,int sigunguCode, String cat1,String cat2){
+
+        this.areaCode=Integer.toString(areaCode);
+        this.sigunguCode=Integer.toString(sigunguCode);
+        this.cat1=cat1;
+        this.cat2=cat2;
+
+        List<Point> point_list = new ArrayList<>();
+        GetPointAsyncTask myAsyncTask = new GetPointAsyncTask();
+        try {
+            point_list=myAsyncTask.execute(this.areaCode,this.sigunguCode,cat1,cat2).get();//전역변수 삭제할까요
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return point_list;
+    }
+    public class GetPointAsyncTask extends AsyncTask<String, Void, List<Point>> {
+        @Override
+        protected List<Point> doInBackground(String... strings) {    //url 연결, Json Data 받아온 후 파싱.
+            List<Point> point_list = new ArrayList<>();
+            String urlstr, str, receiveMsg;
+            URL url = null;
+            try {
+                int total_num = 0;
+                int page_num = 50;
+                int num = 1;
+                System.out.println(strings[0]+strings[1]+strings[2]+strings[3]);
+                do {
+                    if(strings[1].equals("0")) {
+                        urlstr = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
+                                + "ServiceKey=" + ServiceKey
+                                + "&areaCode=" + strings[0]
+                                + "&cat1=" + strings[2]
+                                + "&cat2=" + strings[3]
+                                + "&pageNo=" + num
+                                + "&numOfRows=" + page_num
+                                + "&MobileOS=AND&MobileApp=TestParsing&_type=json";
+                    }
+                    else {
+                        urlstr = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
+                                + "ServiceKey=" + ServiceKey
+                                + "&areaCode=" + strings[0]
+                                + "&sigunguCode=" + strings[1]
+                                + "&cat1=" + strings[2]
+                                + "&cat2=" + strings[3]
+                                + "&pageNo=" + num
+                                + "&numOfRows=" + page_num
+                                + "&MobileOS=AND&MobileApp=TestParsing&_type=json";
+                    }
+                    url = new URL(urlstr);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    if (conn.getResponseCode() == conn.HTTP_OK) {
+                        InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                        BufferedReader reader = new BufferedReader(tmp);
+                        StringBuffer buffer = new StringBuffer();
+                        while ((str = reader.readLine()) != null) {
+                            buffer.append(str);
+                        }
+                        receiveMsg = buffer.toString();
+                        reader.close();
+
+                        System.out.println(receiveMsg);
+
+                        JSONParser jsonParser = new JSONParser();
+                        JSONObject jsonObjtmp = (JSONObject) jsonParser.parse(receiveMsg);
+                        JSONObject parse_response = (JSONObject) jsonObjtmp.get("response");
+                        JSONObject parse_body = (JSONObject) parse_response.get("body");
+
+                        if(total_num==0) {
+                            total_num = Integer.parseInt(parse_body.get("totalCount").toString());
+                        }
+                        if(total_num==0){
+                            System.out.println("표시할 데이터가 존재하지 않습니다.");
+                            return null;
+                        }
+                        if (parse_body.get("items").equals("")) { //정보 없을경우
+                            return point_list;
+                        }
+
+                        JSONObject parse_items = (JSONObject) parse_body.get("items");
+                        JSONArray jarray = (JSONArray) parse_items.get("item");
+                        for (int i = 0; i < jarray.size(); i++) {
+                            JSONObject jObject = (JSONObject) jarray.get(i);
+                            Point point=new Point();
+                            if (jObject.containsKey("mapx") && jObject.containsKey("mapy")) {
+                                point.setX(jObject.get("mapx"));
+                                point.setY(jObject.get("mapy"));
+                                point.setContentid(jObject.get("contentid"));
+                                point_list.add(point);
+                            }
+                            else
+                                continue;
+                        }
+                        num++;
+                    } else {System.out.println("error");}
+                } while ((total_num/page_num)+1>= num) ;
+            }
+            catch (Exception e){
+                System.out.println(e);
+            }
+            return point_list;
+        }
+    }
+
+
+
+
+
     public List<Spot> getRestaurant(Spot spot,String classifi){ //음식점을 받아옵니다.
         GetRestaurantAsyncTask asynctask = new GetRestaurantAsyncTask();
         cat2=classifi;
