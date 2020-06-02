@@ -1,13 +1,9 @@
 package com.example.codetour;
 
-import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -24,20 +20,10 @@ public class ScheduleList extends AppCompatActivity implements ScheduleListContr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_list);
-
-        //Text에 Bold효과 주기위한 코드입니다.
-        TextView textView = (TextView)findViewById(R.id.schedulelist_toptext);
-        textView.setPaintFlags(textView.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
-
-
         scheduleListPresenter = new ScheduleListPresenter(this);
+
         scheduleListPresenter.getScheduleList();
 
-    }
-
-    public void backMainActivity(View view){    //홈으로 돌아가는 버튼 onClick
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivityForResult(intent,0);
     }
 
     @Override
@@ -54,6 +40,9 @@ public class ScheduleList extends AppCompatActivity implements ScheduleListContr
                    scheduleListPresenter.getSchdule(position);
                 }
             });
+        }
+        else {
+
         }
     }
 
