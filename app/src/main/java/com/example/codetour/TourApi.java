@@ -245,12 +245,12 @@ public class TourApi {
                     urlstr = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?"
                             + "ServiceKey=" + ServiceKey
                             + "&contentId=" + point.getContentid()
-                            + "defaultYN=Y"
-                            + "firstImageYN=Y"
-                            + "addrinfoYN=Y"
-                            + "overviewYN=Y"
+                            + "&defaultYN=Y"
+                            + "&firstImageYN=Y"
+                            + "&addrinfoYN=Y"
+                            + "&overviewYN=Y"
                             + "&MobileOS=AND&MobileApp=TestParsing&_type=json";
-
+                    System.out.println(point.getContentid());
                     url = new URL(urlstr);
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     if (conn.getResponseCode() == conn.HTTP_OK) {
@@ -270,10 +270,12 @@ public class TourApi {
                         JSONObject parse_response = (JSONObject) jsonObjtmp.get("response");
                         JSONObject parse_body = (JSONObject) parse_response.get("body");
                         JSONObject parse_items = (JSONObject) parse_body.get("items");
-                        JSONArray jarray = (JSONArray) parse_items.get("item");
+                        if (parse_body.get("items").equals("")) { //정보 없을경우
+                            System.out.println("표시할 정보가 존재하지 않습니다.");
+                            return null;
+                        }
+                        JSONObject jObject =(JSONObject) parse_items.get("item");
 
-                        for (int i = 0; i < jarray.size(); i++) {
-                            JSONObject jObject = (JSONObject) jarray.get(i);
                             Spot spot=new Spot();
 
                             spot.setPos(point.getX(),point.getY());
@@ -307,7 +309,6 @@ public class TourApi {
                             else{}
 
                             spot_list.add(spot);
-                        }
                     } else {
                         System.out.println("error");
                     }

@@ -77,11 +77,13 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
                 //TODO: 현재 TEMP() 함수를 이용하여 areacode와 contentTypeID를 강제로 넘겨 주고 있으므로, 받아온 값을 넘겨주도록 
 
                 Recommend rec = new Recommend();
+                tour.areacode = 1;
+                tour.sigungucode = 0;
                 rec.setTripSchedule(tour);
-                rec.setRecommendSpotList();
+                //rec.setRecommendSpotList();
                 //rec.RecWithClustering();
                 rec.recommendCourse();
-                rec.makeCourses();
+                //rec.makeCourses();
                 Intent intent = new Intent(getApplicationContext(), RouteCheck.class);
                 intent.putExtra("rec", rec);
                 startActivity(intent);

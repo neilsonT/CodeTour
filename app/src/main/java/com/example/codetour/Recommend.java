@@ -32,7 +32,7 @@ public class Recommend implements Serializable {
 
         clusters=sortPointReadCount(clusters); //조회순을 기준으로 오름차순으로 정렬된 클러스터
 
-
+        int j=0;
         for(Cluster cluster : clusters){
             List<Point> points= new ArrayList<>();
 
@@ -42,7 +42,8 @@ public class Recommend implements Serializable {
                 //거리순으로 정렬합니다.
             }
             recommendSpotList=TourApiManager.getInstance().getSpot(points);
-
+            tripSchedule.courseManager.courseList.get(j).spotManager.spotList=recommendSpotList;
+            j++;
         }
 
     }
@@ -63,63 +64,75 @@ public class Recommend implements Serializable {
         for(int i=0; i<recommendSpotList.size(); ++i) System.out.println(recommendSpotList.get(i).title);
     }
 
-
     public List<Cluster> RecWithClustering(){
         List<String> list_cat1 = new ArrayList<String>();//대분류 코드
         List<String> list_cat2 = new ArrayList<String>(); //중분류 코드
         List<String> list_food = new ArrayList<String>(); //음식점 코드
         for (int i=0;i<tripSchedule.theme_selection.size();i++){
-            if (tripSchedule.theme_selection.get(i) == 1) {
-                switch (i) {
-                    case 0:
-                        list_cat1.add("A01");
-                        list_cat2.add("A0101");
-                    case 1:
-                        list_cat1.add("A01");
-                        list_cat2.add("A0102");
-                    case 2:
-                        list_cat1.add("A02");
-                        list_cat2.add("A0201");
-                    case 3:
-                        list_cat1.add("A02");
-                        list_cat2.add("A0202");
-                    case 4:
-                        list_cat1.add("A02");
-                        list_cat2.add("A0203");
-                    case 5:
-                        list_cat1.add("A02");
-                        list_cat2.add("A0204");
-                    case 6:
-                        list_cat1.add("A02");
-                        list_cat2.add("A0205");
-                    case 7:
-                        list_cat1.add("A02");
-                        list_cat2.add("A0206");
-                    case 8:
-                        list_cat1.add("A02");
-                        list_cat2.add("A0207");
-                    case 9:
-                        list_cat1.add("A02");
-                        list_cat2.add("A0208");
-                    default:
-                }
+            switch (tripSchedule.theme_selection.get(i)) {
+                case 1:
+                    list_cat1.add("A01");
+                    list_cat2.add("A0101");
+                    break;
+                case 2:
+                    list_cat1.add("A01");
+                    list_cat2.add("A0102");
+                    break;
+                case 3:
+                    list_cat1.add("A02");
+                    list_cat2.add("A0201");
+                    break;
+                case 4:
+                    list_cat1.add("A02");
+                    list_cat2.add("A0202");
+                    break;
+                case 5:
+                    list_cat1.add("A02");
+                    list_cat2.add("A0203");
+                    break;
+                case 6:
+                    list_cat1.add("A02");
+                    list_cat2.add("A0204");
+                    break;
+                case 7:
+                    list_cat1.add("A02");
+                    list_cat2.add("A0205");
+                    break;
+                case 8:
+                    list_cat1.add("A02");
+                    list_cat2.add("A0206");
+                    break;
+                case 9:
+                    list_cat1.add("A02");
+                    list_cat2.add("A0207");
+                    break;
+                case 10:
+                    list_cat1.add("A02");
+                    list_cat2.add("A0208");
+                    break;
+                default:
+                    break;
             }
         }
         for (int i=0;i<tripSchedule.food_selection.size();i++){
-            if (tripSchedule.food_selection.get(i) == 1){
-                switch (i){
-                    case 0:
-                        list_food.add("A05020100");
-                    case 1:
-                        list_food.add("A05020200");
-                    case 2:
-                        list_food.add("A05020300");
-                    case 3:
-                        list_food.add("A05020400");
-                    case 4:
-                        list_food.add("A05020500");
-                    default:
-                }
+            switch (tripSchedule.food_selection.get(i)) {
+                case 0:
+                    list_food.add("A05020100");
+                    break;
+                case 1:
+                    list_food.add("A05020200");
+                    break;
+                case 2:
+                    list_food.add("A05020300");
+                    break;
+                case 3:
+                    list_food.add("A05020400");
+                    break;
+                case 4:
+                    list_food.add("A05020500");
+                    break;
+                default:
+                    break;
             }
         }
         kMeans= new KMeans();
