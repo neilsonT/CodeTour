@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class TourApi {
@@ -18,6 +19,30 @@ public class TourApi {
     private String ServiceKey="7MuLFocxJtu7I1bf8JWQrKsLl%2FAEwkKk1U0nGGDRHkCSX1%2Bxp7mB38%2FRIjMwrB%2F6x8rRBQ3Le2dUuVFHBhBbtQ%3D%3D";
     String contentTypeId, cat1, cat2, areaCode, sigunguCode;//startDate,endDate;
 
+    private final HashMap<String, Integer> areaCodeMap = new HashMap<String, Integer>(){
+        {
+            put("서울", 1);
+            put("인천", 2);
+            put("대전", 3);
+            put("대구", 4);
+            put("광주", 5);
+            put("부산", 6);
+            put("울산", 7);
+            put("세종특별자치시", 8);
+
+            put("경기도", 31);
+            put("강원도", 32);
+            put("충청북도", 33);
+            put("충청남도", 34);
+            put("경상북도", 35);
+            put("경상남도", 36);
+            put("전라북도", 37);
+            put("전라남도", 38);
+            put("제주도", 39);
+        }
+    };
+
+    private HashMap<String, Integer>[] sigunguCodeMap;
 
     public TourApi() {
        //ServiceKey = "7MuLFocxJtu7I1bf8JWQrKsLl%2FAEwkKk1U0nGGDRHkCSX1%2Bxp7mB38%2FRIjMwrB%2F6x8rRBQ3Le2dUuVFHBhBbtQ%3D%3D";
