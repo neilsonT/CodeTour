@@ -36,7 +36,12 @@ public class Recommend implements Serializable {
         for(Cluster cluster : clusters){
             List<Point> points= new ArrayList<>();
 
-            for(int i=0;i<5;i++) {//활동시간 계산하여 몇개 받아올지 계산해야합니다(i)값으로 주세요!
+            int count ;
+            if (cluster.points.size() <5)
+                count=cluster.points.size();
+            else
+                count=5;
+            for(int i=0;i<count;i++) {//활동시간 계산하여 몇개 받아올지 계산해야합니다(i)값으로 주세요!
                 points.add(cluster.points.get(i));
                 //points=sortPointDistance(points);
                 //거리순으로 정렬합니다.

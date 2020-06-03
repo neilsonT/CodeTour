@@ -1,9 +1,10 @@
 package com.example.codetour.clustering;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Cluster {
+public class Cluster implements Serializable {
     public List<Point> points;
     public Point centroid;
     public int id;

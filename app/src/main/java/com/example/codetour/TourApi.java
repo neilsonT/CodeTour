@@ -137,7 +137,7 @@ public class TourApi {
                 int total_num = 0;
                 int page_num = 50;
                 int num = 1;
-                System.out.println(strings[0]+strings[1]+strings[2]+strings[3]);
+                //System.out.println(strings[0]+strings[1]+strings[2]+strings[3]);
                 do {
                     if(strings[1].equals("0")) {
                         urlstr = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
@@ -172,7 +172,7 @@ public class TourApi {
                         receiveMsg = buffer.toString();
                         reader.close();
 
-                        System.out.println(receiveMsg);
+                        //System.out.println(receiveMsg);
 
                         JSONParser jsonParser = new JSONParser();
                         JSONObject jsonObjtmp = (JSONObject) jsonParser.parse(receiveMsg);
@@ -263,7 +263,7 @@ public class TourApi {
                         receiveMsg = buffer.toString();
                         reader.close();
 
-                        System.out.println(receiveMsg);
+                        //System.out.println(receiveMsg);
 
                         JSONParser jsonParser = new JSONParser();
                         JSONObject jsonObjtmp = (JSONObject) jsonParser.parse(receiveMsg);
