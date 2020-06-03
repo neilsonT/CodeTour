@@ -36,6 +36,7 @@ public class SpotManager implements Serializable {
         return ret;
     }
 
+    public void setSpotList(List<Spot> spotList){this.spotList=spotList;}
     public List<Spot> getSpotList() {
         return spotList;
     }

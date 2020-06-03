@@ -3,10 +3,11 @@ package com.example.codetour.clustering;
 import com.example.codetour.Spot;
 import com.example.codetour.TourApiManager;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KMeans {
+public class KMeans implements Serializable {
     //Number of Clusters. This metric should be related to the number of points
     private int NUM_CLUSTERS;   //cluster의 개수 k
     //k가 여행 날짜를 기준으로 정해저야 한다
@@ -20,11 +21,12 @@ public class KMeans {
 
     //Initializes the process
     public void init(int areaCode, int sigunguCode, List<String> list_cat1, List<String> list_cat2, List<String> list_food,int difdays) {
-        NUM_CLUSTERS = difdays+1;
+        NUM_CLUSTERS = difdays;
         for (int i=0;i<list_cat1.size();i++){
             getPointData(areaCode,sigunguCode,list_cat1.get(i),list_cat2.get(i));
         }
         if(points.size()<NUM_CLUSTERS){
+            System.out.println("size : "+points.size());
             System.out.println("충분한 point가 존재하지 않습니다.");
         }
 
@@ -32,27 +34,29 @@ public class KMeans {
         //Set Random Centroids
         for (int i = 0; i<NUM_CLUSTERS ;i++){
             Cluster cluster = new Cluster(i);
-            Point centroid = new Point(points.get(i).getX(),points.get(i).getY());
+            Point centroid = new Point(points.get(i).getX(),points.get(i).getY()); //여기서 오류남
             cluster.setCentroid(centroid);
             clusters.add(cluster);
         }
-        plotClusters();
+        //plotClusters();
     }
 
     public void getPointData(int areaCode, int sigunguCode, String cat1, String cat2){
         List<Point> tmp_list=new ArrayList<Point>();
-        tmp_list=TourApiManager.getInstance().getPoint(areaCode,sigunguCode,cat1,cat2);
+        //System.out.println("areaCode, sigungoCode, cat1, cat2 : "+areaCode+" ,"+sigunguCode+" ,"+cat1+" ,"+cat2);
+    tmp_list=TourApiManager.getInstance().getPoint(areaCode,sigunguCode,cat1,cat2);
         if(tmp_list!=null)
             points.addAll(tmp_list);
+        //System.out.println("tmp_list 출력 시작");
+        //for(int i=0; i<tmp_list.size(); ++i) System.out.println(tmp_list.get(i).getContentid());
+}
 
-    }
-
-    private void plotClusters() {   //Print
+    /*private void plotClusters() {   //Print
         for (int i = 0; i<NUM_CLUSTERS ;i++){
             Cluster c = clusters.get(i);
             c.plotCluster();
         }
-    }
+    }*/
 
     //The process to calculate the K Means, with iterating method.
     public List<Cluster> calculate() {
@@ -81,10 +85,10 @@ public class KMeans {
             for (int i = 0; i<lastCentroids.size(); i++){
                 distance += Point.distance(lastCentroids.get(i), currentCentroids.get(i));
             }
-            System.out.println("#################");
-            System.out.println("Iteration: " + iteration);
-            System.out.println("Centroid distances: " + distance);
-            plotClusters();
+            //System.out.println("#################");
+            //System.out.println("Iteration: " + iteration);
+            //System.out.println("Centroid distances: " + distance);
+            //plotClusters();
 
             if (distance ==0) {
                 finish = true;

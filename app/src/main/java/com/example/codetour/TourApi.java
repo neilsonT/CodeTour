@@ -108,7 +108,7 @@ public class TourApi {
     //클러스터링 완료 후 getData 모두 삭제 예정
 
 
-    public List<Point> getPoint(int areaCode,int sigunguCode, String cat1,String cat2){
+    public List<Point> getPoint(int areaCode,int sigunguCode, String cat1, String cat2){
 
         this.areaCode=Integer.toString(areaCode);
         this.sigunguCode=Integer.toString(sigunguCode);
@@ -126,6 +126,7 @@ public class TourApi {
 
         return point_list;
     }
+
     public class GetPointAsyncTask extends AsyncTask<String, Void, List<Point>> {
         @Override
         protected List<Point> doInBackground(String... strings) {    //url 연결, Json Data 받아온 후 파싱.
@@ -136,7 +137,7 @@ public class TourApi {
                 int total_num = 0;
                 int page_num = 50;
                 int num = 1;
-                System.out.println(strings[0]+strings[1]+strings[2]+strings[3]);
+                //System.out.println(strings[0]+strings[1]+strings[2]+strings[3]);
                 do {
                     if(strings[1].equals("0")) {
                         urlstr = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?"
@@ -171,7 +172,7 @@ public class TourApi {
                         receiveMsg = buffer.toString();
                         reader.close();
 
-                        System.out.println(receiveMsg);
+                        //System.out.println(receiveMsg);
 
                         JSONParser jsonParser = new JSONParser();
                         JSONObject jsonObjtmp = (JSONObject) jsonParser.parse(receiveMsg);
@@ -198,6 +199,7 @@ public class TourApi {
                                 point.setX(jObject.get("mapx"));
                                 point.setY(jObject.get("mapy"));
                                 point.setContentid(jObject.get("contentid"));
+                                point.setReadcount(jObject.get("readcount"));
                                 point_list.add(point);
                             }
                             else
@@ -214,7 +216,109 @@ public class TourApi {
         }
     }
 
+    public List<Spot> getSpot(List<Point> points) { //정령&추천된 spot들의 List를 받아옵니다.
 
+        List<Spot> spot_list=new ArrayList<>();
+        GetSpotAsyncTask myAsyncTask = new GetSpotAsyncTask();
+
+        try {
+            spot_list=myAsyncTask.execute(points).get();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return spot_list;
+
+    }
+
+    public class GetSpotAsyncTask extends AsyncTask<List<Point>, Void, List<Spot>>{
+        @Override
+        protected List<Spot> doInBackground(List<Point> ... points) {    //url 연결, Json Data 받아온 후 파싱.
+            List<Point> point_list = points[0];
+            List<Spot> spot_list = new ArrayList<>();
+            String urlstr, str, receiveMsg;
+            URL url = null;
+
+            for (int num = 0; num < point_list.size(); num++) {
+                try {
+                    Point point= point_list.get(num);
+                    urlstr = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?"
+                            + "ServiceKey=" + ServiceKey
+                            + "&contentId=" + point.getContentid()
+                            + "&defaultYN=Y"
+                            + "&firstImageYN=Y"
+                            + "&addrinfoYN=Y"
+                            + "&overviewYN=Y"
+                            + "&MobileOS=AND&MobileApp=TestParsing&_type=json";
+                    System.out.println(point.getContentid());
+                    url = new URL(urlstr);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    if (conn.getResponseCode() == conn.HTTP_OK) {
+                        InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                        BufferedReader reader = new BufferedReader(tmp);
+                        StringBuffer buffer = new StringBuffer();
+                        while ((str = reader.readLine()) != null) {
+                            buffer.append(str);
+                        }
+                        receiveMsg = buffer.toString();
+                        reader.close();
+
+                        //System.out.println(receiveMsg);
+
+                        JSONParser jsonParser = new JSONParser();
+                        JSONObject jsonObjtmp = (JSONObject) jsonParser.parse(receiveMsg);
+                        JSONObject parse_response = (JSONObject) jsonObjtmp.get("response");
+                        JSONObject parse_body = (JSONObject) parse_response.get("body");
+                        JSONObject parse_items = (JSONObject) parse_body.get("items");
+                        if (parse_body.get("items").equals("")) { //정보 없을경우
+                            System.out.println("표시할 정보가 존재하지 않습니다.");
+                            return null;
+                        }
+                        JSONObject jObject =(JSONObject) parse_items.get("item");
+
+                            Spot spot=new Spot();
+
+                            spot.setPos(point.getX(),point.getY());
+                            spot.setContentid(point.getContentid());
+                            spot.setTitle(jObject.get("title"));
+
+                            if(jObject.containsKey("tel")){
+                                spot.setTel(jObject.get("tel"));
+                            }
+                            else{
+                                spot.setTel("전화번호가 존재하지 않습니다.");
+                            }
+
+                            if(jObject.containsKey("addr1")){
+                                spot.setAddr1(jObject.get("addr1"));
+                            }
+                            else{
+                                spot.setAddr1("주소가 존재하지 않습니다.");
+                            }
+
+                            if(jObject.containsKey("overview")){
+                                spot.setExplain(jObject.get("overview"));
+                            }
+                            else{
+                                spot.setExplain("상세설명이 존재하지 않습니다.");
+                            }
+
+                            if(jObject.containsKey("firstimage")){
+
+                            }
+                            else{}
+
+                            spot_list.add(spot);
+                    } else {
+                        System.out.println("error");
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+            return spot_list;
+        }
+    }
 
 
 

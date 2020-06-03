@@ -1,13 +1,12 @@
 package com.example.codetour.clustering;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.io.Serializable;
 
-public class Point {
+public class Point implements Serializable {
 
     private double x = 0;
     private double y = 0;
+    private int readcount=0;
     private String contentid="";
     private int cluster_number = 0;
     private int num;
@@ -40,10 +39,13 @@ public class Point {
     public double getY() {
         return this.y;
     }
-
     public void setContentid(Object contentid){ this.contentid=contentid.toString();}
 
     public String getContentid(){return this.contentid;}
+
+    public void setReadcount(Object readcount){ this.readcount=Integer.parseInt(readcount.toString());}
+
+    public int getReadcount(){return this.readcount;}
 
     public void setCluster(int n) {
         this.cluster_number = n;
@@ -60,7 +62,7 @@ public class Point {
 
     //Creates random point
 
-    public String toString() {
-        return "("+x+","+y+")";
-    }
+    //public String toString() {
+    //    return "("+x+","+y+")";
+    //}
 }
