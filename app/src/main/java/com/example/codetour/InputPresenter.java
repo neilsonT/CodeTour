@@ -1,9 +1,6 @@
 package com.example.codetour;
 
 
-import android.content.Context;
-import android.content.Intent;
-
 import java.util.List;
 
 public class InputPresenter implements InputContract.Presenter{
@@ -23,7 +20,7 @@ public class InputPresenter implements InputContract.Presenter{
     }
     @Override
     public void makeTripSchedule(String name, String startDate, String endDate, int pNum,
-                                 int tourBudget, int accBudget, int[] startTime, int[] endTime, List<String> food_selection, List<String> theme_selection){
+                                 int tourBudget, int accBudget, int[] startTime, int[] endTime, List<Integer> food_selection, List<Integer> theme_selection){
         this.tour = new TripSchedule("null",startDate,endDate,pNum,tourBudget,accBudget,startTime,endTime,food_selection,theme_selection);
 
     }

@@ -8,28 +8,22 @@ import java.util.List;
 
 public class KMeans {
     //Number of Clusters. This metric should be related to the number of points
-    private int NUM_CLUSTERS = 3;   //cluster의 개수
+    private int NUM_CLUSTERS;   //cluster의 개수 k
+    //k가 여행 날짜를 기준으로 정해저야 한다
 
     private List<Point> points;
     private List<Cluster> clusters;
-
     public KMeans() {
         this.points = new ArrayList();
         this.clusters = new ArrayList();
     }
 
-    public static void main() {
-
-        KMeans kmeans = new KMeans();
-        kmeans.init();
-        kmeans.calculate();
-    }
-
     //Initializes the process
-    public void init() {
-
-        getPointData();
-
+    public void init(int areaCode, int sigunguCode, List<String> list_cat1, List<String> list_cat2, List<String> list_food,int difdays) {
+        NUM_CLUSTERS = difdays+1;
+        for (int i=0;i<list_cat1.size();i++){
+            getPointData(areaCode,sigunguCode,list_cat1.get(i),list_cat2.get(i));
+        }
         if(points.size()<NUM_CLUSTERS){
             System.out.println("충분한 point가 존재하지 않습니다.");
         }
@@ -45,14 +39,12 @@ public class KMeans {
         plotClusters();
     }
 
-    public void getPointData(){
+    public void getPointData(int areaCode, int sigunguCode, String cat1, String cat2){
         List<Point> tmp_list=new ArrayList<Point>();
-        /*for 가져온 소분류,중분류리스트 갯수 만큼반복시켜주세요 {*/
-        tmp_list=TourApiManager.getInstance().getPoint(1,0,"A02","A0202");
+        tmp_list=TourApiManager.getInstance().getPoint(areaCode,sigunguCode,cat1,cat2);
         if(tmp_list!=null)
             points.addAll(tmp_list);
 
-        //}
     }
 
     private void plotClusters() {   //Print
@@ -63,7 +55,7 @@ public class KMeans {
     }
 
     //The process to calculate the K Means, with iterating method.
-    public void calculate() {
+    public List<Cluster> calculate() {
         boolean finish = false;
         int iteration = 0;
 
@@ -98,6 +90,7 @@ public class KMeans {
                 finish = true;
             }
         }
+        return clusters;
     }
 
     private void clearClusters() {

@@ -15,8 +15,8 @@ public class TripScheduleManager {
         public void addSchedule(TripSchedule tripSchedule){
             tripScheduleList.add(tripSchedule);
         }
-    public void deleteSchedule(){}
-    public void loadSchedule(){}
+        public void deleteSchedule(){}
+        public void loadSchedule(){}
 
     //생성자는 load를 위해, toJSONObj는 save를 위해 사용.
     public TripScheduleManager(JSONObject obj){

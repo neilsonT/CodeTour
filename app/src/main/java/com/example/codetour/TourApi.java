@@ -112,12 +112,13 @@ public class TourApi {
 
         this.areaCode=Integer.toString(areaCode);
         this.sigunguCode=Integer.toString(sigunguCode);
-        this.cat1=cat1;
-        this.cat2=cat2;
+        this.cat1=cat1; //대분류
+        this.cat2=cat2; //중분류
 
         List<Point> point_list = new ArrayList<>();
         GetPointAsyncTask myAsyncTask = new GetPointAsyncTask();
         try {
+            //////////////////////////////////////////////////////////
             point_list=myAsyncTask.execute(this.areaCode,this.sigunguCode,cat1,cat2).get();//전역변수 삭제할까요
         } catch (Exception e) {
             System.out.println(e);
