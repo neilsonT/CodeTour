@@ -46,6 +46,85 @@ public class TourApi {
 
     public TourApi() {
        //ServiceKey = "7MuLFocxJtu7I1bf8JWQrKsLl%2FAEwkKk1U0nGGDRHkCSX1%2Bxp7mB38%2FRIjMwrB%2F6x8rRBQ3Le2dUuVFHBhBbtQ%3D%3D";
+
+        sigunguCodeMap[0] = new HashMap<String, Integer>() {{
+            // 경기도
+            put("가평군",  1);    put("고양시",  2);    put("과천시",  3);    put("광명시",  4);
+            put("광주시",  5);    put("구리시",  6);    put("군포시",  7);    put("김포시",  8);
+            put("남양주시",  9);  put("동두천시", 10);   put("부천시", 11);    put("성남시", 12);
+            put("수원시", 13);    put("시흥시", 14);    put("안산시", 15);    put("안성시", 16);
+            put("안양시", 17);    put("양주시", 18);    put("양평군", 19);    put("여주시", 20);
+            put("연천군", 21);    put("오산시", 22);    put("용인시", 23);    put("의왕시", 24);
+            put("의정부시", 25);  put("이천시", 26);    put("파주시", 27);    put("평택시", 28);
+            put("포천시", 29);    put("하남시", 30);    put("화성시", 31);
+        }};
+
+        sigunguCodeMap[1] = new HashMap<String, Integer>() {{
+            // 강원도
+            put("강릉시",  1);    put("고성군",  2);    put("동해시",  3);    put("삼척시",  4);
+            put("속초시",  5);    put("양구군",  6);    put("양양군",  7);    put("영월군",  8);
+            put("원주시",  9);    put("인제군", 10);    put("정선군", 11);    put("철원군", 12);
+            put("춘천시", 13);    put("태백시", 14);    put("평창군", 15);    put("홍천군", 16);
+            put("화천군", 17);    put("횡성군", 18);
+        }};
+
+        sigunguCodeMap[2] = new HashMap<String, Integer>() {{
+            // 충청북도
+            put("괴산군",  1);    put("단양군",  2);    put("보은군",  3);    put("영동군",  4);
+            put("옥천군",  5);    put("음성군",  6);    put("제천시",  7);    put("진천군",  8);
+            put("청원군",  9);    put("청주시", 10);    put("충주시", 11);    put("증평군", 12);
+        }};
+
+        sigunguCodeMap[3] = new HashMap<String, Integer>() {{
+            // 충청남도
+            put("공주시",  1);    put("금산군",  2);    put("논산시",  3);    put("당진시",  4);
+            put("보령시",  5);    put("부여군",  6);    put("서산시",  7);    put("서천군",  8);
+            put("아산시",  9);  /*put("없음 ", 10);*/  put("예산군", 11);    put("천안시", 12);
+            put("청양군", 13);    put("태안군", 14);    put("홍성군", 15);    put("계룡시", 16);
+        }};
+
+        sigunguCodeMap[4] = new HashMap<String, Integer>() {{
+            // 경상북도
+            put("경산시",  1);    put("경주시",  2);    put("고령군",  3);    put("구미시",  4);
+            put("군위군",  5);    put("김천시",  6);    put("문경시",  7);    put("봉화군",  8);
+            put("상주시",  9);    put("성주군", 10);    put("안동시", 11);    put("영덕군", 12);
+            put("영양군", 13);    put("영주시", 14);    put("영천시", 15);    put("예천군", 16);
+            put("울릉군", 17);    put("울진군", 18);    put("의성군", 19);    put("청도군", 20);
+            put("청송군", 21);    put("칠곡군", 22);    put("포항시", 23);
+        }};
+
+        sigunguCodeMap[5] = new HashMap<String, Integer>() {{
+            // 경상남도
+            put("거제시",  1);    put("거창군",  2);    put("고성군",  3);    put("김해시",  4);
+            put("남해군",  5);    put("마산시",  6);    put("밀양시",  7);    put("사천시",  8);
+            put("산청군",  9);    put("양산시", 10);  /*put("없음 ", 11);*/  put("의령군", 12);
+            put("진주시", 13);    put("진해시", 14);    put("창녕군", 15);    put("창원시", 16);
+            put("통영시", 17);    put("하동군", 18);    put("함안군", 19);    put("함양군", 20);
+            put("합천군", 21);
+        }};
+
+        sigunguCodeMap[6] = new HashMap<String, Integer>() {{
+            // 전라북도
+            put("고창군",  1);    put("군산시",  2);    put("김제시",  3);    put("남원시",  4);
+            put("무주군",  5);    put("부안군",  6);    put("순창군",  7);    put("완주군",  8);
+            put("익산시",  9);    put("임실군", 10);    put("장수군", 11);    put("전주시", 12);
+            put("정읍시", 13);    put("진안군", 14);
+        }};
+
+        sigunguCodeMap[7] = new HashMap<String, Integer>() {{
+            // 전라남도
+            put("강진군",  1);    put("고흥군",  2);    put("곡성군",  3);    put("광양시",  4);
+            put("구례군",  5);    put("나주시",  6);    put("담양군",  7);    put("목포시",  8);
+            put("무안군",  9);    put("보성군", 10);    put("순천시", 11);    put("신안군", 12);
+            put("여수시", 13);  /*put("없음 ", 14);*/ /*put("없음", 15);*/   put("영광군", 16);
+            put("영암군", 17);    put("완도군", 18);    put("장성군", 19);    put("장흥군", 20);
+            put("진도군", 21);    put("함평군", 22);    put("해남군", 23);    put("화순군", 24);
+        }};
+
+        sigunguCodeMap[8] = new HashMap<String, Integer>() {{
+            // 제주도
+            put("남제주군",  1);  put("북제주군",  2);   put("서귀포시",  3);  put("제주시",  4);
+        }};
     }
 
     public List<Spot> getData(String contentTypeId, int areaCode, int sigunguCode, String cat1, String cat2) {
