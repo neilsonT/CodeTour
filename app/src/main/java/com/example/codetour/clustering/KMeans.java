@@ -36,7 +36,7 @@ public class KMeans {
             cluster.setCentroid(centroid);
             clusters.add(cluster);
         }
-        plotClusters();
+        //plotClusters();
     }
 
     public void getPointData(int areaCode, int sigunguCode, String cat1, String cat2){
@@ -47,12 +47,12 @@ public class KMeans {
 
     }
 
-    private void plotClusters() {   //Print
+    /*private void plotClusters() {   //Print
         for (int i = 0; i<NUM_CLUSTERS ;i++){
             Cluster c = clusters.get(i);
             c.plotCluster();
         }
-    }
+    }*/
 
     //The process to calculate the K Means, with iterating method.
     public List<Cluster> calculate() {
@@ -84,7 +84,7 @@ public class KMeans {
             System.out.println("#################");
             System.out.println("Iteration: " + iteration);
             System.out.println("Centroid distances: " + distance);
-            plotClusters();
+            //plotClusters();
 
             if (distance ==0) {
                 finish = true;

@@ -24,7 +24,7 @@ public class Cluster {
     public void addPoint(Point point) {
         points.add(point);
     }
-
+/*
     public void plotCluster() {
         System.out.println("[Cluster: " + id+"]");
         System.out.println("[Centroid: " + centroid + "]");
@@ -34,7 +34,7 @@ public class Cluster {
         }
         System.out.println("]");
     }
-
+*/
     /*Get,Set*/
     public List getPoints() {return points;}
     public Point getCentroid() {return centroid;}

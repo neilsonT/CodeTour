@@ -79,7 +79,8 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
                 Recommend rec = new Recommend();
                 rec.setTripSchedule(tour);
                 rec.setRecommendSpotList();
-                rec.RecWithClustering();
+                //rec.RecWithClustering();
+                rec.recommendCourse();
                 rec.makeCourses();
                 Intent intent = new Intent(getApplicationContext(), RouteCheck.class);
                 intent.putExtra("rec", rec);
