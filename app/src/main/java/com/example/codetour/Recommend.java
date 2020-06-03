@@ -1,5 +1,8 @@
 package com.example.codetour;
 
+import com.example.codetour.clustering.Cluster;
+import com.example.codetour.clustering.KMeans;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +12,7 @@ public class Recommend implements Serializable {
     //TourApi tourApi;
     TripSchedule tripSchedule;
     List<Spot> recommendSpotList;
-
+    KMeans kMeans;
     public void setTripSchedule(TripSchedule trip){
         tripSchedule = trip;
     }
@@ -55,5 +58,68 @@ public class Recommend implements Serializable {
             지금은 설명만 받아옵니다( + 대표이미지도 여기서 받아올까요?)
          */
         //tourApi.getexplain(tmp.get(0));
+    }
+
+    public void RecWithClustering(){
+        List<String> list_cat1 = new ArrayList<String>();//대분류 코드
+        List<String> list_cat2 = new ArrayList<String>(); //중분류 코드
+        List<String> list_food = new ArrayList<String>(); //음식점 코드
+        for (int i=0;i<tripSchedule.theme_selection.size();i++){
+            if (tripSchedule.theme_selection.get(i) == 1) {
+                switch (i) {
+                    case 0:
+                        list_cat1.add("A01");
+                        list_cat2.add("A0101");
+                    case 1:
+                        list_cat1.add("A01");
+                        list_cat2.add("A0102");
+                    case 2:
+                        list_cat1.add("A02");
+                        list_cat2.add("A0201");
+                    case 3:
+                        list_cat1.add("A02");
+                        list_cat2.add("A0202");
+                    case 4:
+                        list_cat1.add("A02");
+                        list_cat2.add("A0203");
+                    case 5:
+                        list_cat1.add("A02");
+                        list_cat2.add("A0204");
+                    case 6:
+                        list_cat1.add("A02");
+                        list_cat2.add("A0205");
+                    case 7:
+                        list_cat1.add("A02");
+                        list_cat2.add("A0206");
+                    case 8:
+                        list_cat1.add("A02");
+                        list_cat2.add("A0207");
+                    case 9:
+                        list_cat1.add("A02");
+                        list_cat2.add("A0208");
+                    default:
+                }
+            }
+        }
+        for (int i=0;i<tripSchedule.food_selection.size();i++){
+            if (tripSchedule.food_selection.get(i) == 1){
+                switch (i){
+                    case 0:
+                        list_food.add("A05020100");
+                    case 1:
+                        list_food.add("A05020200");
+                    case 2:
+                        list_food.add("A05020300");
+                    case 3:
+                        list_food.add("A05020400");
+                    case 4:
+                        list_food.add("A05020500");
+                    default:
+                }
+            }
+        }
+        kMeans= new KMeans();
+        kMeans.init(tripSchedule.areacode, tripSchedule.sigungucode, list_cat1,list_cat2,list_food, tripSchedule.difdays);
+        List<Cluster> clusters = kMeans.calculate();
     }
 }

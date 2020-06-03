@@ -18,13 +18,14 @@ public class TripSchedule implements Serializable{
     Date sd;
     Date ed;
     int areacode;
+    int sigungucode;
     String contentTypeID;
     int difdays;
     int pNum;
     int tourBudget;
     int accBudget;
-    List<String> food_selection;
-    List<String> theme_selection;
+    List<Integer> food_selection;
+    List<Integer> theme_selection;
     int[] startTime;
     int[] endTime;
     List<String> startPoss;
@@ -39,7 +40,7 @@ public class TripSchedule implements Serializable{
         this.endDate=endDate;
     }
     public TripSchedule(String name, String startDate, String endDate, int pNum,
-                int tourBudget, int accBudget, int[] startTime, int[] endTime, List<String> food_selection, List<String> theme_selection){
+                int tourBudget, int accBudget, int[] startTime, int[] endTime, List<Integer> food_selection, List<Integer> theme_selection){
         this.name=name;
         this.startDate=startDate;
         this.endDate=endDate;
@@ -58,7 +59,6 @@ public class TripSchedule implements Serializable{
         } catch (ParseException e) {
             e.printStackTrace();
         }
-//<<<<<<< HEAD
 //        courseList = new Course[difdays];
         this.startPoss = new ArrayList<String>();
         this.endPoss = new ArrayList<String>();
@@ -70,10 +70,8 @@ public class TripSchedule implements Serializable{
             this.startAddr.add("");
             this.endAddr.add("");
         }
-//=======
         courseManager = new CourseManager(difdays, startTime, endTime);
 
-//>>>>>>> e0c04da052e7c5e8056f596d75eb26ae5b2e6f64
     }
 
 
@@ -109,18 +107,18 @@ public class TripSchedule implements Serializable{
             tourBudget = obj.getInt("tourBudget");
             accBudget = obj.getInt("accBudget");
 
-            food_selection = new ArrayList<String>();
+            food_selection = new ArrayList<Integer>();
             JSONArray food_selection_tmp = obj.getJSONArray("food_selection");
             int len_food = food_selection_tmp.length();
             for(int i=0; i<len_food; ++i){
-                food_selection.add(food_selection_tmp.getString(i));
+                food_selection.add(food_selection_tmp.getInt(i));
             }
 
-            theme_selection = new ArrayList<String>();
+            theme_selection = new ArrayList<Integer>();
             JSONArray theme_selection_tmp = obj.getJSONArray("theme_selection");
             int len_theme = theme_selection_tmp.length();
             for(int i=0; i<len_theme; ++i){
-                theme_selection.add(theme_selection_tmp.getString(i));
+                theme_selection.add(theme_selection_tmp.getInt(i));
             }
 
             startTime = new int[difdays];

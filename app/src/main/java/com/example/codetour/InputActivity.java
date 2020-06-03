@@ -77,9 +77,10 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
         List<String> food_list = new ArrayList<String>();
         food_list.add("선택하세요");
         food_list.add("한식");
-        food_list.add("중식");
-        food_list.add("일식");
         food_list.add("양식");
+        food_list.add("일식");
+        food_list.add("중식");
+        food_list.add("아시아식");
         food_spinner.setItems(food_list);
         List<String> theme_list = new ArrayList<String>();
         theme_list.add("선택하세요");
@@ -228,8 +229,8 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
             tourBudget = Integer.parseInt( "" + tour_budget.getText() );
             accBudget = Integer.parseInt( "" + acc_budget.getText() );
 
-            List<String> food_selection = food_spinner.getSelectedStrings();
-            List<String> theme_selection = theme_spinner.getSelectedStrings();
+            List<Integer> food_selection = food_spinner.getSelectedIndicies();
+            List<Integer> theme_selection = theme_spinner.getSelectedIndicies();
             presenter.makeTripSchedule("",startDate,endDate,num,tourBudget,accBudget,startTime,endTime,food_selection,theme_selection);
             Intent intent=new Intent(getApplicationContext(),SePosSetting.class);
             intent.putExtra("class", presenter.getTripSchedule());

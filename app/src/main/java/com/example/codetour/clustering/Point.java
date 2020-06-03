@@ -10,7 +10,7 @@ public class Point {
     private double y = 0;
     private String contentid="";
     private int cluster_number = 0;
-
+    private int num;
 
     public Point(){}
 

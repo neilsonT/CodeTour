@@ -35,8 +35,6 @@ public class Cluster {
         System.out.println("]");
     }
 
-
-
     /*Get,Set*/
     public List getPoints() {return points;}
     public Point getCentroid() {return centroid;}
