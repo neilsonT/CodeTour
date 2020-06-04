@@ -72,12 +72,10 @@ public class SearchView extends AppCompatActivity {
                 final String keyword = s.toString();
                 System.out.println("글자 입력 완료");
                 handler.removeCallbacks(workRunnable);
-                System.out.println("1");
                 workRunnable = new Runnable() {
                     @Override
                     public void run() {
                         //RecyclerViewAdapter.filter 함수를 실행합니다.
-                        System.out.println("2");
                         adapter.filter(keyword);
                     }
                 };

@@ -47,7 +47,7 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK){
-            if(requestCode>0 && requestCode<=tour.difdays){
+            if(requestCode>0 && requestCode<=2*tour.difdays){
                 ((TextView)findViewById((requestCode%2==1?stPosID:edPosID)[(requestCode-1)/2])).setText(data.getStringExtra("title"));
                 (requestCode%2==1?stAddr:edAddr)[(requestCode-1)/2] = data.getStringExtra("addr");
             }

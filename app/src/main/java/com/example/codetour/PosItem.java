@@ -8,11 +8,13 @@ public class PosItem {
 
     //위도 경도를 담는 class  http://tmapapi.sktelecom.com/main.html#android/docs/androidDoc.TMapPoint 궁금하면 여기 참고할 것
     private TMapPoint point;
-
+    private double[] xy = new double[2];
     public PosItem(String title, String address,TMapPoint point) {
         this.title = title;
         this.address = address;
         this.point = point;
+        this.xy[0] = point.getLongitude(); //위도
+        this.xy[1] = point.getLatitude(); //경도
     }
 
 
@@ -36,8 +38,12 @@ public class PosItem {
         return point;
     }
 
+    public double[] getXy() {
+        return xy;
+    }
     public void setPoint(TMapPoint point) {
         this.point=point;
     }
+
 
 }
