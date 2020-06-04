@@ -14,9 +14,11 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 public class SpotManager implements Serializable {
     List<Spot> spotList;
+    Spot[] seSpot; //각 날마다의 출발지, 도착지
 
     public SpotManager(){
         spotList = new ArrayList<Spot>();
+        seSpot = new Spot[2];
     }
 
     public void addSpotAt(int idx, Spot spot){

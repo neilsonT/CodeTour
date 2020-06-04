@@ -24,6 +24,8 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
     TripSchedule tour;
 
     String[] stAddr, edAddr;
+    double[][] stPosVal;
+    double[][] edPosVal;
 
     public void TEMP(){
         tour.areacode = 1;
@@ -50,6 +52,7 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
             if(requestCode>0 && requestCode<=2*tour.difdays){
                 ((TextView)findViewById((requestCode%2==1?stPosID:edPosID)[(requestCode-1)/2])).setText(data.getStringExtra("title"));
                 (requestCode%2==1?stAddr:edAddr)[(requestCode-1)/2] = data.getStringExtra("addr");
+                (requestCode%2==1?stPosVal:edPosVal)[(requestCode-1)/2] = data.getDoubleArrayExtra("point");
             }
         }
     }
@@ -67,10 +70,12 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
                     tmp = (TextView)findViewById(stPosID[i]);
                     tour.startPoss.set(i, tmp.getText().toString());
                     tour.startAddr.set(i, stAddr[i]);
+                    tour.startPosVal[i] = stPosVal[i];
 
                     tmp = (TextView)findViewById(edPosID[i]);
                     tour.endPoss.set(i, tmp.getText().toString());
                     tour.endAddr.set(i, edAddr[i]);
+                    tour.endPosVal[i] = edPosVal[i];
                 }
 
                 TEMP();
@@ -100,6 +105,13 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
         edPosID = new int[tour.difdays];
         stAddr = new String[tour.difdays];
         edAddr = new String[tour.difdays];
+
+        stPosVal = new double[tour.difdays][];
+        edPosVal = new double[tour.difdays][];
+        for(int i=0; i<tour.difdays; ++i){
+            stPosVal[i] = new double[2];
+            edPosVal[i] = new double[2];
+        }
     }
 
     public void  MakeTable(){

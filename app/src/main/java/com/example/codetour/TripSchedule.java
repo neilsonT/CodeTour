@@ -26,12 +26,16 @@ public class TripSchedule implements Serializable{
     int accBudget;
     List<Integer> food_selection;
     List<Integer> theme_selection;
+
+    //아래의 정보는 전부 Spot 각각에 관한 정보라서, 차후 Spot 안으로 옮기는게 다루기도 편할 듯?
     int[] startTime;
     int[] endTime;
     List<String> startPoss;
     List<String> endPoss;
     List<String> startAddr;
     List<String> endAddr;
+    double[][] startPosVal;
+    double[][] endPosVal;
 
     public TripSchedule(){}
     public TripSchedule(String name,String startDate,String endDate){   //임시생성자입니다 SchduleListPresenter에서 사용합니다.
@@ -64,14 +68,17 @@ public class TripSchedule implements Serializable{
         this.endPoss = new ArrayList<String>();
         this.startAddr = new ArrayList<String>();
         this.endAddr = new ArrayList<String>();
+        this.startPosVal = new double[difdays][];
+        this.endPosVal = new double[difdays][];
         for(int i=0; i<difdays; ++i){
             this.startPoss.add("");
             this.endPoss.add("");
             this.startAddr.add("");
             this.endAddr.add("");
+            this.startPosVal[i] = new double[2];
+            this.endPosVal[i] = new double[2];
         }
         courseManager = new CourseManager(difdays, startTime, endTime);
-
     }
 
 
