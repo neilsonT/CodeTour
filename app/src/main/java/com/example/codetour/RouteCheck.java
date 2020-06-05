@@ -118,7 +118,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         long diff = (endDate.getTimeInMillis() - startDate.getTimeInMillis())/(1000*24*60*60);
 
         for(int i=0; i<diff; i++){
-            dayList.add(i+"일차");
+            dayList.add(i+1+"일차");
         }
 
 
@@ -135,7 +135,14 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                tMapView.removeAllMarkerItem();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tMapView.removeAllMarkerItem();
+                    }
+                });
+                day = i;
+                spotList = courseList.get(i).getSpotList();
 //                hideMarkers(courseList.get(day).getSpotList());
                 showTripSchedule(i);
             }
@@ -149,7 +156,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         tMapPointList = new ArrayList<>();
         courseList = tripSchedule.getCourseList();
         spotList = courseList.get(0).getSpotList();
-        showTripSchedule(0);
+//        showTripSchedule(0);
     }
 
     // 경로 보기 설명 버튼 누르면 작동. 경로의 정보가 설정되고 fragment가 표시된다
@@ -159,13 +166,24 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     }
 
     // fragment 숨기기
-    public void hideFragment(Fragment fragment){
-        fm.beginTransaction().hide(fragment).commit();
+    public void hideFragment(final Fragment fragment){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                fm.beginTransaction().hide(fragment).commit();
+            }
+        });
     }
 
     // fragment 보이기
-    public void showFragment(Fragment fragment){
-        fm.beginTransaction().show(fragment).commit();
+    public void showFragment(final Fragment fragment){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                fm.beginTransaction().show(fragment).commit();
+            }
+        });
+
     }
 
     public void showTripSchedule(int i){
@@ -179,7 +197,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
     // 마커 하나 추가
     public void showMarker(Parcelable place){
-        TMapMarkerItem markerItem = new TMapMarkerItem();
+        final TMapMarkerItem markerItem = new TMapMarkerItem();
 
         TMapPoint tMapPoint = new TMapPoint(37.570841, 126.985302);
         // 마커 아이콘
@@ -189,23 +207,37 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         markerItem.setPosition(0.5f,1.0f);
         markerItem.setTMapPoint(tMapPoint);
         markerItem.setName("marker");
-        tMapView.addMarkerItem("markerItem",markerItem);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tMapView.addMarkerItem("markerItem",markerItem);
+            }
+        });
+
 
         locationList.add(markerItem);
     }
 
     // 마커 하나 삭제
-    public void hideMarker(Parcelable place){
-        tMapView.removeMarkerItem(((Place)place).getName());
+    public void hideMarker(final Parcelable place){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tMapView.removeMarkerItem(((Place)place).getName());
+            }
+        });
+
     }
 
     // 마커 여러개 지도에 표시
     public void showMarkers(List<Serializable> placeList){
         // 마커 리스트 테스트용도
+        tMapPointList.clear();
         locationList = new ArrayList<>();
+
         for(int i=0; i<placeList.size(); i++){
-            TMapMarkerItem markerItem = new TMapMarkerItem();
-            Spot spot  = (Spot)placeList.get(i);
+            final TMapMarkerItem markerItem = new TMapMarkerItem();
+            final Spot spot  = (Spot)placeList.get(i);
             TMapPoint tMapPoint = new TMapPoint(spot.getPos()[1],spot.getPos()[0]);
             // 마커 아이콘
             Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.marker);
@@ -214,21 +246,36 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
             markerItem.setPosition(0.5f,1.0f);
             markerItem.setTMapPoint(tMapPoint);
             markerItem.setName(spot.getTitle());
-            tMapView.addMarkerItem(spot.getTitle(),markerItem);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tMapView.addMarkerItem(spot.getTitle(),markerItem);
+                }
+            });
+
             tMapPointList.add(tMapPoint);
             locationList.add(markerItem);
         }
         // 지도 위치를 경로에 맞게 바꿔주기
-        TMapInfo tMapInfo = tMapView.getDisplayTMapInfo(tMapPointList);
+        final TMapInfo tMapInfo = tMapView.getDisplayTMapInfo(tMapPointList);
         Log.d("mapLevel", String.valueOf(tMapInfo.getTMapZoomLevel()));
-        if(tMapInfo.getTMapZoomLevel()<8){
-            Log.d("mapLevel","8아래");
-            tMapView.setZoomLevel(tMapInfo.getTMapZoomLevel());
-        }else{
-            Log.d("mapLevel","8이상");
-            tMapView.setZoomLevel(8);
-        }
-        tMapView.setCenterPoint(tMapInfo.getTMapPoint().getLongitude(),tMapInfo.getTMapPoint().getLatitude());
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                int zoomlevel;
+                if(tMapInfo.getTMapZoomLevel()<12){ // 줌 레벨이 클 수록 확대, 작을수록 축소
+                    Log.d("mapLevel","12아래");
+                    zoomlevel = 11;
+                }else{
+                    Log.d("mapLevel","12이상");
+                    zoomlevel = tMapInfo.getTMapZoomLevel();
+                }
+                tMapView.setZoomLevel(zoomlevel);
+                tMapView.setCenterPoint(tMapInfo.getTMapPoint().getLongitude(),tMapInfo.getTMapPoint().getLatitude());
+            }
+        });
+
     }
 
     // 마커 여러개 삭제
@@ -243,7 +290,12 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     public void showMarkerOverlay(Serializable place,TMapPoint tmapPoint){
         Spot spot = (Spot) place;
         markerOverlay = new MarkerOverlay(getApplicationContext(), spot.getFirstImage2(),spot.getTitle() ,spot.getTel() , spot.getAddress());
-        tMapView.addMarkerItem2("id", markerOverlay);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tMapView.addMarkerItem2("id", markerOverlay);
+            }
+        });
         markerOverlay.setID("id");
         markerOverlay.setPosition(0.0f, 0.0f);
         markerOverlay.setTMapPoint(tmapPoint);
@@ -256,8 +308,6 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     // 일정 저장하기
     public void saveSchedule(View view) {
         // 만들어진 일정을 모델에 저장
-
-
         // 경로 다 저장했으면 화면 전환
         Intent intent = new Intent(this,ScheduleList.class);
         intent.putExtra("tour",tripSchedule);
@@ -266,6 +316,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
     // 일정 취소하기
     public void cancel(View view) {
+
         Intent intent = new Intent (this, MainActivity.class);
         startActivityForResult(intent,0);
     }
