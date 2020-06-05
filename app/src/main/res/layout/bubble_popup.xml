@@ -37,6 +37,7 @@
             android:id="@+id/bubble_subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/holo_blue_light"
             android:textSize="10sp"
             android:textStyle="bold"/>
 
@@ -44,7 +45,6 @@
             android:id="@+id/content1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/holo_blue_light"
             android:textSize="10sp"
             android:textStyle="bold"/>
 
