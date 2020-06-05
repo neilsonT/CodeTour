@@ -51,12 +51,13 @@ public class BalloonOverlayView extends FrameLayout {
         content1  = view.findViewById(R.id.content1);
         content2 = view.findViewById(R.id.content2);
 
+//        Glide.with(view.getContext()).load(imageURL).into(image);
         Glide.with(this).load(imageURL).into(image);
+//        Glide.with(this).load(imageURL).into(image);
         setTitle(name);
         setSubTitle(tel);
         setContent1(address);
 //        setContent2();
-
     }
 
     public void setTitle(String str) {

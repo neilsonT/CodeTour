@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
                 android:layout_toRightOf="@+id/placeImage"
@@ -51,22 +51,23 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@+id/placeImage"
-                android:paddingLeft="10dp"
+                android:paddingLeft="0dp"
                 android:text="010-0000-0000"
-                android:textSize="20sp" />
+                android:textColor="@android:color/holo_blue_light"
+                android:textSize="15sp" />
 
             <!-- 장소 주소 -->
             <TextView
                 android:id="@+id/placeAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/placeName"
+                android:layout_below="@+id/placeTel"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="42dp"
+                android:layout_marginTop="12dp"
                 android:layout_toEndOf="@+id/placeImage"
-                android:paddingLeft="10dp"
+                android:paddingLeft="0dp"
                 android:text="주소"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <!--&lt;!&ndash; 장소 삭제 버튼 &ndash;&gt;-->
             <!--<ImageButton-->
