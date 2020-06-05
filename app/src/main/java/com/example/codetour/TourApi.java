@@ -45,11 +45,11 @@ public class TourApi {
         }
     };
 
-    private HashMap<String, Integer>[] sigunguCodeMap;
+    private HashMap<String, Integer>[] sigunguCodeMap ;
 
     public TourApi() {
        //ServiceKey = "7MuLFocxJtu7I1bf8JWQrKsLl%2FAEwkKk1U0nGGDRHkCSX1%2Bxp7mB38%2FRIjMwrB%2F6x8rRBQ3Le2dUuVFHBhBbtQ%3D%3D";
-
+        sigunguCodeMap = new HashMap[10];
         sigunguCodeMap[0] = new HashMap<String, Integer>() {{
             // 경기도
             put("가평군",  1);    put("고양시",  2);    put("과천시",  3);    put("광명시",  4);
@@ -407,8 +407,8 @@ public class TourApi {
                                 spot.setExplain("상세설명이 존재하지 않습니다.");
                             }
 
-                            if(jObject.containsKey("firstimage")){
-
+                            if(jObject.containsKey("firstimage2")){
+                                spot.setFirstImage2((String)jObject.get("firstimage2"));
                             }
                             else{}
 

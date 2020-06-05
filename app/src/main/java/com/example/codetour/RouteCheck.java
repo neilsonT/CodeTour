@@ -29,7 +29,10 @@ import com.skt.Tmap.TMapView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.StringTokenizer;
 
 // 경로 확인 페이지 클래스
 public class RouteCheck extends AppCompatActivity implements  ScheduleContract.View{
@@ -98,6 +101,28 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
         // 여행 날짜 List 초기화
         dayList = new ArrayList<>();
+
+        StringTokenizer st = new StringTokenizer(tripSchedule.getStartDate(),"-");
+        int startYear = Integer.parseInt(st.nextToken());
+        int startMon = Integer.parseInt(st.nextToken());
+        int startDay = Integer.parseInt(st.nextToken());
+
+        st = new StringTokenizer(tripSchedule.getEndDate(),"-");
+        int endYear = Integer.parseInt(st.nextToken());
+        int endMon = Integer.parseInt(st.nextToken());
+        int endDay = Integer.parseInt(st.nextToken());
+
+        Calendar startDate = new GregorianCalendar(startYear,startMon,startDay);
+        Calendar endDate = new GregorianCalendar(endYear,endMon,endDay);
+
+        long diff = (endDate.getTimeInMillis() - startDate.getTimeInMillis())/(1000*24*60*60);
+
+        for(int i=0; i<diff; i++){
+            dayList.add(i+"일차");
+        }
+
+
+        tripSchedule.getStartDate();
 
         // 여행 날짜 선택 spinnner
         Spinner daySpinner = findViewById(R.id.daySpinner);
@@ -195,10 +220,13 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         }
         // 지도 위치를 경로에 맞게 바꿔주기
         TMapInfo tMapInfo = tMapView.getDisplayTMapInfo(tMapPointList);
-        if(tMapInfo.getTMapZoomLevel()<10){
-            tMapView.setZoomLevel(10);
-        }else{
+        Log.d("mapLevel", String.valueOf(tMapInfo.getTMapZoomLevel()));
+        if(tMapInfo.getTMapZoomLevel()<8){
+            Log.d("mapLevel","8아래");
             tMapView.setZoomLevel(tMapInfo.getTMapZoomLevel());
+        }else{
+            Log.d("mapLevel","8이상");
+            tMapView.setZoomLevel(8);
         }
         tMapView.setCenterPoint(tMapInfo.getTMapPoint().getLongitude(),tMapInfo.getTMapPoint().getLatitude());
     }
