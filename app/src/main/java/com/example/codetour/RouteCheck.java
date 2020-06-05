@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Parcel;
@@ -25,6 +26,7 @@ import com.skt.Tmap.TMapInfo;
 import com.skt.Tmap.TMapMarkerItem;
 import com.skt.Tmap.TMapPOIItem;
 import com.skt.Tmap.TMapPoint;
+import com.skt.Tmap.TMapPolyLine;
 import com.skt.Tmap.TMapView;
 
 import java.io.Serializable;
@@ -139,6 +141,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
                     @Override
                     public void run() {
                         tMapView.removeAllMarkerItem();
+                        tMapView.removeAllTMapPolyLine();
                     }
                 });
                 day = i;
@@ -240,7 +243,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
             final Spot spot  = (Spot)placeList.get(i);
             TMapPoint tMapPoint = new TMapPoint(spot.getPos()[1],spot.getPos()[0]);
             // 마커 아이콘
-            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.marker);
+            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.marker+i+1);
 
             markerItem.setIcon(bitmap);
             markerItem.setPosition(0.5f,1.0f);
@@ -256,10 +259,17 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
             tMapPointList.add(tMapPoint);
             locationList.add(markerItem);
         }
+        final TMapPolyLine tMapPolyLine = new TMapPolyLine();
+        tMapPolyLine.setLineColor(Color.BLUE);
+        tMapPolyLine.setLineWidth(1);
+        for( int i=0; i<tMapPointList.size(); i++ ) {
+            tMapPolyLine.addLinePoint( tMapPointList.get(i) );
+        }
+
+
         // 지도 위치를 경로에 맞게 바꿔주기
         final TMapInfo tMapInfo = tMapView.getDisplayTMapInfo(tMapPointList);
         Log.d("mapLevel", String.valueOf(tMapInfo.getTMapZoomLevel()));
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -271,6 +281,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
                     Log.d("mapLevel","12이상");
                     zoomlevel = tMapInfo.getTMapZoomLevel();
                 }
+                tMapView.addTMapPolyLine(String.valueOf(day), tMapPolyLine);
                 tMapView.setZoomLevel(zoomlevel);
                 tMapView.setCenterPoint(tMapInfo.getTMapPoint().getLongitude(),tMapInfo.getTMapPoint().getLatitude());
             }
