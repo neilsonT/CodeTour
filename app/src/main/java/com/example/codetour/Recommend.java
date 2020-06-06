@@ -25,14 +25,20 @@ public class Recommend implements Serializable {
 
     public Recommend(){ }
 
-    public void recommendSpot(){ }
+    public List<Spot> recommendSpot(Spot spot){
+
+        List<Spot> spots = new ArrayList<>();
+        spots=TourApiManager.getInstance().getSpotUseDist(spot);//스팟 근처의 장소들을 받아옵니다.
+
+        return spots;//장소 없을경우 null return하는 경우 존재합니다
+
+    }
     public void recommendCourse(){
         //숙소좌표 받아와야 합니다()
-        List<Cluster> clusters=RecWithClustering();
-
+        List<Cluster> clusters=RecWithClustering();//클러스터링
         clusters=sortPointReadCount(clusters); //조회순을 기준으로 오름차순으로 정렬된 클러스터
 
-        int j=0;
+        int i=0;
         for(Cluster cluster : clusters){
             List<Point> points= new ArrayList<>();
 
@@ -41,32 +47,17 @@ public class Recommend implements Serializable {
                 count=cluster.points.size();
             else
                 count=5;
-            for(int i=0;i<count;i++) {//활동시간 계산하여 몇개 받아올지 계산해야합니다(i)값으로 주세요!
+
+            for(int j=0;j<count;j++)//활동시간 계산하여 몇개 받아올지 계산해야합니다(j)값으로 주세요!
                 points.add(cluster.points.get(i));
-                //points=sortPointDistance(points);
-                //거리순으로 정렬합니다.
-            }
+
+            points=sortPointDistance(points);//숙소-point까지의 거리 계산 후 경로 만들기
+
             recommendSpotList=TourApiManager.getInstance().getSpot(points);
-            tripSchedule.courseManager.courseList.get(j).spotManager.spotList=recommendSpotList;
-            j++;
+            tripSchedule.courseManager.courseList.get(i).spotManager.spotList=recommendSpotList;
+            i++;
         }
 
-    }
-
-
-    public void makeCourses(){
-        //각 날짜에 대해서 코스를 만드는 메소드
-        for(int i=0; i<tripSchedule.difdays; ++i){
-            tripSchedule.courseManager.addSpotAt(i, 0, recommendSpotList.get(2*i  ));
-            tripSchedule.courseManager.addSpotAt(i, 1, recommendSpotList.get(2*i+1));
-        }
-    }
-
-    public void setRecommendSpotList(){
-        //tourApi로부터 스팟들의 리스트를 받아와서 임시로 저장해놓는 메소드
-        recommendSpotList = TourApiManager.getInstance().getData(tripSchedule.contentTypeID, tripSchedule.areacode);
-        System.out.println("Successfully got list");
-        for(int i=0; i<recommendSpotList.size(); ++i) System.out.println(recommendSpotList.get(i).title);
     }
 
     public List<Cluster> RecWithClustering(){
@@ -186,6 +177,7 @@ public class Recommend implements Serializable {
         for (Point point : points) {
             Collections.sort(points, cmp);
         }
+
 
         return points;
     }

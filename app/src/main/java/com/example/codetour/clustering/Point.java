@@ -60,9 +60,4 @@ public class Point implements Serializable {
         return Math.sqrt(Math.pow((centroid.getY() - p.getY()), 2) + Math.pow((centroid.getX() - p.getX()), 2));
     }
 
-    //Creates random point
-
-    //public String toString() {
-    //    return "("+x+","+y+")";
-    //}
 }
