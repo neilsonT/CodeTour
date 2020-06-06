@@ -5,7 +5,7 @@ import java.util.List;
 public interface ScheduleListContract{
     interface View extends BaseContract.View{
         void showScheduleList(List<TripSchedule> trip_schedule_list);
-        void showSchedule(TripSchedule trip_schedule);
+        void showSchedule(Recommend rec);
     }
 
     interface Presenter extends BaseContract.Presenter<View>{

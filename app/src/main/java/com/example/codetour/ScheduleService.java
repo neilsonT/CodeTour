@@ -1,7 +1,12 @@
 package com.example.codetour;
 
 public class ScheduleService {
-    TripScheduleManager tripScheduleManager;
+
+    static TripScheduleManager tripScheduleManager=null;
+    public static TripScheduleManager getInstance(){
+        if(tripScheduleManager == null) tripScheduleManager = new TripScheduleManager();
+        return tripScheduleManager;
+    }
 
     public ScheduleService(){
 
