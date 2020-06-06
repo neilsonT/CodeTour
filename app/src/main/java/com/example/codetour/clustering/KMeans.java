@@ -8,12 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class KMeans implements Serializable {
-    //Number of Clusters. This metric should be related to the number of points
-    private int NUM_CLUSTERS;   //cluster의 개수 k
-    //k가 여행 날짜를 기준으로 정해저야 한다
 
+    private int NUM_CLUSTERS;
     private List<Point> points;
     private List<Cluster> clusters;
+
     public KMeans() {
         this.points = new ArrayList();
         this.clusters = new ArrayList();
@@ -27,18 +26,17 @@ public class KMeans implements Serializable {
         }
         if(points.size()<NUM_CLUSTERS){
             System.out.println("size : "+points.size());
-            System.out.println("충분한 point가 존재하지 않습니다.");
+            System.out.println("충분한 point가 존재하지 않습니다.");//가져올 수 있는 정보의 개수가 클러스터의 개수보다 작을경우.
+            return;
         }
 
-        //Create Clusters
-        //Set Random Centroids
-        for (int i = 0; i<NUM_CLUSTERS ;i++){
+        for (int i = 0; i<NUM_CLUSTERS ;i++){ //클러스터 생성 및 centroid 초기화
             Cluster cluster = new Cluster(i);
-            Point centroid = new Point(points.get(i).getX(),points.get(i).getY()); //여기서 오류남
+            Point centroid = new Point(points.get(i).getX(),points.get(i).getY());
             cluster.setCentroid(centroid);
             clusters.add(cluster);
         }
-        //plotClusters();
+
     }
 
     public void getPointData(int areaCode, int sigunguCode, String cat1, String cat2){
@@ -63,7 +61,6 @@ public class KMeans implements Serializable {
         boolean finish = false;
         int iteration = 0;
 
-        // Add in new data, one at a time, recalculating centroids with each new one.
         while (!finish) {
             //Clear cluster state
             clearClusters();

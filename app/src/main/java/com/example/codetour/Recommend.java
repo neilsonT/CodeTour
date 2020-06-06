@@ -14,7 +14,6 @@ import java.util.List;
 
 public class Recommend implements Serializable {
 
-    //TourApi tourApi;
     TripSchedule tripSchedule;
     List<Spot> recommendSpotList;
     KMeans kMeans;
@@ -33,30 +32,27 @@ public class Recommend implements Serializable {
         return spots;//장소 없을경우 null return하는 경우 존재합니다
 
     }
+
     public void recommendCourse(){
-        //숙소좌표 받아와야 합니다()
+
         List<Cluster> clusters=RecWithClustering();//클러스터링
-        clusters=sortPointReadCount(clusters); //조회순을 기준으로 오름차순으로 정렬된 클러스터
+        clusters=sortPointReadCount(clusters);
 
-        int i=0;
-        for(Cluster cluster : clusters){
+        for(int i=0;i<tripSchedule.difdays;i++){
             List<Point> points= new ArrayList<>();
-
-            int count ;
-            if (cluster.points.size() <5)
-                count=cluster.points.size();
-            else
-                count=5;
-
-            for(int j=0;j<count;j++)//활동시간 계산하여 몇개 받아올지 계산해야합니다(j)값으로 주세요!
-                points.add(cluster.points.get(i));
-
-            points=sortPointDistance(points);//숙소-point까지의 거리 계산 후 경로 만들기
-
+            Cluster tmp=clusters.get(i);
+            if(tmp.points.size()<5){
+                for(int j=0;j<tmp.points.size();j++)
+                    points.add(tmp.points.get(j));
+            }
+            else{
+                for(int j=0;j<5;j++)
+                    points.add(tmp.points.get(j));
+            }
             recommendSpotList=TourApiManager.getInstance().getSpot(points);
             tripSchedule.courseManager.courseList.get(i).spotManager.spotList=recommendSpotList;
-            i++;
         }
+
 
     }
 
@@ -131,12 +127,14 @@ public class Recommend implements Serializable {
                     break;
             }
         }
+
         kMeans= new KMeans();
         kMeans.init(tripSchedule.areacode, tripSchedule.sigungucode, list_cat1,list_cat2,list_food, tripSchedule.difdays);
         List<Cluster> clusters = kMeans.calculate();
         return clusters;
 
     }//kMeans 클러스터링 후 return clusterList
+
     public List<Cluster> sortPointReadCount(List<Cluster> clusters) {
 
         Comparator<Point> cmp=new Comparator<Point>(){
@@ -156,12 +154,11 @@ public class Recommend implements Serializable {
         };
 
         for(Cluster cluster: clusters)
-            Collections.sort(cluster.points,cmp);//오름차순 정렬
+            Collections.sort(cluster.points,cmp);//cluster내부에서 point들 오름차순 정렬
 
         return clusters;
+    }
 
-
-    }//조회순 정렬을 위해 사용합니다.
     public List<Point> sortPointDistance(List<Point> points) {
 
         Comparator<Point> cmp = new Comparator<Point>() {

@@ -319,9 +319,15 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     // 일정 저장하기
     public void saveSchedule(View view) {
         // 만들어진 일정을 모델에 저장
-        // 경로 다 저장했으면 화면 전환
+        if(tripSchedule.save){
+            ScheduleService.getInstance().tripScheduleList.get(tripSchedule.getList_pos());
+        }
+        else{
+            tripSchedule.setList_pos(ScheduleService.getInstance().tripScheduleList.size());
+            ScheduleService.getInstance().addSchedule(tripSchedule);
+        }
+
         Intent intent = new Intent(this,ScheduleList.class);
-        intent.putExtra("tour",tripSchedule);
         startActivityForResult(intent,0);
     }
 

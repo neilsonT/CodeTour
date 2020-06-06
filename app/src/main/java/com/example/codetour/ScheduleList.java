@@ -24,9 +24,9 @@ public class ScheduleList extends AppCompatActivity implements ScheduleListContr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_list);
         //Text에 Bold효과 주기위한 코드입니다.
+
         TextView textView = (TextView)findViewById(R.id.schedulelist_toptext);
         textView.setPaintFlags(textView.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
-
 
         scheduleListPresenter = new ScheduleListPresenter(this);
         scheduleListPresenter.getScheduleList();
@@ -57,12 +57,12 @@ public class ScheduleList extends AppCompatActivity implements ScheduleListContr
     }
 
     @Override
-    public void showSchedule(TripSchedule trip_schedule){
-        Toast.makeText(getApplicationContext(),trip_schedule.getName(),Toast.LENGTH_LONG).show();
+    public void showSchedule(Recommend rec){
+        Toast.makeText(getApplicationContext(),rec.tripSchedule.getName(),Toast.LENGTH_LONG).show();
 
         //RouteCheck로 이동합니다.
-        //Intent intent= new Intent(this, RouteCheck.class);
-        //intent.putExtra("tripSchedule",trip_schedule);
-        //startActivityForResult(intent,0);
+        Intent intent= new Intent(this, RouteCheck.class);
+        intent.putExtra("rec",rec);
+        startActivityForResult(intent,0);
     }
 }
