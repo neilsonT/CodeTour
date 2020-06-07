@@ -129,6 +129,16 @@ public class TourApi {
         }};
     }
 
+    // 출발, 도착지 주소 -> 지역코드로 바꿔주는 메소드
+    public int[] getAddtoCode(String add1,String add2){
+        int[] code = new int[2];
+        code[0] = areaCodeMap.get(add1);
+        code[1] = 0;
+        if (code[0] >30)
+            code[1] = sigunguCodeMap[code[0]-31].get(add2);
+        return code;
+    }
+
     public List<Point> getPoint(int areaCode,int sigunguCode, String cat1, String cat2){
 
         List<Point> point_list = new ArrayList<>();

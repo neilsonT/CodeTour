@@ -14,7 +14,6 @@ import java.util.List;
 
 public class Recommend implements Serializable {
 
-    //TourApi tourApi;
     TripSchedule tripSchedule;
     List<Spot> recommendSpotList;
     KMeans kMeans;
@@ -132,7 +131,8 @@ public class Recommend implements Serializable {
             }
         }
         kMeans= new KMeans();
-        kMeans.init(tripSchedule.areacode, tripSchedule.sigungucode, list_cat1,list_cat2,list_food, tripSchedule.difdays);
+        //수정해야함
+        //kMeans.init(tripSchedule.areacode, tripSchedule.sigungucode, list_cat1,list_cat2,list_food, tripSchedule.difdays);
         List<Cluster> clusters = kMeans.calculate();
         return clusters;
 

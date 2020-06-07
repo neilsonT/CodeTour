@@ -26,7 +26,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         //추가적인 정보를 보여주고 싶으면 추가하면 됩니다.
         public TextView title;
         public TextView address;
-        public Activity mActivity;
+
         public CustomViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(new View.OnClickListener(){
