@@ -56,7 +56,7 @@ public class Point implements Serializable {
     }
 
     //Calculates the distance between two points.
-    protected static double distance(Point p, Point centroid) {
+    public static double distance(Point p, Point centroid) {
         return Math.sqrt(Math.pow((centroid.getY() - p.getY()), 2) + Math.pow((centroid.getX() - p.getX()), 2));
     }
 

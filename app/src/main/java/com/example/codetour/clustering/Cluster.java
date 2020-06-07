@@ -8,6 +8,7 @@ public class Cluster implements Serializable {
     public List<Point> points;
     public Point centroid;
     public int id;
+    public boolean select=false;
 
     //Creates a new Cluster
     public Cluster(){}

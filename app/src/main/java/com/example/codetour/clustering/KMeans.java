@@ -20,7 +20,12 @@ public class KMeans implements Serializable {
 
     //Initializes the process
     public void init(int areaCode, int sigunguCode, List<String> list_cat1, List<String> list_cat2, List<String> list_food,int difdays) {
-        NUM_CLUSTERS = difdays;
+
+
+
+        NUM_CLUSTERS = difdays+1;
+
+
         for (int i=0;i<list_cat1.size();i++){
             getPointData(areaCode,sigunguCode,list_cat1.get(i),list_cat2.get(i));
         }
@@ -42,7 +47,7 @@ public class KMeans implements Serializable {
     public void getPointData(int areaCode, int sigunguCode, String cat1, String cat2){
         List<Point> tmp_list=new ArrayList<Point>();
         //System.out.println("areaCode, sigungoCode, cat1, cat2 : "+areaCode+" ,"+sigunguCode+" ,"+cat1+" ,"+cat2);
-    tmp_list=TourApiManager.getInstance().getPoint(areaCode,sigunguCode,cat1,cat2);
+        tmp_list=TourApiManager.getInstance().getPoint(areaCode,sigunguCode,cat1,cat2);
         if(tmp_list!=null)
             points.addAll(tmp_list);
         //System.out.println("tmp_list 출력 시작");
