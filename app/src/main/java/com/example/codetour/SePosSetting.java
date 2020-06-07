@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +27,11 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
     String[] stAddr, edAddr;
     double[][] stPosVal;
     double[][] edPosVal;
+
+    final int backgroundColor = 0xffdddddd;
+    final float fontSize = 22.f;
+    final String hintStr = "입력하세요";
+    TableRow.LayoutParams seParams;
 
     /*public void TEMP(){
         tour.areacode = 1;
@@ -61,6 +67,9 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
         //테이블 틀 생성
         seEdit = (TableLayout) findViewById(R.id.seEdit);
         sePosSettingConfirm = (Button) findViewById(R.id.sePosSettingConfirm);
+
+        seParams = new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 3);
+        seParams.setMargins(1,0,1,0);
 
         sePosSettingConfirm.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -141,12 +150,15 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
             //row 생성
             TableRow tr = new TableRow(this);
             TableLayout.LayoutParams tmpRowParams = new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, 4);
+            tmpRowParams.setMargins(0, 10, 0, 10);
             tr.setLayoutParams(tmpRowParams);
 
             //몇일째인지 날짜를 보여주는 텍스트를 row에 추가
             TextView text = new TextView(this);
             text.setText(new String((i+1)+"일째"));
             text.setGravity(Gravity.CENTER_VERTICAL);
+            text.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize);
+            text.setHeight(100);
             tr.addView(text, new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 1));
 
             //아직 위치값을 넣지 않았기 때문에 실행해보기 위해서 주석처리 해놓음
@@ -163,7 +175,12 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
                     startActivityForResult(intent, finalI +1);
                 }
             });
-            tr.addView(stPos, new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 3));
+            stPos.setHeight(100);
+            stPos.setTextSize(fontSize);
+            stPos.setBackgroundColor(backgroundColor);
+            if(i==0) stPos.setHint(hintStr);
+            stPos.setGravity(Gravity.CENTER);
+            tr.addView(stPos, seParams);
 
             //i번째날 도착지 입력칸을 row에 추가
             TextView edPos = new TextView(this);
@@ -177,7 +194,12 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
                     startActivityForResult(intent, finalI +2);
                 }
             });
-            tr.addView(edPos, new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 3));
+            edPos.setHeight(100);
+            edPos.setTextSize(fontSize);
+            edPos.setBackgroundColor(backgroundColor);
+            if(i==0) edPos.setHint(hintStr);
+            edPos.setGravity(Gravity.CENTER);
+            tr.addView(edPos, seParams);
 
             //row를 테이블에 추가
             seEdit.addView(tr);
