@@ -27,10 +27,10 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
     double[][] stPosVal;
     double[][] edPosVal;
 
-    public void TEMP(){
+    /*public void TEMP(){
         tour.areacode = 1;
         tour.contentTypeID = "12";
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,19 +71,27 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
                     tour.startPoss.set(i, tmp.getText().toString());
                     tour.startAddr.set(i, stAddr[i]);
                     tour.startPosVal[i] = stPosVal[i];
-
+                    String[] add = stAddr[i].split(" ");
+                    int[] temp= TourApiManager.getInstance().getAddtoCode(add[0],add[1]);
+                    tour.areacode[0][i] = temp[0];
+                    tour.sigungucode[0][i] = temp[1];
                     tmp = (TextView)findViewById(edPosID[i]);
                     tour.endPoss.set(i, tmp.getText().toString());
                     tour.endAddr.set(i, edAddr[i]);
                     tour.endPosVal[i] = edPosVal[i];
+                    add = edAddr[i].split(" ");
+                    temp= TourApiManager.getInstance().getAddtoCode(add[0],add[1]);
+                    tour.areacode[1][i] = temp[0];
+                    tour.sigungucode[1][i] = temp[1];
                 }
-
-                TEMP();
+                System.out.println("출발도착지 test");
+                System.out.println(tour.areacode[0][0]+", "+tour.areacode[1][0]);
+                System.out.println(tour.areacode[0][1]+", "+tour.areacode[1][1]);
+                //TEMP();
                 //TODO: 현재 TEMP() 함수를 이용하여 areacode와 contentTypeID를 강제로 넘겨 주고 있으므로, 받아온 값을 넘겨주도록 
 
                 Recommend rec = new Recommend();
-                tour.areacode = 1;
-                tour.sigungucode = 0;
+
                 rec.setTripSchedule(tour);
                 //rec.setRecommendSpotList();
                 //rec.RecWithClustering();

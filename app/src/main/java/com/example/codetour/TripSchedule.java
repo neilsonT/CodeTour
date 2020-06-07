@@ -17,8 +17,12 @@ public class TripSchedule implements Serializable{
     String endDate;
     Date sd;
     Date ed;
-    int areacode;
-    int sigungucode;
+
+    //날짜별로 여행지역이 다를 수 있기 때문에 int로 되어있는 지역코드랑 시군구 코드를 int[]형태로 바꿔야함
+    //[0 : 출발지, 1: 도착지][날짜]
+    int[][] areacode;
+    int[][] sigungucode;
+
     String contentTypeID;
     int difdays;
     int pNum;
@@ -75,6 +79,8 @@ public class TripSchedule implements Serializable{
             this.startPosVal[i] = new double[2];
             this.endPosVal[i] = new double[2];
         }
+        this.areacode=new int[2][difdays];
+        this.sigungucode=new int[2][difdays];
         courseManager = new CourseManager(difdays, startTime, endTime);
     }
 

@@ -258,7 +258,7 @@
                 app:layout_constraintRight_toLeftOf="@id/pNum"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 android:gravity="center"
-                android:onClick="onClick">
+                android:onClick="OnClickHandlerP">
             </Button>
             <TextView
                 android:id="@+id/pNum"
@@ -284,7 +284,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 android:gravity="center"
-                android:onClick="onClick">
+                android:onClick="OnClickHandlerP">
             </Button>
         </androidx.constraintlayout.widget.ConstraintLayout>
 <!-- 활동 시간, 종료 시간 입력 -->

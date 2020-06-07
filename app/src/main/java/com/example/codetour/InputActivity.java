@@ -25,7 +25,7 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
     private Button start_date_B;
     private Button end_date_B;
     private DatePickerDialog.OnDateSetListener callbackMethodD;
-    private int DataPickerCalled; //가는날/오는날 중에 어떤 버튼을 클릭한 것인지 저장
+    private int DataPickerCalled; //가는날,오는날 중에 어떤 버튼을 클릭한 것인지 저장
     private String startDate;
     private String endDate;
     private int[] startD;
@@ -192,10 +192,9 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
         dialog.show();
     }
 
-    public void onClick(View view) { //인원 더하기,빼기 버튼을 위한 click 함수
+    public void OnClickHandlerP(View view) { //인원 더하기,빼기 버튼을 위한 click 함수
         if (view.getId()==R.id.pNum_plus){
             num++;
-            pNum.setText(num + " 명");
         }
         else if (view.getId()==R.id.pNum_minus){
             if (num > 0) {
@@ -214,14 +213,18 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
         });
         //예외처리
         try{
+            boolean flag = true;
             for(int i=0;i<3;i++){
-                if (startD[i]>endD[i]){
-                    alert.setMessage("출발/도착 날짜를 확인해주세요");
-                    alert.show();
-                    return;
-                }
+                if (flag)
+                    if (startD[i]>endD[i] ){
+                        alert.setMessage("출발/도착 날짜를 확인해주세요");
+                        alert.show();
+                        return;
+                    }
+                    else
+                        flag=false;
             }
-            if (startTime[0]>endTime[0] || startTime[1]>endTime[1]){
+            if (startTime[0]>endTime[0] || (startTime[0]==endTime[0] && startTime[1]>endTime[1])){
                 alert.setMessage("활동 시작/종료시간을 확인해주세요");
                 alert.show();
                 return;
