@@ -195,6 +195,7 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
     public void OnClickHandlerP(View view) { //인원 더하기,빼기 버튼을 위한 click 함수
         if (view.getId()==R.id.pNum_plus){
             num++;
+            pNum.setText(num + " 명");
         }
         else if (view.getId()==R.id.pNum_minus){
             if (num > 0) {
