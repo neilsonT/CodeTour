@@ -66,6 +66,14 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
             @Override
             public void onClick(View view){
                 TextView tmp;
+                for(int i=0;i<tour.difdays;i++){
+                    tour.startAddr.set(i, stAddr[i]);
+                    String[] add = stAddr[i].split(" ");
+                    System.out.println(add[0]+" , "+add[1]);
+                    tour.endAddr.set(i, edAddr[i]);
+                    add = edAddr[i].split(" ");
+                    System.out.println(add[0]+" , "+add[1]);
+                }
                 for(int i=0; i<tour.difdays; ++i){
                     tmp = (TextView)findViewById(stPosID[i]);
                     tour.startPoss.set(i, tmp.getText().toString());
@@ -73,6 +81,7 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
                     tour.startPosVal[i] = stPosVal[i];
                     String[] add = stAddr[i].split(" ");
                     int[] temp= TourApiManager.getInstance().getAddtoCode(add[0],add[1]);
+                    System.out.println(add[1]);
                     tour.areacode[0][i] = temp[0];
                     tour.sigungucode[0][i] = temp[1];
                     tmp = (TextView)findViewById(edPosID[i]);
