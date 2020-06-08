@@ -1,5 +1,7 @@
 package com.example.codetour;
 
+import android.content.Context;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -22,6 +24,7 @@ public class TripScheduleManager {
         public void loadSchedule(){}
 
     //생성자는 load를 위해, toJSONObj는 save를 위해 사용.
+    /*
     public TripScheduleManager(JSONObject obj){
         try {
             tripScheduleList = new ArrayList<TripSchedule>();
@@ -45,6 +48,13 @@ public class TripScheduleManager {
         }
         catch(Exception e){}
         return  ret;
+    }
+    */
+    public void saveList(Context ctx, String key){
+        SaveLoadManager.saveTripScheduleList(ctx, key, tripScheduleList);
+    }
+    public void loadList(Context ctx, String key){
+        tripScheduleList = SaveLoadManager.loadTripScheduleList(ctx, key);
     }
 }
 

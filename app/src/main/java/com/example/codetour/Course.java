@@ -51,7 +51,7 @@ public class Course implements Serializable {
             //spotList = new ArrayList<Spot>();
             timeList = new int[countSpot];
             JSONArray timeListTemp = obj.getJSONArray("timeList");
-            JSONArray spotListTemp = obj.getJSONArray("spotList");
+            //JSONArray spotListTemp = obj.getJSONArray("spotList");
             for(int i=0; i<countSpot; ++i){
                 timeList[i] = timeListTemp.getInt(i);
                 //spotList.add(new Spot(spotListTemp.getJSONObject(i)));
@@ -89,7 +89,7 @@ public class Course implements Serializable {
                 //startTime ??
                 //endTime ??
             }
-            ret.put("spotList", spotListTmp);
+            //ret.put("spotList", spotListTmp);
             ret.put("timeList", timeListTmp);
         }
         catch(Exception e){}
