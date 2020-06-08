@@ -29,7 +29,7 @@ public class TripSchedule implements Serializable{
     int tourBudget;
     int accBudget;
     int list_pos;
-    boolean save=false;
+    boolean save=false; // 대양: 얘는 뭐 하는 변수?
     List<Integer> food_selection;
     List<Integer> theme_selection;
 
@@ -118,6 +118,7 @@ public class TripSchedule implements Serializable{
             //sd = ???
             //ed = ???
 
+            contentTypeID = obj.getString("contentTypeID");
             difdays = obj.getInt("difdays");
             pNum = obj.getInt("pNum");
             tourBudget = obj.getInt("tourBudget");
@@ -145,11 +146,49 @@ public class TripSchedule implements Serializable{
             JSONArray startPossTmp = obj.getJSONArray("startPoss");
             endPoss = new ArrayList<String>();
             JSONArray endPossTmp = obj.getJSONArray("endPoss");
+
+            startAddr = new ArrayList<String>();
+            JSONArray startAddrTemp = obj.getJSONArray("startAddr");
+            endAddr = new ArrayList<String>();
+            JSONArray endAddrTemp = obj.getJSONArray("endAddr");
+
+            startPosVal = new double[difdays][];
+            endPosVal = new double[difdays][];
+            for(int i=0; i<difdays; ++i){
+                startPosVal[i] = new double[2];
+                endPosVal[i] = new double[2];
+            }
+            JSONArray startPosValTemp = obj.getJSONArray("startPosVal");
+            JSONArray endPosValTemp = obj.getJSONArray("endPosVal");
+
+            areacode = new int[2][];
+            sigungucode = new int[2][];
+            for(int i=0; i<2; ++i){
+                areacode[i] = new int[difdays];
+                sigungucode[i] = new int[difdays];
+            }
+
+            JSONArray areacodeTemp = obj.getJSONArray("areacode");
+            JSONArray sigungucodeTemp = obj.getJSONArray("sigungucode");
+
             for(int i=0; i<difdays; ++i){
                 startTime[i] = startTimeTmp.getInt(i);
                 endTime[i] = endTimeTmp.getInt(i);
                 startPoss.add(startPossTmp.getString(i));
                 endPoss.add(endPossTmp.getString(i));
+
+                startAddr.add(startAddrTemp.getString(i));
+                endAddr.add(endAddrTemp.getString(i));
+
+                startPosVal[i][0] = startPosValTemp.getDouble(2*i  );
+                startPosVal[i][1] = startPosValTemp.getDouble(2*i+1);
+                endPosVal[i][0]   =   endPosValTemp.getDouble(2*i  );
+                endPosVal[i][1]   =   endPosValTemp.getDouble(2*i+1);
+
+                areacode[0][i]    =    areacodeTemp.getInt(2*i  );
+                areacode[1][i]    =    areacodeTemp.getInt(2*i+1);
+                sigungucode[0][i] = sigungucodeTemp.getInt(2*i  );
+                sigungucode[1][i] = sigungucodeTemp.getInt(2*i+1);
             }
         }
         catch(Exception e){}
@@ -162,6 +201,13 @@ public class TripSchedule implements Serializable{
         JSONArray endTimeTmp = new JSONArray();
         JSONArray startPossTmp = new JSONArray();
         JSONArray endPossTmp = new JSONArray();
+
+        JSONArray startAddrTemp = new JSONArray();
+        JSONArray endAddrTemp = new JSONArray();
+        JSONArray startPosValTemp = new JSONArray();
+        JSONArray endPosValTemp = new JSONArray();
+        JSONArray areacodeTemp = new JSONArray();
+        JSONArray sigungucodeTemp = new JSONArray();
         try{
             ret.put("courseManager", courseManager.toJSONObj());
             ret.put("name", name);
@@ -191,11 +237,31 @@ public class TripSchedule implements Serializable{
                 endTimeTmp.put(endTime[i]);
                 startPossTmp.put(startPoss.get(i));
                 endPossTmp.put(endPoss.get(i));
+
+                startAddrTemp.put(startAddr.get(i));
+                endAddrTemp.put(endAddr.get(i));
+
+                startPosValTemp.put(startPosVal[i][0]);
+                startPosValTemp.put(startPosVal[i][1]);
+                endPosValTemp.put(endPosVal[i][0]);
+                endPosValTemp.put(endPosVal[i][1]);
+
+                areacodeTemp.put(areacode[0][i]);
+                areacodeTemp.put(areacode[1][i]);
+                sigungucodeTemp.put(sigungucode[0][i]);
+                sigungucodeTemp.put(sigungucode[1][i]);
             }
             ret.put("startTime", startTimeTmp);
             ret.put("endTime", endTimeTmp);
             ret.put("startPoss", startPossTmp);
             ret.put("endPoss", endPossTmp);
+
+            ret.put("startAddr", startAddrTemp);
+            ret.put("endAddr", endAddrTemp);
+            ret.put("startPosVal", startPosValTemp);
+            ret.put("endPosVal", endPosValTemp);
+            ret.put("areacode", areacodeTemp);
+            ret.put("sigungucode", sigungucodeTemp);
         }
         catch(Exception e){}
         return ret;

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.net.URL;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -19,6 +20,7 @@ public class SpotManager implements Serializable {
     public SpotManager(){
         spotList = new ArrayList<Spot>();
         seSpot = new Spot[2];
+        //for(int i=0; i<2; ++i) seSpot[i] = new Spot();
     }
 
     public void addSpotAt(int idx, Spot spot){
@@ -27,12 +29,31 @@ public class SpotManager implements Serializable {
 
     //생성자는 load를 위해, toJSONObj는 save를 위해 사용.
     public SpotManager(JSONObject obj){
+        try{
+            spotList = new ArrayList<Spot>();
+            seSpot = new Spot[2];
 
+            seSpot[0] = new Spot(obj.getJSONObject("stSpot"));
+            seSpot[1] = new Spot(obj.getJSONObject("edSpot"));
+
+            JSONArray spotListTemp = obj.getJSONArray("spotList");
+            for(int i=0, l=spotListTemp.length(); i<l; ++i){
+                spotList.add(new Spot(spotListTemp.getJSONObject(i)));
+            }
+        }
+        catch(Exception e){}
     }
     public JSONObject toJSONObj(){
         JSONObject ret = new JSONObject();
+        JSONArray spotListTemp = new JSONArray();
         try{
+            ret.put("stSpot", seSpot[0]);
+            ret.put("edSpot", seSpot[1]);
 
+            for(int i=0, l=spotList.size(); i<l; ++i){
+                spotListTemp.put(spotList.get(i).toJSONObj());
+            }
+            ret.put("spotList", spotListTemp);
         }
         catch(Exception e){}
         return ret;
