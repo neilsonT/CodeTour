@@ -19,7 +19,7 @@ import static android.app.Activity.RESULT_OK;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.CustomViewHolder> {
 
     private ArrayList<PosItem> itemLists = new ArrayList<>();
-    private SearchView searchView;
+
     //ViewHolder가 RecyclerView가 갱신될 때 마다 View를 설정해주는 친구인 것 같습니다
     public class CustomViewHolder extends RecyclerView.ViewHolder {
         //검색된 장소 하나를 보여줄 때 아직은 장소이름이랑 주소만 보여주기 때문에 두개 있습니다.

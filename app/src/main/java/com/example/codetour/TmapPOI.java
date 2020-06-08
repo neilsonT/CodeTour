@@ -17,7 +17,7 @@ public class TmapPOI extends AsyncTask<String, Void, ArrayList<PosItem>> {
 
     public TmapPOI(RecyclerViewAdapter adapter) {
         this.mAdapter = adapter;
-        mListData = new ArrayList<PosItem>();
+        mListData = new ArrayList<>();
     }
 
     @Override
