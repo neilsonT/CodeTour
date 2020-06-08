@@ -40,7 +40,7 @@ public class TripSchedule implements Serializable{
     List<String> endPoss;
     List<String> startAddr;
     List<String> endAddr;
-    double[][] startPosVal;
+    double[][] startPosVal; //startPos[day][pos] pos=0:x, pos=1:y
     double[][] endPosVal;
 
     public TripSchedule(){}
