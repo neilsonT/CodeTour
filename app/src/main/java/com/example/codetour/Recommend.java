@@ -80,45 +80,58 @@ public class Recommend implements Serializable {
 
         for (int i = 0; i < tripSchedule.theme_selection.size(); i++) {
             switch (tripSchedule.theme_selection.get(i)) {
-                case 1:
+                case 1: //자연관광지
                     list_cat1.add("A01");
                     list_cat2.add("A0101");
                     break;
-                case 2:
+                case 2: //관광자원
                     list_cat1.add("A01");
                     list_cat2.add("A0102");
                     break;
-                case 3:
+                case 3: //역사관광지
                     list_cat1.add("A02");
                     list_cat2.add("A0201");
                     break;
-                case 4:
+                case 4: //휴양관광지
                     list_cat1.add("A02");
                     list_cat2.add("A0202");
                     break;
-                case 5:
+                case 5: //체험관광지
                     list_cat1.add("A02");
                     list_cat2.add("A0203");
                     break;
-                case 6:
-                    list_cat1.add("A02");
-                    list_cat2.add("A0204");
-                    break;
-                case 7:
+                case 6: //건축/조형물
                     list_cat1.add("A02");
                     list_cat2.add("A0205");
                     break;
-                case 8:
+                case 7: //문화시설
                     list_cat1.add("A02");
                     list_cat2.add("A0206");
                     break;
-                case 9:
+                    /*
+                case 8: //축제
                     list_cat1.add("A02");
                     list_cat2.add("A0207");
                     break;
-                case 10:
+                case 9: //공연,행사
                     list_cat1.add("A02");
                     list_cat2.add("A0208");
+                    break;*/
+                case 10: //육상레포츠
+                    list_cat1.add("A03");
+                    list_cat2.add("A0302");
+                    break;
+                case 11: //수상레포츠
+                    list_cat1.add("A03");
+                    list_cat2.add("A0303");
+                    break;
+                case 12: //항공레포츠
+                    list_cat1.add("A03");
+                    list_cat2.add("A0304");
+                    break;
+                case 13: //쇼핑
+                    list_cat1.add("A04");
+                    list_cat2.add("A0401");
                     break;
                 default:
                     break;

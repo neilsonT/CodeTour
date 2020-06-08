@@ -89,11 +89,14 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
         theme_list.add("역사관광지");
         theme_list.add("휴양관광지");
         theme_list.add("체험관광지");
-        theme_list.add("산업관광지");
         theme_list.add("건축/조형물");
         theme_list.add("문화시설");
         theme_list.add("축제");
         theme_list.add("공연/행사");
+        theme_list.add("육상레포츠");
+        theme_list.add("수상레포츠");
+        theme_list.add("항공레포츠");
+        theme_list.add("쇼핑");
         theme_spinner.setItems(theme_list);
     }
     public void InitializeListener() //날짜, 시간 입력 Listener 설정
