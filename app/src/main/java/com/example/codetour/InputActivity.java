@@ -184,7 +184,7 @@ public class InputActivity extends AppCompatActivity implements InputContract.Vi
         int year = today.get(today.YEAR);
         int month = today.get(today.MONTH);
         int day = today.get(today.DAY_OF_MONTH);
-        DatePickerDialog dialog = new DatePickerDialog(this, callbackMethodD,year,month,day); //여기 쓰여지는 날짜는 무슨 의미인가?
+        DatePickerDialog dialog = new DatePickerDialog(this,callbackMethodD,year,month,day); //여기 쓰여지는 날짜는 무슨 의미인가? 달력 처음 띄울 때 기준날짜를 오늘날짜로 하기 위함
         DataPickerCalled = view.getId();
         dialog.show();
     }

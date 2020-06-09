@@ -16,6 +16,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_margin="8dp"
+        android:textColor="#F27405"
+        android:backgroundTint="#F2CB9B"
         android:privateImeOptions="defaultInputmode=korean"
         />
 
