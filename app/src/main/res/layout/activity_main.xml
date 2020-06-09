@@ -6,40 +6,69 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/logo"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:layout_marginBottom="200dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/wrap_button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        >
+
+    </androidx.appcompat.widget.AppCompatImageView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/wrap_button"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        >
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+        <Button
+            android:id="@+id/btnMakeSchedule"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/btnViewSchedule"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="70dp"
+            android:layout_width="150dp"
+            android:layout_height="75dp"
+            android:backgroundTint="#F27405"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            app:layout_constraintHorizontal_chainStyle="packed"
 
-            <Button
-                android:id="@+id/btnMakeSchedule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:onClick="makeSchedule"
-                android:text="@string/btnMakeSchedule" />
+            android:layout_centerInParent="true"
+            android:onClick="makeSchedule"
+            android:text="@string/btnMakeSchedule" />
 
-        </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
 
-            <Button
-                android:id="@+id/btnViewSchedule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:onClick="showScheduleList"
-                android:text="@string/btnViewSchedule" />
 
-        </RelativeLayout>
-    </LinearLayout>
+        <Button
+            android:id="@+id/btnViewSchedule"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/btnMakeSchedule"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="150dp"
+            android:layout_height="75dp"
+            android:backgroundTint="#F27405"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+
+            android:layout_centerInParent="true"
+            android:onClick="showScheduleList"
+            android:text="@string/btnViewSchedule" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

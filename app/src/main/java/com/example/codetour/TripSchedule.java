@@ -61,6 +61,7 @@ public class TripSchedule implements Serializable{
             sd=sdf.parse(startDate);
             ed=sdf.parse(endDate);
             difdays= (int) (ed.getTime()-sd.getTime())/(24*60*60*1000);
+            difdays++;
         } catch (ParseException e) {
             e.printStackTrace();
         }

@@ -30,7 +30,8 @@ public class TmapPOI extends AsyncTask<String, Void, ArrayList<PosItem>> {
                 //이 주석은 검색결과 잘 받아오는지 로그로 확인해보는 거라 지금은 안봐도 됨
                 Log.d("POI Name: ", item.getPOIName().toString() + ", " +
                         "Address: " + item.getPOIAddress().replace("null", "")  + ", " +
-                        "Point: " + item.getPOIPoint().toString());
+                        "Point: " + item.getPOIPoint().toString()+"content"+item.getPOIContent());
+
                 mListData.add(new PosItem(item.getPOIName().toString(),item.getPOIAddress().replace("null","").toString(),item.getPOIPoint()));
             }
         }catch (Exception e){
@@ -40,11 +41,6 @@ public class TmapPOI extends AsyncTask<String, Void, ArrayList<PosItem>> {
         System.out.println("mListData size :"+mListData.size());
         return mListData;
     }
-/*
-    @Override
-    protected void onPostExecute(ArrayList<PosItem> autoCompleteItems) {
-        mAdapter.setData(autoCompleteItems);
-        mAdapter.notifyDataSetChanged();
-    }*/
+
 }
 

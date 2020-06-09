@@ -118,7 +118,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         Calendar endDate = new GregorianCalendar(endYear,endMon,endDay);
 
         long diff = (endDate.getTimeInMillis() - startDate.getTimeInMillis())/(1000*24*60*60);
-
+        diff++;
         for(int i=0; i<diff; i++){
             dayList.add(i+1+"일차");
         }
