@@ -20,6 +20,7 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
     int[] stPosID;
     int[] edPosID;
     Button sePosSettingConfirm;
+    Button copyToAllBtn;
 
     TableLayout seEdit;
     TripSchedule tour;
@@ -27,6 +28,10 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
     String[] stAddr, edAddr;
     double[][] stPosVal;
     double[][] edPosVal;
+
+    String lastAddr = "";
+    String lastTitle = "";
+    double[] lastPos = {0,0};
 
     final int backgroundColor = 0xffdddddd;
     final float fontSize = 22.f;
@@ -56,9 +61,14 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK){
             if(requestCode>0 && requestCode<=2*tour.difdays){
-                ((TextView)findViewById((requestCode%2==1?stPosID:edPosID)[(requestCode-1)/2])).setText(data.getStringExtra("title"));
-                (requestCode%2==1?stAddr:edAddr)[(requestCode-1)/2] = data.getStringExtra("addr");
-                (requestCode%2==1?stPosVal:edPosVal)[(requestCode-1)/2] = data.getDoubleArrayExtra("point");
+                lastTitle = data.getStringExtra("title");
+                ((TextView)findViewById((requestCode%2==1?stPosID:edPosID)[(requestCode-1)/2])).setText(lastTitle);
+
+                lastAddr = data.getStringExtra("addr");
+                (requestCode%2==1?stAddr:edAddr)[(requestCode-1)/2] = lastAddr;
+
+                lastPos = data.getDoubleArrayExtra("point");
+                (requestCode%2==1?stPosVal:edPosVal)[(requestCode-1)/2] = lastPos;
             }
         }
     }
@@ -67,9 +77,26 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
         //테이블 틀 생성
         seEdit = (TableLayout) findViewById(R.id.seEdit);
         sePosSettingConfirm = (Button) findViewById(R.id.sePosSettingConfirm);
+        copyToAllBtn = (Button)findViewById(R.id.copyToAllBtn);
 
-        seParams = new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 3);
+        seParams = new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 9);
         seParams.setMargins(1,0,1,0);
+
+        copyToAllBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                for(int i=0; i<tour.difdays; ++i){
+                    stAddr[i] = lastAddr;
+                    edAddr[i] = lastAddr;
+
+                    stPosVal[i] = lastPos;
+                    edPosVal[i] = lastPos;
+
+                    ((TextView)findViewById(stPosID[i])).setText(lastTitle);
+                    ((TextView)findViewById(edPosID[i])).setText(lastTitle);
+                }
+            }
+        });
 
         sePosSettingConfirm.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -159,7 +186,7 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
             text.setGravity(Gravity.CENTER_VERTICAL);
             text.setTextSize(TypedValue.COMPLEX_UNIT_DIP, fontSize);
             text.setHeight(100);
-            tr.addView(text, new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 1));
+            tr.addView(text, new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 4));
 
             //아직 위치값을 넣지 않았기 때문에 실행해보기 위해서 주석처리 해놓음
 
