@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.codetour.R;
+import com.example.codetour.RouteCheck;
 import com.example.codetour.Spot;
 import com.example.codetour.vo.Place;
 
@@ -51,11 +52,11 @@ public class PlaceItemFragment extends Fragment implements PlaceItemContract.Vie
 //        placeAdd = v.findViewById(R.id.placeAddButton);
 //        placeDeleteButton = v.findViewById(R.id.placeDeleteButton);
 
-        // 장소 추가 버튼 이벤트 핸들러
+////         장소 추가 버튼 이벤트 핸들러
 //        placeAdd.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//                placeItemPresenter.loadRecommendPlace();
+//                placeItemPresenter.loadRecommendPlace(new Spot());
 //            }
 //        });
 //
@@ -96,7 +97,14 @@ public class PlaceItemFragment extends Fragment implements PlaceItemContract.Vie
     }
 
     // 추천장소를 화면에 표시하는 메서드
-    public void showRecommendPlace(List<Spot> placeList){
+    public void showRecommendPlace(int i){
+        List<Spot> spotList = placeItemPresenter.loadRecommendPlace(dataset.get(i));
+        ((RouteCheck)getActivity()).showRecommendMarkers(spotList);
+
+    }
+
+    @Override
+    public void showRecommendPlace(List<Spot> placeList) {
 
     }
 

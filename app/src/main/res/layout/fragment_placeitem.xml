@@ -91,7 +91,7 @@
         android:text=""
         />
 
-    <!--&lt;!&ndash;장소 추가 버튼&ndash;&gt;-->
+    <!--장소 추가 버튼-->
     <!--<TextView-->
         <!--android:id="@+id/placeAddButton"-->
         <!--android:layout_width="match_parent"-->
@@ -103,5 +103,5 @@
         <!--android:layout_marginTop="5dp"-->
         <!--android:layout_marginBottom="5dp"-->
         <!--android:background="@drawable/edge"-->
-        />
+        <!--/>-->
 </LinearLayout>

@@ -49,7 +49,7 @@ public class PlaceItemViewAdapter extends BaseAdapter {
 
     // placeList의 바뀐 내용을 View에 표시
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         View itemLayout = view;
         if(itemLayout == null){
             itemLayout = layoutInflater.inflate(R.layout.fragment_placeitem,viewGroup, false);
@@ -59,13 +59,21 @@ public class PlaceItemViewAdapter extends BaseAdapter {
         TextView tel = itemLayout.findViewById(R.id.placeTel);
         TextView address = itemLayout.findViewById(R.id.placeAddress);
         ImageView image = itemLayout.findViewById(R.id.placeImage);
-
+//        TextView addButton = itemLayout.findViewById(R.id.placeAddButton);
 
         title.setText(spotList.get(i).getTitle());
         tel.setText(spotList.get(i).getTel());
         address.setText(spotList.get(i).getAddress());
 //        Glide.with(view.getContext()).load(spotList.get(i).getFirstImage2()).into(image); // nullPointerException
         Glide.with(itemLayout.getContext()).load(spotList.get(i).getFirstImage2()).into(image);
+
+//        addButton.setOnClickListener(new View.OnClickListener(){
+//
+//            @Override
+//            public void onClick(View view) {
+//                new PlaceItemFragment().showRecommendPlace(i);
+//            }
+//        });
         return itemLayout;
     }
 }

@@ -232,6 +232,33 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
     }
 
+    public void showRecommendMarkers(List<Spot> spotList){
+        // 마커 리스트 테스트용도
+        recommendedPlaceList = new ArrayList<>();
+
+        for(int i=0; i<spotList.size(); i++){
+            final TMapMarkerItem markerItem = new TMapMarkerItem();
+            final Spot spot  = (Spot)spotList.get(i);
+            TMapPoint tMapPoint = new TMapPoint(spot.getPos()[1],spot.getPos()[0]);
+            // 마커 아이콘
+            Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.r_marker);
+
+            markerItem.setIcon(bitmap);
+            markerItem.setPosition(0.5f,1.0f);
+            markerItem.setTMapPoint(tMapPoint);
+            markerItem.setName(spot.getTitle());
+            markerItem.setID("recommend");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tMapView.addMarkerItem(spot.getTitle(),markerItem);
+                }
+            });
+
+            recommendedPlaceList.add(markerItem);
+        }
+    }
+
     // 마커 여러개 지도에 표시
     public void showMarkers(List<Serializable> placeList){
         // 마커 리스트 테스트용도

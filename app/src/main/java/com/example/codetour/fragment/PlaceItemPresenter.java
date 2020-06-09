@@ -1,8 +1,10 @@
 package com.example.codetour.fragment;
 
+import com.example.codetour.Recommend;
 import com.example.codetour.Spot;
 import com.example.codetour.vo.Place;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class PlaceItemPresenter implements PlaceItemContract.Presenter {
@@ -14,10 +16,9 @@ public class PlaceItemPresenter implements PlaceItemContract.Presenter {
     }
 
     @Override
-    public void loadRecommendPlace() {
-        List<Spot> placeList = null ;
+    public List<Spot> loadRecommendPlace(Spot spot) {
         // 서비스로 부터 장소 추가 받아오기 메서드
-        placeItemView.showRecommendPlace(placeList);
+        return new Recommend().recommendSpot(spot);
     }
 
     @Override
