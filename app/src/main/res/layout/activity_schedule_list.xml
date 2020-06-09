@@ -9,7 +9,8 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/colorUser">
 
         <Button
             android:id="@+id/home_btn"
@@ -27,6 +28,7 @@
             android:paddingTop="5dp"
             android:layout_gravity="center"
             android:text="일정확인하기"
+            android:textColor="@color/white"
             android:textSize="25sp"/>
 
     </LinearLayout>
