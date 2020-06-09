@@ -1,9 +1,16 @@
 package com.example.codetour.fragment;
 
 
+import com.example.codetour.ScheduleService;
+import com.example.codetour.TripSchedule;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class ScheduleListItemPresenter implements ScheduleListItemContract.Presenter {
 
     private ScheduleListItemContract.View scheduleListItemView;
+
     //모델 결정 후 모델연결
 
 
@@ -25,8 +32,12 @@ public class ScheduleListItemPresenter implements ScheduleListItemContract.Prese
     @Override
     public void Delete_Schedule(int position) {
 
-        //연결 된 모델에서 position위치의 tripSchedule삭제
-        System.out.println(position+"번 째가 삭제되었습니다.");
+        ScheduleService.getInstance().tripScheduleList.remove(position);
+        for(int i=position;i<ScheduleService.getInstance().tripScheduleList.size()-2;i++){
+            ScheduleService.getInstance().tripScheduleList.get(i+1).setList_pos(i);
+            ScheduleService.getInstance().tripScheduleList.set(i, ScheduleService.getInstance().tripScheduleList.get(i+1));
+        }
+
         scheduleListItemView.UpdateView();
     }
 }

@@ -63,7 +63,7 @@ public class ScheduleListAdapter extends BaseAdapter implements ScheduleListItem
     }
 
     public void UpdateView(){
-        //notifyDataSetChanged();
+        notifyDataSetChanged();
     }
 
 }
