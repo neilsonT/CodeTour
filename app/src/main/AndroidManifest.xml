@@ -20,6 +20,8 @@
         <activity android:name=".InputActivity" />
         <activity android:name=".SePosSetting" />
         <activity android:name=".ScheduleList" />
+        <activity android:name=".Delete_Popup"
+            android:theme="@android:style/Theme.Holo.Dialog"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
