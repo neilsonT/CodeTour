@@ -20,6 +20,7 @@ public class TripScheduleManager {
         public void addSchedule(TripSchedule tripSchedule){
             tripScheduleList.add(tripSchedule);
         }
+        public void setSchedule(int idx, TripSchedule tripSchedule){ tripScheduleList.set(idx, tripSchedule); }
         public void deleteSchedule(){}
         public void loadSchedule(){}
 
