@@ -22,6 +22,8 @@ public class BalloonOverlayView extends FrameLayout {
     private TextView content1;
     private TextView content2;
 
+    String imageStatus = "no";
+
     public BalloonOverlayView(Context context, String imageURL, String name, String tel, String address) {
 
         super(context);
@@ -36,6 +38,7 @@ public class BalloonOverlayView extends FrameLayout {
                 LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.NO_GRAVITY;
         addView(layout, params);
+        imageStatus = "yes";
     }
 
 
@@ -58,6 +61,7 @@ public class BalloonOverlayView extends FrameLayout {
         setSubTitle(tel);
         setContent1(address);
 //        setContent2();
+
     }
 
     public void setTitle(String str) {
@@ -71,4 +75,8 @@ public class BalloonOverlayView extends FrameLayout {
     public void setContent1(String str) { content1.setText(str);}
 
     public void setContent2(String str) { content2.setText(str);}
+
+    public String getImageStatus() {
+        return imageStatus;
+    }
 }
