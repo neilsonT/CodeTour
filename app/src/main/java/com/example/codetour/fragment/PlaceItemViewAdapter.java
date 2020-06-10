@@ -61,7 +61,7 @@ public class PlaceItemViewAdapter extends BaseAdapter {
         ImageView image = itemLayout.findViewById(R.id.placeImage);
 //        TextView addButton = itemLayout.findViewById(R.id.placeAddButton);
 
-        title.setText(spotList.get(i).getTitle());
+        title.setText(i+1+". "+spotList.get(i).getTitle());
         tel.setText(spotList.get(i).getTel());
         address.setText(spotList.get(i).getAddress());
 //        Glide.with(view.getContext()).load(spotList.get(i).getFirstImage2()).into(image); // nullPointerException
