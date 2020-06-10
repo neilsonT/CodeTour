@@ -125,6 +125,8 @@ public class TripSchedule implements Serializable{
             tourBudget = obj.getInt("tourBudget");
             accBudget = obj.getInt("accBudget");
 
+            save = obj.getBoolean("save");
+
             food_selection = new ArrayList<Integer>();
             JSONArray food_selection_tmp = obj.getJSONArray("food_selection");
             int len_food = food_selection_tmp.length();
@@ -220,6 +222,8 @@ public class TripSchedule implements Serializable{
             ret.put("pNum", pNum);
             ret.put("tourBudget", tourBudget);
             ret.put("accBudget", accBudget);
+
+            ret.put("save", save);
 
             int food_selection_len = food_selection.size();
             for(int i=0; i<food_selection_len; ++i){

@@ -1,5 +1,7 @@
 package com.example.codetour;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,5 +38,10 @@ public class ScheduleListPresenter implements ScheduleListContract.Presenter {
         rec.setTripSchedule(ScheduleService.getInstance().tripScheduleList.get(position));
         scheduleListView.showSchedule(rec);
 
+    }
+
+    @Override
+    public void loadScheduleList(Context ctx, String key){
+        ScheduleService.getInstance().tripScheduleList = SaveLoadManager.loadTripScheduleList(ctx, key);
     }
 }

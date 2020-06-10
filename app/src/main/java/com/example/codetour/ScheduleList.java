@@ -29,8 +29,8 @@ public class ScheduleList extends AppCompatActivity implements ScheduleListContr
         textView.setPaintFlags(textView.getPaintFlags() | Paint.FAKE_BOLD_TEXT_FLAG);
 
         scheduleListPresenter = new ScheduleListPresenter(this);
+        scheduleListPresenter.loadScheduleList(this, "scheduleList");
         scheduleListPresenter.getScheduleList();
-
     }
 
     public void backMainActivity(View view){    //홈으로 돌아가는 버튼 onClick
