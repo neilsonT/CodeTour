@@ -34,9 +34,7 @@ public class Recommend implements Serializable {
 
         List<Spot> spots = new ArrayList<>();
         spots = TourApiManager.getInstance().getSpotUseDist(spot);//스팟 근처의 장소들을 받아옵니다.
-
         return spots;//장소 없을경우 null return하는 경우 존재합니다
-
     }
 
     public void recommendCourse() {
@@ -246,13 +244,14 @@ public class Recommend implements Serializable {
             System.out.println("left size:"+left.size());
             System.out.println("right size:"+right.size());
 
-            if(right.size()==0){
-                point_list=SortPoint(left);
-            }
-            else if(left.size()==0){
-                point_list=SortPoint(right);
-            }
-            else {
+//            if(right.size()==0){
+//                point_list=SortPoint(left);
+//            }
+//            else if(left.size()==0){
+//                point_list=SortPoint(right);
+//            }
+//            else
+            {
                 Collections.reverse(right);
                 point_list.addAll(left);
                 point_list.addAll(right);

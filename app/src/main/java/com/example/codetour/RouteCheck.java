@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.example.codetour.TmapOverlay.MarkerOverlay;
+import com.example.codetour.fragment.PlaceFragment;
 import com.example.codetour.fragment.PlaceItemFragment;
 import com.example.codetour.vo.Place;
 import com.skt.Tmap.TMapInfo;
@@ -45,6 +46,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     // fragment
     private FragmentManager fm;
     private PlaceItemFragment placeItemFragment;
+//    private PlaceFragment placeFragment;
 
     // 티맵 지도
     private TMapView tMapView;
@@ -92,8 +94,10 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         // 경로 정보에 대한 Fragment 관리
         fm = getSupportFragmentManager();
         placeItemFragment = (PlaceItemFragment)fm.findFragmentById(R.id.placeItemFragment);
+//        placeFragment = (PlaceFragment)fm.findFragmentById(R.id.placeFragment);
         fm.beginTransaction().addToBackStack(null);
         hideFragment(placeItemFragment);
+//        hideFragment(placeFragment);
 
         // 완성된 여행 일정; edited by 대양; tripSchedule 클래스를 직접 받는 대신, recommend 클래스 안에 있는 것을 갖도록 함.
         Intent intent = getIntent();
@@ -165,7 +169,9 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     // 경로 보기 설명 버튼 누르면 작동. 경로의 정보가 설정되고 fragment가 표시된다
     public void openPlaceList(View view) {
         setPlaceDetail(courseList.get(day).getSpotList());
+//        hideFragment(placeFragment);
         showFragment(placeItemFragment);
+        Log.d("tag","message");
     }
 
     // fragment 숨기기
@@ -325,18 +331,27 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     }
 
 
-    public void showMarkerOverlay(Serializable place,TMapPoint tmapPoint){
-        Spot spot = (Spot) place;
-        markerOverlay = new MarkerOverlay(getApplicationContext(), spot.getFirstImage2(),spot.getTitle() ,spot.getTel() , spot.getAddress());
+    public void showMarkerOverlay(final Serializable place, final TMapPoint tmapPoint){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                Spot spot = (Spot) place;
+                markerOverlay = new MarkerOverlay(getApplicationContext(), spot.getFirstImage2(),spot.getTitle() ,spot.getTel() , spot.getAddress());
+                markerOverlay.setID("id");
+                markerOverlay.setPosition(0.0f, 0.0f);
+                markerOverlay.setTMapPoint(tmapPoint);
+                Log.d("image",markerOverlay.getImageStatus());
+                try {
+                    Thread.sleep(300);
+                    Log.d("image","sleep");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Log.d("image","addMarker");
                 tMapView.addMarkerItem2("id", markerOverlay);
             }
         });
-        markerOverlay.setID("id");
-        markerOverlay.setPosition(0.0f, 0.0f);
-        markerOverlay.setTMapPoint(tmapPoint);
+
     }
 
     public void hideMarkerOverlay(MarkerOverlay markerOverlay){

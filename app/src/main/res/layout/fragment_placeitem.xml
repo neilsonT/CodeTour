@@ -19,14 +19,14 @@
             <!-- 장소 이미지 -->
             <ImageView
                 android:id="@+id/placeImage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
 
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                 />
+                android:layout_marginStart="5dp"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="5dp" />
 
             <!-- 장소 이름 -->
             <TextView
@@ -39,7 +39,7 @@
                 android:layout_marginRight="5dp"
                 android:layout_toRightOf="@+id/placeImage"
                 android:text="장소 이름"
-                android:textSize="25sp" />
+                android:textSize="18sp" />
 
 
             <!-- 장소 전화번호 -->
@@ -54,7 +54,7 @@
                 android:paddingLeft="0dp"
                 android:text="010-0000-0000"
                 android:textColor="@android:color/holo_blue_light"
-                android:textSize="15sp" />
+                android:textSize="13sp" />
 
             <!-- 장소 주소 -->
             <TextView
@@ -67,7 +67,8 @@
                 android:layout_toEndOf="@+id/placeImage"
                 android:paddingLeft="0dp"
                 android:text="주소"
-                android:textSize="18sp" />
+                android:ellipsize="end"
+                android:textSize="13sp" />
 
             <!--&lt;!&ndash; 장소 삭제 버튼 &ndash;&gt;-->
             <!--<ImageButton-->
@@ -83,13 +84,13 @@
 
     </LinearLayout>
 
-    <!--장소 상세설명-->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text=""
-        />
+    <!--&lt;!&ndash;장소 상세설명&ndash;&gt;-->
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_margin="8dp"-->
+        <!--android:text=""-->
+        <!--/>-->
 
     <!--장소 추가 버튼-->
     <!--<TextView-->

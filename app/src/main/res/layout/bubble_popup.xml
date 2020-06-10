@@ -13,9 +13,11 @@
 
         <ImageView
             android:id="@+id/bubble_placeImage"
-            android:layout_marginLeft="10dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="7dp"
+            android:scaleType="centerCrop" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,7 +33,7 @@
             android:layout_height="wrap_content"
             android:textSize="17sp"
             android:textStyle="bold"
-            android:paddingTop="10dp"/>
+            android:paddingTop="12dp"/>
 
         <TextView
             android:id="@+id/bubble_subtitle"

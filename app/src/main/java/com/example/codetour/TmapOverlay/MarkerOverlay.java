@@ -91,4 +91,8 @@ public class MarkerOverlay extends TMapMarkerItem2 {
         mapView.showCallOutViewWithMarkerItemID(getID());
         return false;
     }
+
+    public String getImageStatus() {
+        return balloonView.getImageStatus();
+    }
 }

@@ -37,15 +37,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="save"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:textAlignment="center"
-                android:background="@drawable/round_border"
                 android:layout_marginLeft="3dp"
                 android:layout_marginRight="3dp"
                 android:layout_weight="15"
-                android:onClick="saveSchedule"/>
+                android:background="#F27405"
+                android:onClick="saveSchedule"
+                android:text="save"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+            <!--android:background="@drawable/round_border"-->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -54,9 +56,13 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textAlignment="center"
-                android:background="@drawable/round_border"
+
                 android:layout_weight="15"
+                android:background="#F27405"
+                android:textColor="#FFFFFF"
                 android:onClick="cancel"/>
+            <!--android:background="@drawable/round_border"-->
+
 
     </LinearLayout>
 
@@ -81,6 +87,14 @@
             android:name="com.example.codetour.fragment.PlaceItemFragment"
             />
 
+        <!--&lt;!&ndash; 간단한 장소 정보 제공 &ndash;&gt;-->
+        <!--<fragment-->
+            <!--android:id="@+id/placeFragment"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:name="com.example.codetour.fragment.PlaceFragment"-->
+            <!--/>-->
 
     </RelativeLayout>
 
