@@ -23,6 +23,7 @@ public class CourseManager implements Serializable {
 
     //생성자는 load를 위해, toJSONObj는 save를 위해 사용.
     public CourseManager(JSONObject obj){
+//System.out.println("    Loading CourseManager...");
         courseList = new ArrayList<Course>();
         try {
             JSONArray courseListTmp = obj.getJSONArray("courseList");
@@ -30,10 +31,12 @@ public class CourseManager implements Serializable {
             for(int i=0; i<len; ++i){
                 courseList.add(new Course(courseListTmp.getJSONObject(i)));
             }
+//System.out.println("    Complete");
         }
-        catch(Exception e){}
+        catch(Exception e){ System.out.println("Error at Loading CourseManager"); }
     }
     public JSONObject toJSONObj(){
+//System.out.println("    Saving CourseManager...");
         JSONObject ret = new JSONObject();
         JSONArray courseListTemp = new JSONArray();
         try{
@@ -42,8 +45,9 @@ public class CourseManager implements Serializable {
                 courseListTemp.put(courseList.get(i).toJSONObj());
             }
             ret.put("courseList", courseListTemp);
+//System.out.println("    Complete");
         }
-        catch(Exception e){}
+        catch(Exception e){ System.out.println("Error at Saving CourseManager"); }
         return ret;
     }
 

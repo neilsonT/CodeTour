@@ -1,5 +1,7 @@
 package com.example.codetour;
 
+import android.util.Log;
+
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -87,6 +89,7 @@ public class Spot implements Serializable {
 
     //생성자는 load를 위해, toJSONObj는 save를 위해 사용.
     public Spot(JSONObject obj){
+//System.out.print("                Loading Spot...");
         try {
             pos = new double[2];
             pos[0] = obj.getDouble("posX");
@@ -102,10 +105,12 @@ public class Spot implements Serializable {
             firstImage2 = obj.getString("firstImage2");
             //openTime = new int[ ?? ];
             //closedTime = new int[ ?? ];
+//System.out.println("Complete");
         }
-        catch(Exception e){}
+        catch(Exception e){ System.out.println("Error at Loading Spot"); }
     }
     public JSONObject toJSONObj(){
+//System.out.print("                Saving Spot...");
         JSONObject ret = new JSONObject();
         try{
             ret.put("posX", pos[0]);
@@ -118,8 +123,9 @@ public class Spot implements Serializable {
             ret.put("address", address);
             ret.put("RorT", RorT);
             ret.put("firstImage2",firstImage2);
+//System.out.println("Complete");
         }
-        catch(Exception e){}
+        catch(Exception e){ System.out.println("Error at Saving Spot"); }
         return ret;
     }
 

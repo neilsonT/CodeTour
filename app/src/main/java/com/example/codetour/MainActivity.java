@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-    public class MainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity {
         //상수 & 임시 상수 설정
         final int days = 4;
         final int code_sePosSetting = 1;
@@ -20,7 +23,8 @@ import android.widget.Button;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //ScheduleService.getInstance().tripScheduleList = SaveLoadManager.loadTripScheduleList(this, "scheduleList");
+        ScheduleService.getInstance().tripScheduleList = SaveLoadManager.loadTripScheduleList(this, "scheduleList");
+        //SaveLoadManager.saveTripScheduleList(this, "scheduleList", new ArrayList<TripSchedule>());
 
         //se가 내부적으로 Exception을 throw하므로 try-catch를 사용
         //sePos는 이후 일정에 해당하는 class로 대체될 예정

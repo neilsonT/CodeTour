@@ -16,6 +16,7 @@ public class ScheduleService {
     public void addSchedule(TripSchedule tripSchedule){
         tripScheduleManager.addSchedule(tripSchedule);
     }
+    public void setSchedule(int idx, TripSchedule tripSchedule){ tripScheduleManager.setSchedule(idx, tripSchedule); }
     public void deleteSchedule(){}
     public void loadSchedule(){}
 }

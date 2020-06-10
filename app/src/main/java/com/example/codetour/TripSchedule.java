@@ -108,6 +108,7 @@ public class TripSchedule implements Serializable{
 
     //생성자는 load를 위해, toJSONObj는 save를 위해 사용.
     public TripSchedule(JSONObject obj){
+//System.out.println("Loading TripSchedule...");
         try {
             courseManager = new CourseManager(obj.getJSONObject("courseManager"));
             name = obj.getString("name");
@@ -193,10 +194,12 @@ public class TripSchedule implements Serializable{
                 sigungucode[0][i] = sigungucodeTemp.getInt(2*i  );
                 sigungucode[1][i] = sigungucodeTemp.getInt(2*i+1);
             }
+//System.out.println("Complete");
         }
-        catch(Exception e){}
+        catch(Exception e){ System.out.println("Error at Loading TripSchedule"); }
     }
     public JSONObject toJSONObj(){
+//System.out.println("Saving TripSchedule...");
         JSONObject ret = new JSONObject();
         JSONArray food_selection_tmp = new JSONArray();
         JSONArray theme_selection_tmp = new JSONArray();
@@ -238,8 +241,8 @@ public class TripSchedule implements Serializable{
             ret.put("theme_selection", theme_selection_tmp);
 
             for(int i=0; i<difdays; ++i){
-                startTimeTmp.put(startTime[i]);
-                endTimeTmp.put(endTime[i]);
+                //startTimeTmp.put(startTime[i]);
+                //endTimeTmp.put(endTime[i]);
                 startPossTmp.put(startPoss.get(i));
                 endPossTmp.put(endPoss.get(i));
 
@@ -256,6 +259,7 @@ public class TripSchedule implements Serializable{
                 sigungucodeTemp.put(sigungucode[0][i]);
                 sigungucodeTemp.put(sigungucode[1][i]);
             }
+
             ret.put("startTime", startTimeTmp);
             ret.put("endTime", endTimeTmp);
             ret.put("startPoss", startPossTmp);
@@ -267,8 +271,10 @@ public class TripSchedule implements Serializable{
             ret.put("endPosVal", endPosValTemp);
             ret.put("areacode", areacodeTemp);
             ret.put("sigungucode", sigungucodeTemp);
+
+//System.out.println("Complete");
         }
-        catch(Exception e){}
+        catch(Exception e){ System.out.println("Error at Saving TripSchedule"); }
         return ret;
     }
 

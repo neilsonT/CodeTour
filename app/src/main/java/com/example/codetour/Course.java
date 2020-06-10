@@ -40,6 +40,7 @@ public class Course implements Serializable {
 
     //생성자는 load를 위해, toJSONObj는 save를 위해 사용.
     public Course(JSONObject obj){
+//System.out.println("        Loading Course...");
         try{
             spotManager = new SpotManager(obj.getJSONObject("spotManager"));
             order = obj.getInt("order");
@@ -50,49 +51,55 @@ public class Course implements Serializable {
 
             //spotList = new ArrayList<Spot>();
             timeList = new int[countSpot];
-            JSONArray timeListTemp = obj.getJSONArray("timeList");
+            //JSONArray timeListTemp = obj.getJSONArray("timeList");
             //JSONArray spotListTemp = obj.getJSONArray("spotList");
             for(int i=0; i<countSpot; ++i){
-                timeList[i] = timeListTemp.getInt(i);
+                //timeList[i] = timeListTemp.getInt(i);
                 //spotList.add(new Spot(spotListTemp.getJSONObject(i)));
             }
 
-            startPos = new int[2];
-            startPos[0] = obj.getInt("sPosX");
-            startPos[1] = obj.getInt("sPosY");
+            //startPos = new int[2];
+            //startPos[0] = obj.getInt("sPosX");
+            //startPos[1] = obj.getInt("sPosY");
 
-            endPos = new int[2];
-            endPos[0] = obj.getInt("ePosX");
-            endPos[1] = obj.getInt("ePosY");
+            //endPos = new int[2];
+            //endPos[0] = obj.getInt("ePosX");
+            //endPos[1] = obj.getInt("ePosY");
 
             //startTime = new int[ ?? ];
             //endTime = new int[ ?? ];
+//System.out.println("        Complete");
         }
-        catch(Exception e){}
+        catch(Exception e){ System.out.println("Error at Loading Course"); }
     }
     public JSONObject toJSONObj(){
+//System.out.println("        Saving Course...");
         JSONObject ret = new JSONObject();
         JSONArray spotListTmp = new JSONArray();
         JSONArray timeListTmp = new JSONArray();
         try{
             ret.put("spotManager", spotManager.toJSONObj());
+
             ret.put("order", order);
             ret.put("countSpot", countSpot);
-            ret.put("sPosX", startPos[0]);
-            ret.put("sPosY", startPos[1]);
-            ret.put("ePosX", endPos[0]);
-            ret.put("ePosY", endPos[1]);
+            //ret.put("sPosX", startPos[0]);
+            //ret.put("sPosY", startPos[1]);
+            //ret.put("ePosX", endPos[0]);
+            //ret.put("ePosY", endPos[1]);
 
             for(int i=0; i<countSpot; ++i){
                 //spotListTmp.put(spotList.get(i).toJSONObj());
-                timeListTmp.put(timeList[i]);
+                //timeListTmp.put(timeList[i]);
                 //startTime ??
                 //endTime ??
             }
             //ret.put("spotList", spotListTmp);
-            ret.put("timeList", timeListTmp);
+            //ret.put("timeList", timeListTmp);
+
+//System.out.println("        Complete");
         }
-        catch(Exception e){}
+        catch(Exception e){ System.out.println("Error at Saving Course"); }
+
         return ret;
     }
     public List<Serializable> getSpotList(){
