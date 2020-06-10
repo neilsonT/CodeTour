@@ -241,16 +241,13 @@ public class Recommend implements Serializable {
                 }
             }
 
-            System.out.println("left size:"+left.size());
-            System.out.println("right size:"+right.size());
-
-//            if(right.size()==0){
-//                point_list=SortPoint(left);
-//            }
-//            else if(left.size()==0){
-//                point_list=SortPoint(right);
-//            }
-//            else
+            if(right.size()==0){
+                point_list=SortPoint(left);
+            }
+            else if(left.size()==0){
+                point_list=SortPoint(right);
+            }
+            else
             {
                 Collections.reverse(right);
                 point_list.addAll(left);
@@ -310,6 +307,11 @@ public class Recommend implements Serializable {
             return_list.addAll(down_list);
             Collections.reverse(up_list);
             return_list.addAll(up_list);
+        }else
+        {
+            return_list.addAll(up_list);
+            Collections.reverse((down_list));
+            return_list.addAll(down_list);
         }
 
         return return_list;

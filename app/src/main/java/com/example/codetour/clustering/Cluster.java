@@ -21,6 +21,7 @@ public class Cluster implements Serializable {
 
     public void clear() {
         points.clear();
+        select=false;
     }
 
     public void addPoint(Point point) {

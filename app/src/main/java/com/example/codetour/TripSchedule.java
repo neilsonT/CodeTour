@@ -105,7 +105,9 @@ public class TripSchedule implements Serializable{
         this.save=true;
         this.list_pos=list_pos;
     }
-
+    public void setName(String name){
+        this.name=name;
+    }
     //생성자는 load를 위해, toJSONObj는 save를 위해 사용.
     public TripSchedule(JSONObject obj){
         try {

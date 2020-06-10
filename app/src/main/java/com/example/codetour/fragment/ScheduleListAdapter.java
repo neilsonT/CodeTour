@@ -1,6 +1,7 @@
 package com.example.codetour.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.codetour.Delete_Popup;
 import com.example.codetour.R;
+import com.example.codetour.ScheduleListPresenter;
+import com.example.codetour.ScheduleService;
 import com.example.codetour.TripSchedule;
 
 import java.util.List;
@@ -55,12 +59,18 @@ public class ScheduleListAdapter extends BaseAdapter implements ScheduleListItem
 
         delete_btn.setOnClickListener(new Button.OnClickListener(){
                 public void onClick(View v){
+                    String name= ScheduleService.getInstance().tripScheduleList.get(position).getName();
                     scheduleListItemPresenter.Delete_Schedule(position);
+                    Intent intent = new Intent(mContext, Delete_Popup.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("name",name);
+                    mContext.startActivity(intent);
                 }
         });
 
         return view;
     }
+
 
     public void UpdateView(){
         notifyDataSetChanged();
