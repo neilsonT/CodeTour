@@ -20,6 +20,7 @@ import android.widget.Button;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //ScheduleService.getInstance().tripScheduleList = SaveLoadManager.loadTripScheduleList(this, "scheduleList");
 
         //se가 내부적으로 Exception을 throw하므로 try-catch를 사용
         //sePos는 이후 일정에 해당하는 class로 대체될 예정

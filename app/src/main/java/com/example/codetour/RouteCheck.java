@@ -354,7 +354,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
             ScheduleService.getInstance().addSchedule(tripSchedule);
         }
 
-        SaveLoadManager.saveTripScheduleList(this, "scheduleList", ScheduleService.getInstance().tripScheduleList);
+        //SaveLoadManager.saveTripScheduleList(this, "scheduleList", ScheduleService.getInstance().tripScheduleList);
 
         Intent intent = new Intent(this,ScheduleList.class);
         startActivityForResult(intent,0);

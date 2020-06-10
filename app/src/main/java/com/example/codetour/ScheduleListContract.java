@@ -13,6 +13,5 @@ public interface ScheduleListContract{
     interface Presenter extends BaseContract.Presenter<View>{
         void getScheduleList();
         void getSchdule(int position);
-        void loadScheduleList(Context ctx, String key);
     }
 }
