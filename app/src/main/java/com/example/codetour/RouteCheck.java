@@ -366,6 +366,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         }
         else{
             tripSchedule.setList_pos(ScheduleService.getInstance().tripScheduleList.size());
+            tripSchedule.setName("일정"+ScheduleService.getInstance().tripScheduleList.size());
             ScheduleService.getInstance().addSchedule(tripSchedule);
         }
 
