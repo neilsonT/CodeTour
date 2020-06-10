@@ -39,9 +39,4 @@ public class ScheduleListPresenter implements ScheduleListContract.Presenter {
         scheduleListView.showSchedule(rec);
 
     }
-
-    @Override
-    public void loadScheduleList(Context ctx, String key){
-        ScheduleService.getInstance().tripScheduleList = SaveLoadManager.loadTripScheduleList(ctx, key);
-    }
 }
