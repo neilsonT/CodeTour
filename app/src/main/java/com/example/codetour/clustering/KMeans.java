@@ -48,7 +48,7 @@ public class KMeans implements Serializable {
         List<Point> tmp_list=new ArrayList<Point>();
         //System.out.println("areaCode, sigungoCode, cat1, cat2 : "+areaCode+" ,"+sigunguCode+" ,"+cat1+" ,"+cat2);
         tmp_list=TourApiManager.getInstance().getPoint(areaCode,sigunguCode,cat1,cat2);
-        if(tmp_list.size()!=0)
+        if(tmp_list!=null)
             points.addAll(tmp_list);
         //System.out.println("tmp_list 출력 시작");
         //for(int i=0; i<tmp_list.size(); ++i) System.out.println(tmp_list.get(i).getContentid());
