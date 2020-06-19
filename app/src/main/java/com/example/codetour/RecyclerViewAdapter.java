@@ -79,13 +79,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list, parent, false);
-        System.out.println("생성 완료");
         return new CustomViewHolder(view);
     }
     //RecyclerView가 갱신될 때? 발생하는 이벤트
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-        System.out.println("bind");
         holder.title.setText(itemLists.get(position).getTitle());
         holder.address.setText(itemLists.get(position).getAddress());
 
@@ -109,12 +107,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             try{
                 TmapPOI parser = new TmapPOI(this);
                 //getAutoComplete(string) 얘가 검색해주는 함수야
-                System.out.println("검색해줘");
                 //parser.getAutoComplete(keyword);
                 itemLists=parser.execute(keyword).get();
-                System.out.println("왜 안 돼");
                 notifyDataSetChanged();
-                System.out.println("왜 왜 왜 왜 왜 왜 왜");
                 for(int i=0;i<itemLists.size();i++) {
                     Log.d("POI Name: ", itemLists.get(i).getTitle() + ", " +
                             "Address: " + itemLists.get(i).getAddress() + ", " +

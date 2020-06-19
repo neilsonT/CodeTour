@@ -38,7 +38,6 @@ public class TmapPOI extends AsyncTask<String, Void, ArrayList<PosItem>> {
             e.printStackTrace();
         }
         //adapter에 검색결과 달아주고, 데이터 갱신되었다고 알려주기.
-        System.out.println("mListData size :"+mListData.size());
         return mListData;
     }
 

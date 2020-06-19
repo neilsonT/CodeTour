@@ -28,6 +28,7 @@ public class Delete_Popup extends Activity {
         String name = intent.getStringExtra("name");
         txtText.setText(name+"이 삭제되었습니다.");
                 //"을 삭제하시겠습니까?");
+        SaveLoadManager.saveTripScheduleList(this, "scheduleList", ScheduleService.getInstance().tripScheduleList);//
     }
 
     //확인 버튼 클릭
