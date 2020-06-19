@@ -42,7 +42,7 @@ public class Recommend implements Serializable {
         HashMap<String, List> hash_map = SetUserData();
 
         for (String key : hash_map.keySet()) {
-
+            recommendSpotList=new ArrayList<>();
             List value = hash_map.get(key);
             List<Cluster> clusters = RecWithClustering(tripSchedule.areacode[0][(int) value.get(0)], tripSchedule.sigungucode[0][(int) value.get(0)],value.size());//클러스터링
             System.out.println(key+""+value.size());
@@ -53,8 +53,18 @@ public class Recommend implements Serializable {
 
                 Cluster selec_cluster = SelecClusterDistance(clusters, start_point);
                 List<Point> selec_points = SelecPoint(selec_cluster, start_point, end_point);
+                List<Spot> spots=TourApiManager.getInstance().getSpot(selec_points);
 
-                recommendSpotList = TourApiManager.getInstance().getSpot(selec_points);
+                int time=tripSchedule.startTime[0];
+                for(int j=0;j<spots.size();j++){
+                    if(j==3) {
+                        recommendSpotList.add(GetRestaurant(selec_points.get(j)));
+                        time+=2;
+                    }
+                    recommendSpotList.add(spots.get(j));
+                    time+=2;
+                }
+                //recommendSpotList = TourApiManager.getInstance().getSpot(selec_points);
                 tripSchedule.courseManager.courseList.get((int) value.get(i)).spotManager.spotList = recommendSpotList;
 
             }
@@ -62,7 +72,15 @@ public class Recommend implements Serializable {
     }
 
 
-
+    private Spot GetRestaurant(Point point){
+        Spot spot=TourApiManager.getInstance().getRestaurant(point,list_food);
+        if(spot!=null)
+            return spot;
+        else{
+            System.out.println("추천할 식당이 존재하지 않습니다.");
+            return null;
+        }
+    }
 
     private List<Cluster> RecWithClustering(int areacode, int sigungucode,int difdays) { //kMeans 클러스터링 후 return clusterList
 
@@ -215,12 +233,12 @@ public class Recommend implements Serializable {
         List<Point> point_list=new ArrayList<>();
         List<Point> tmp_list=new ArrayList<>();
         int numSpot = tripSchedule.times/2;
-        if (cluster.points.size() < numSpot) {
+        if (cluster.points.size() < 5) {
             for(int i=0;i<cluster.points.size();i++)
                 tmp_list.add(cluster.points.get(i));
         }
         else{
-            for(int i=0;i<numSpot;i++)
+            for(int i=0;i<5;i++)
                 tmp_list.add(cluster.points.get(i));
         }
 
