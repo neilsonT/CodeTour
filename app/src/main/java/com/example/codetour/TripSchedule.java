@@ -25,6 +25,7 @@ public class TripSchedule implements Serializable{
 
     String contentTypeID;
     int difdays;
+    int times;
     int pNum;
     int tourBudget;
     int accBudget;
@@ -54,6 +55,7 @@ public class TripSchedule implements Serializable{
         this.accBudget=accBudget;
         this.startTime=startTime;
         this.endTime=endTime;
+        this.times = endTime[0]-startTime[0]; //활동 시간
         this.food_selection=food_selection;
         this.theme_selection=theme_selection;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
