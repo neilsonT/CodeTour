@@ -214,13 +214,13 @@ public class Recommend implements Serializable {
 
         List<Point> point_list=new ArrayList<>();
         List<Point> tmp_list=new ArrayList<>();
-
-        if (cluster.points.size() < 5) {
+        int numSpot = tripSchedule.times/2;
+        if (cluster.points.size() < numSpot) {
             for(int i=0;i<cluster.points.size();i++)
                 tmp_list.add(cluster.points.get(i));
         }
         else{
-            for(int i=0;i<5;i++)
+            for(int i=0;i<numSpot;i++)
                 tmp_list.add(cluster.points.get(i));
         }
 
