@@ -9,7 +9,8 @@
         android:background="@drawable/box"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:weightSum="100">
 
         <ImageView
             android:id="@+id/bubble_placeImage"
@@ -17,23 +18,27 @@
             android:layout_height="80dp"
             android:layout_marginLeft="7dp"
             android:layout_marginTop="7dp"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:paddingRight="10dp"
+            android:layout_marginRight="15sp"
+            >
 
 
         <TextView
             android:id="@+id/bubble_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="17sp"
+            android:textSize="12sp"
             android:textStyle="bold"
-            android:paddingTop="12dp"/>
+            android:paddingTop="12dp"
+            android:ellipsize="end"/>
 
         <TextView
             android:id="@+id/bubble_subtitle"
@@ -41,6 +46,7 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/holo_blue_light"
             android:textSize="10sp"
+            android:ellipsize="end"
             android:textStyle="bold"/>
 
         <TextView
@@ -48,14 +54,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="10sp"
+            android:ellipsize="end"
             android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/content2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:textStyle="bold"/>
+        <Button
+            android:id="@+id/recommendButton"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:layout_gravity="right"
+            android:layout_margin="3dp"
+            android:background="#F27405"
+            android:onClick="addRecommend"
+            android:text="추가"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

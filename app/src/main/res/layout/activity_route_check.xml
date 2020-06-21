@@ -64,11 +64,11 @@
             <!--android:background="@drawable/round_border"-->
 
 
-    </LinearLayout>
+         </LinearLayout>
 
 
     <!-- 코스 상세 정보 확인 버튼 -->
-        <ImageButton
+         <ImageButton
             android:id="@+id/detailButton"
             android:layout_width="70dp"
             android:layout_height="70dp"
@@ -87,14 +87,34 @@
             android:name="com.example.codetour.fragment.PlaceItemFragment"
             />
 
-        <!--&lt;!&ndash; 간단한 장소 정보 제공 &ndash;&gt;-->
-        <!--<fragment-->
-            <!--android:id="@+id/placeFragment"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:name="com.example.codetour.fragment.PlaceFragment"-->
-            <!--/>-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            >
+
+            <Button
+                android:id="@+id/recommendButton"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:background="#F27405"
+                android:onClick="addRecommend"
+                android:text="추가"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:visibility="gone"/>
+        </LinearLayout>
+    <!--&lt;!&ndash; 간단한 장소 정보 제공 &ndash;&gt;-->
+    <!--<fragment-->
+        <!--android:id="@+id/placeFragment"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:name="com.example.codetour.fragment.PlaceFragment"-->
+        <!--/>-->
 
     </RelativeLayout>
 

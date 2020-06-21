@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
@@ -54,6 +55,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     // 사용자가 입력한 조건에 의해 완성된 여행 일정
     private TripSchedule tripSchedule;
     private List<Serializable> spotList;
+    private List<Serializable> recommendList;
 
     private Recommend rec; //added by 대양; 위의 tripSchedule 외에 추천 Spot들의 리스트들을 같이 받기 위해 작성
 
@@ -69,16 +71,19 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     private MarkerOverlay markerOverlay;
 
     // 마커 선택시 해당 장소 저장용도
-    private Place selectedPlace;
+    private TMapMarkerItem selectedPlace;
 
     // 현재 날짜 번호( 1일차, 2일차 )
     private int day;
+
+    private Button recommendButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_route_check);
 
+        recommendButton = findViewById(R.id.recommendButton);
         // presenter 생성
         schedulePresenter = new SchedulePresenter(this);
 
@@ -148,6 +153,10 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
                         tMapView.removeAllTMapPolyLine();
                     }
                 });
+                tripSchedule.getCourseList().get(day).getSpotList().clear();
+                for(Serializable s : spotList){
+                    tripSchedule.getCourseList().get(day).getSpotList().add(s);
+                }
                 day = i;
                 spotList = courseList.get(i).getSpotList();
 //                hideMarkers(courseList.get(day).getSpotList());
@@ -168,7 +177,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
     // 경로 보기 설명 버튼 누르면 작동. 경로의 정보가 설정되고 fragment가 표시된다
     public void openPlaceList(View view) {
-        setPlaceDetail(courseList.get(day).getSpotList());
+        setPlaceDetail(spotList);
 //        hideFragment(placeFragment);
         showFragment(placeItemFragment);
         Log.d("tag","message");
@@ -205,7 +214,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     }
 
     // 마커 하나 추가
-    public void showMarker(Parcelable place){
+    public void showMarker(Serializable place){
         final TMapMarkerItem markerItem = new TMapMarkerItem();
 
         TMapPoint tMapPoint = new TMapPoint(37.570841, 126.985302);
@@ -228,22 +237,29 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     }
 
     // 마커 하나 삭제
-    public void hideMarker(final Parcelable place){
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                tMapView.removeMarkerItem(((Place)place).getName());
+    public void hideMarker(final Serializable place){
+        for(int i=0; i<spotList.size(); i++){
+            if(((Spot)spotList.get(i)).getTitle().equals(((Spot)place).getTitle())){
+                tMapPointList.remove(i);
+                spotList.remove(i);
+                break;
             }
-        });
-
+        }
+        showMarkers(spotList);
     }
 
-    public void showRecommendMarkers(List<Spot> spotList){
-        // 마커 리스트 테스트용도
+    public void showRecommendMarkers(List<Spot> spotList,int num){
+        Log.d("showRecommend 호출", "size : "+String.valueOf(spotList.size()));
+        hideFragment(placeItemFragment);
+        recommendList = new ArrayList<>();
+        recommendList.addAll(spotList);
+
         recommendedPlaceList = new ArrayList<>();
 
+        tMapPointList.clear();
+
         for(int i=0; i<spotList.size(); i++){
-            final TMapMarkerItem markerItem = new TMapMarkerItem();
+            TMapMarkerItem markerItem = new TMapMarkerItem();
             final Spot spot  = (Spot)spotList.get(i);
             TMapPoint tMapPoint = new TMapPoint(spot.getPos()[1],spot.getPos()[0]);
             // 마커 아이콘
@@ -252,21 +268,57 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
             markerItem.setIcon(bitmap);
             markerItem.setPosition(0.5f,1.0f);
             markerItem.setTMapPoint(tMapPoint);
-            markerItem.setName(spot.getTitle());
-            markerItem.setID("recommend");
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    tMapView.addMarkerItem(spot.getTitle(),markerItem);
-                }
-            });
+            markerItem.setName(String.valueOf(num));
+            markerItem.setID(spot.getTitle());
+            tMapPointList.add(tMapPoint);
+//            Log.d("showRecommend",markerItem.getName());
+            tMapView.addMarkerItem(spot.getTitle(),markerItem);
 
             recommendedPlaceList.add(markerItem);
         }
+
+        final TMapInfo tMapInfo = tMapView.getDisplayTMapInfo(tMapPointList);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                int zoomlevel;
+                if(tMapInfo.getTMapZoomLevel()<12){ // 줌 레벨이 클 수록 확대, 작을수록 축소
+                    Log.d("mapLevel","12아래");
+                    zoomlevel = 11;
+                }else{
+                    Log.d("mapLevel","12이상");
+                    zoomlevel = tMapInfo.getTMapZoomLevel();
+                }
+                tMapView.setZoomLevel(zoomlevel);
+                tMapView.setCenterPoint(tMapInfo.getTMapPoint().getLongitude(),tMapInfo.getTMapPoint().getLatitude());
+            }
+        });
+    }
+
+    public void addRecommend(View view){
+        Log.d("addRecommend","호출");
+        recommendButton.setVisibility(View.GONE);
+        for(Serializable s : recommendList){
+            if(((Spot)s).getTitle().equals(selectedPlace.getID())){
+                spotList.add(Integer.parseInt(selectedPlace.getName())+1,s);
+            }
+        }
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tMapView.removeAllMarkerItem();
+                tMapView.removeAllTMapPolyLine();
+                hideMarkerOverlay(markerOverlay);
+            }
+        });
+        showMarkers(spotList);
+        placeItemFragment.showPlaceList(spotList);
     }
 
     // 마커 여러개 지도에 표시
     public void showMarkers(List<Serializable> placeList){
+        Log.d("showmarkers","호출");
+        tMapView.removeAllMarkerItem();
         // 마커 리스트 테스트용도
         tMapPointList.clear();
         locationList = new ArrayList<>();
@@ -282,6 +334,9 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
             markerItem.setPosition(0.5f,1.0f);
             markerItem.setTMapPoint(tMapPoint);
             markerItem.setName(spot.getTitle());
+            markerItem.setID(spot.getTitle());
+
+            Log.d("markers"+i,spot.getTitle());
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -314,6 +369,7 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
                     Log.d("mapLevel","12이상");
                     zoomlevel = tMapInfo.getTMapZoomLevel();
                 }
+
                 tMapView.addTMapPolyLine(String.valueOf(day), tMapPolyLine);
                 tMapView.setZoomLevel(zoomlevel);
                 tMapView.setCenterPoint(tMapInfo.getTMapPoint().getLongitude(),tMapInfo.getTMapPoint().getLatitude());
@@ -331,12 +387,12 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
     }
 
 
-    public void showMarkerOverlay(final Serializable place, final TMapPoint tmapPoint){
+    public void showMarkerOverlay(final Serializable place, final TMapPoint tmapPoint, final int i){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Spot spot = (Spot) place;
-                markerOverlay = new MarkerOverlay(getApplicationContext(), spot.getFirstImage2(),spot.getTitle() ,spot.getTel() , spot.getAddress());
+                markerOverlay = new MarkerOverlay(getApplicationContext(), spot.getFirstImage2(),spot.getTitle() ,spot.getTel() , spot.getAddress(), i);
                 markerOverlay.setID("id");
                 markerOverlay.setPosition(0.0f, 0.0f);
                 markerOverlay.setTMapPoint(tmapPoint);
@@ -360,6 +416,12 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
 
     // 일정 저장하기
     public void saveSchedule(View view) {
+        tripSchedule.getCourseList().get(day).getSpotList().clear();
+        for(Serializable s : spotList){
+            tripSchedule.getCourseList().get(day).getSpotList().add(s);
+        }
+        List<Serializable> list2 = tripSchedule.getCourseList().get(day).getSpotList();
+        List<Serializable> list3 = spotList;
         // 만들어진 일정을 모델에 저장
         if(tripSchedule.save){
             ScheduleService.getInstance().tripScheduleList.get(tripSchedule.getList_pos());
@@ -399,26 +461,46 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
             Log.d("onPressUpEvent","지도 클릭");
             // 지도 선택시 장소 경로 숨기기
             hideFragment(placeItemFragment);
-
+            recommendButton.setVisibility(View.GONE);
             // 말풍선 지우기
             if(markerOverlay != null) {
                hideMarkerOverlay(markerOverlay);
             }
 
+
             // 장소를 선택한게 아니면 아무일도 없다
             if(arrayList.size() == 0) {
-                selectedPlace = null;
                 return false;
             }
 
+
+
             // 마커를 선택했다는 조건 추가해야됨
-            if(true) {
+            selectedPlace = arrayList.get(0);
+            Log.d("선택 id",selectedPlace.getID());
+            Log.d("선택 name",selectedPlace.getName());
+            Log.d("onPressUpEvent_PlaceId",selectedPlace.getID());
+            if(selectedPlace.getID().equals(selectedPlace.getName())) {
+                Log.d("onPressUpEvent_place","같다=spot");
                 for(Serializable a : spotList){
-                    if(((Spot)a).getTitle().equals(arrayList.get(0).getName())){
-                       showMarkerOverlay(a,tMapPoint);
+                    if(((Spot)a).getTitle().equals(selectedPlace.getName())){
+                       showMarkerOverlay(a,tMapPoint,0);    // 0 이면 여행지, 1 이면 추천 장소
+                        break;
                     }
                 }
-                schedulePresenter.setMarkerOverlay(arrayList.get(0).getName());
+                schedulePresenter.setMarkerOverlay(selectedPlace.getName());
+            }
+            // 추천장소 선택
+            else{
+                Log.d("onPressUpEvent_place","다르다=recoomend");
+                for(Serializable a : recommendList){
+                    if(((Spot)a).getTitle().equals(selectedPlace.getID())){
+                        showMarkerOverlay(a,tMapPoint,1);
+                        recommendButton.setVisibility(View.VISIBLE);
+                        break;
+                    }
+                }
+                schedulePresenter.setMarkerOverlay(selectedPlace.getName());
             }
 
             return false;
