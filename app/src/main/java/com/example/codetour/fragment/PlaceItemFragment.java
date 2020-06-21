@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ public class PlaceItemFragment extends Fragment implements PlaceItemContract.Vie
     private PlaceItemViewAdapter placeItemViewAdapter;
 
 //    private TextView placeAdd;  // 장소 추가 버튼
-//    private ImageButton placeDeleteButton;  // 장소 삭제 버튼
+    private ImageButton placeDeleteButton;  // 장소 삭제 버튼
 
     @Nullable
     @Override
@@ -46,11 +47,14 @@ public class PlaceItemFragment extends Fragment implements PlaceItemContract.Vie
         dataset = new ArrayList<Spot>();
         listView = rootView.findViewById(R.id.placeItemList);
         placeItemViewAdapter = new PlaceItemViewAdapter(dataset,getActivity().getApplicationContext());
+        placeItemViewAdapter.setFragment(this);
+
+
         listView.setAdapter(placeItemViewAdapter);
 
         View v = inflater.inflate(R.layout.fragment_placeitem,container,false);
 //        placeAdd = v.findViewById(R.id.placeAddButton);
-//        placeDeleteButton = v.findViewById(R.id.placeDeleteButton);
+        placeDeleteButton = v.findViewById(R.id.placeDeleteButton);
 
 ////         장소 추가 버튼 이벤트 핸들러
 //        placeAdd.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +94,7 @@ public class PlaceItemFragment extends Fragment implements PlaceItemContract.Vie
     // 변경된 장소가 매개변수로 들어오면 해당 placeList가 dataset에 추가된다
     public void showPlaceList(List<Serializable> placeList) {
         dataset.clear();
+        Log.d("show","place List Size :"+placeList.size());
         for(Serializable s : placeList){
             dataset.add((Spot) s);
         }
@@ -99,8 +104,7 @@ public class PlaceItemFragment extends Fragment implements PlaceItemContract.Vie
     // 추천장소를 화면에 표시하는 메서드
     public void showRecommendPlace(int i){
         List<Spot> spotList = placeItemPresenter.loadRecommendPlace(dataset.get(i));
-        ((RouteCheck)getActivity()).showRecommendMarkers(spotList);
-
+        ((RouteCheck)getActivity()).showRecommendMarkers(spotList, i);
     }
 
     @Override
@@ -115,6 +119,8 @@ public class PlaceItemFragment extends Fragment implements PlaceItemContract.Vie
 
     @Override
     public void erasePlace(int i) {
-
+        ((RouteCheck)getActivity()).hideMarker(dataset.get(i));
+        dataset.remove(i);
+        placeItemViewAdapter.notifyDataSetChanged();
     }
 }

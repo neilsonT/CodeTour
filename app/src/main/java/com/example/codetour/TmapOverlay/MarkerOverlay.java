@@ -53,14 +53,14 @@ public class MarkerOverlay extends TMapMarkerItem2 {
         super.setCalloutRect(rect);
     }
 
-    public MarkerOverlay(Context context, String imageURL, String name, String tel, String address) {
+    public MarkerOverlay(Context context, String imageURL, String name, String tel, String address,int i) {
         this.mContext = context;
 
         dm = new DisplayMetrics();
         WindowManager wmgr = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         wmgr.getDefaultDisplay().getMetrics(dm);
 
-        balloonView = new BalloonOverlayView(mContext, imageURL, name, tel, address);
+        balloonView = new BalloonOverlayView(mContext, imageURL, name, tel, address, i);
 
         balloonView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
                 View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));

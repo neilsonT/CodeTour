@@ -5,6 +5,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.codetour.R;
+import com.example.codetour.RouteCheck;
 
 public class BalloonOverlayView extends FrameLayout {
 
@@ -20,11 +22,11 @@ public class BalloonOverlayView extends FrameLayout {
     private TextView title;
     private TextView subTitle;
     private TextView content1;
-    private TextView content2;
+    private Button content2;
 
     String imageStatus = "no";
 
-    public BalloonOverlayView(Context context, String imageURL, String name, String tel, String address) {
+    public BalloonOverlayView(Context context, String imageURL, String name, String tel, String address,int i) {
 
         super(context);
 
@@ -39,6 +41,10 @@ public class BalloonOverlayView extends FrameLayout {
         params.gravity = Gravity.NO_GRAVITY;
         addView(layout, params);
         imageStatus = "yes";
+
+        if(i == 0){
+            content2.setVisibility(View.GONE);
+        }
     }
 
 
@@ -52,8 +58,7 @@ public class BalloonOverlayView extends FrameLayout {
         title = (TextView) view.findViewById(R.id.bubble_title);
         subTitle = (TextView) view.findViewById(R.id.bubble_subtitle);
         content1  = view.findViewById(R.id.content1);
-        content2 = view.findViewById(R.id.content2);
-
+        content2 = view.findViewById(R.id.recommendButton);
 //        Glide.with(view.getContext()).load(imageURL).into(image);
         Glide.with(this).load(imageURL).into(image);
 //        Glide.with(this).load(imageURL).into(image);

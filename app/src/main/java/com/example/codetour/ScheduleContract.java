@@ -16,11 +16,11 @@ public interface ScheduleContract {
         void showFragment(Fragment fragment);
         void hideFragment(Fragment fragment);
         void setPlaceDetail(List<Serializable> placeList);
-        void showMarker(Parcelable place);
-        void hideMarker(Parcelable place);
+        void showMarker(Serializable place);
+        void hideMarker(Serializable place);
         void showMarkers(List<Serializable> placeList);
         void hideMarkers(List<Serializable> placeList);
-        void showMarkerOverlay(Serializable place, TMapPoint tMapPoint);
+        void showMarkerOverlay(Serializable place, TMapPoint tMapPoint,int i);
         void hideMarkerOverlay(MarkerOverlay markerOverlay);
     }
 

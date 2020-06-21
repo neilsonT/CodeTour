@@ -74,4 +74,11 @@ public class SpotManager implements Serializable {
     public List<Spot> getSpotList() {
         return spotList;
     }
+
+    public void replaceList(List<Serializable> list){
+        spotList.clear();
+        for(Serializable s : list){
+            spotList.add((Spot)s);
+        }
+    }
 }
