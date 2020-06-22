@@ -248,19 +248,22 @@ public class RouteCheck extends AppCompatActivity implements  ScheduleContract.V
         showMarkers(spotList);
     }
 
-    public void showRecommendMarkers(List<Spot> spotList,int num){
-        Log.d("showRecommend 호출", "size : "+String.valueOf(spotList.size()));
+    public void showRecommendMarkers(List<Spot> recommendList,int num){
+        Log.d("showRecommend 호출", "size : "+String.valueOf(recommendList.size()));
         hideFragment(placeItemFragment);
-        recommendList = new ArrayList<>();
-        recommendList.addAll(spotList);
+        this.recommendList = new ArrayList<>();
+        this.recommendList.addAll(recommendList);
 
         recommendedPlaceList = new ArrayList<>();
 
         tMapPointList.clear();
 
-        for(int i=0; i<spotList.size(); i++){
+        for(int i=0; i<recommendList.size(); i++){
+            if(recommendList.get(i).getTitle().equals(((Spot)spotList.get(num)).getTitle())){
+                continue;
+            }
             TMapMarkerItem markerItem = new TMapMarkerItem();
-            final Spot spot  = (Spot)spotList.get(i);
+            final Spot spot  = (Spot)recommendList.get(i);
             TMapPoint tMapPoint = new TMapPoint(spot.getPos()[1],spot.getPos()[0]);
             // 마커 아이콘
             Bitmap bitmap = BitmapFactory.decodeResource(this.getResources(), R.drawable.r_marker);
