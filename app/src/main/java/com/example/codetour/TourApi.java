@@ -267,10 +267,10 @@ public class TourApi {
             for (int num = 0; num < point_list.size(); num++) {
                 Point point = point_list.get(num);
                 Spot spot = new Spot();
-                if (point.getContentid().equals("")) {
-                    spot.setPos(point.getX(), point.getY());
-                    spot.setTitle("숙소");
-                } else {
+                //if (point.getContentid().equals("")) {
+                //    spot.setPos(point.getX(), point.getY());
+                //    spot.setTitle("숙소");
+                //} else {
                     try {
                         urlstr = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?"
                                 + "ServiceKey=" + ServiceKey
@@ -333,6 +333,7 @@ public class TourApi {
                             if (jObject.containsKey("firstimage2")) {
                                 spot.setFirstImage2((String) jObject.get("firstimage2"));
                             } else {
+                                spot.setFirstImage2("");
                             }
 
                         } else {
@@ -341,7 +342,7 @@ public class TourApi {
                     } catch (Exception e) {
                         System.out.println(e);
                     }
-                }
+             //  }
                 spot_list.add(spot);
             }
             return spot_list;
@@ -434,81 +435,53 @@ public class TourApi {
 
 
 
-/*
-    public List<Spot> getRestaurant(Spot spot,String classifi){ //음식점을 받아옵니다.
+
+    public Point getRestaurant(Point point,List<String> list_food) {
         GetRestaurantAsyncTask asynctask = new GetRestaurantAsyncTask();
-        cat2=classifi;
+
         try {
-            return asynctask.execute(spot).get();
+            return asynctask.execute(point, list_food).get();
         }
         catch (Exception e){
             System.out.println(e);
-            return null;
-        }
-    }
-
-    protected List<Spot> dataParse_restaurant(JSONArray jarray,List<Spot> spotlist){
-
-        for (int i = 0; i < jarray.size(); i++) {
-            //TourAPI 필수제공data title, contentID, contenttypeid
-            //contentID, contenttypeid 장소 세부설명 받아오는데 필요합니다.
-            Spot bus = new Spot();
-            JSONObject jObject = (JSONObject) jarray.get(i);
-
-            if(jObject.get("cat2")!=cat2)
-                continue;
-
-            bus.setContentTypeId(jObject.get("contenttypeid"));
-            bus.setTitle(jObject.get("title"));
-            bus.setContentid(jObject.get("contentid"));
-
-            if (jObject.containsKey("addr1")) {
-                bus.setAddr1(jObject.get("addr1"));
-            }
-
-            //if (jObject.containsKey("firstimage")) {bus.setFirstimage(jObject.get("firstimage"));}
-
-            if (jObject.containsKey("mapx") && jObject.containsKey("mapy")) {
-                bus.setPos(jObject.get("mapx"), jObject.get("mapy"));
-            }
-            if (jObject.containsKey("tel")) {
-                bus.setTel(jObject.get("tel"));
-            }
-
-            spotlist.add(bus);
         }
 
-        return spotlist;
-
+        return null;
     }
 
-    public class GetRestaurantAsyncTask extends AsyncTask<Spot, Void, List<Spot>> {    //SpotList를 가져올까요?
+    public class GetRestaurantAsyncTask extends AsyncTask<Object, Void, Point> {    //SpotList를 가져올까요?
         @Override
-        protected List<Spot> doInBackground(Spot... spot) {    //url 연결, Json Data 받아온 후 파싱.
+        protected Point doInBackground(Object... params) {    //url 연결, Json Data 받아온 후 파싱.
             String str, receiveMsg;
             List<Spot> tmp_list=null;
-            URL url = null;
-
+            URL url;
+            Point return_point=null;
+            Point point=(Point)params[0];
+            List<String> list_food=(List<String>)params[1];
             try {
-                for (int num = 1; num <= 3; num++) {  //한번에 5개 장소 가져옵니다. page=3
-                    String urlstr = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/locationBasedList?"
-                            + "ServiceKey=" + ServiceKey
-                            + "&pageNo="+num
-                            + "&numOfRows=5&listYN=Y&contentTypeId=39&arrange=P"
-                            + "&mapX="+spot[0].getPos()[0]
-                            + "&mapY="+spot[0].getPos()[1]
-                            + "radius=2000" //단위 m
-                            + "&MobileOS=AND&MobileApp=TestParsing&_type=json";
+                int radius=20000;
+                str=null;
+                receiveMsg=null;
+                url=null;
 
-                    url = new URL(urlstr);
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                String urlstr = "http://api.visitkorea.or.kr/openapi/service/rest/KorService/locationBasedList?"
+                        + "ServiceKey=" + ServiceKey
+                        + "&pageNo=1"
+                        + "&numOfRows=20&listYN=Y&contentTypeId=39&arrange=E"
+                        + "&mapX="+point.getX()
+                        + "&mapY="+point.getY()
+                        + "&radius="+radius //단위 m
+                        + "&MobileOS=AND&MobileApp=TestParsing&_type=json";
+
+                url = new URL(urlstr);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     if (conn.getResponseCode() == conn.HTTP_OK) {
                         InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
                         BufferedReader reader = new BufferedReader(tmp);
                         StringBuffer buffer = new StringBuffer();
-                        while ((str = reader.readLine()) != null) {
-                            buffer.append(str);
-                        }
+                            while ((str = reader.readLine()) != null) {
+                                buffer.append(str);
+                            }
                         receiveMsg = buffer.toString();
                         reader.close();
 
@@ -520,25 +493,36 @@ public class TourApi {
                         JSONObject parse_body = (JSONObject) parse_response.get("body");
 
                         if (parse_body.get("items").equals("")) { //정보 없을경우
-                            return tmp_list;
+                            return null;
                         }
 
                         JSONObject parse_items = (JSONObject) parse_body.get("items");
                         JSONArray jarray = (JSONArray) parse_items.get("item");
 
-                        tmp_list = dataParse_restaurant(jarray,tmp_list);
-
+                        for (int i = 0; i < jarray.size(); i++) {
+                            JSONObject jObject = (JSONObject) jarray.get(i);
+                            for(String food : list_food){
+                                if(jObject.get("cat3").equals(food)){
+                                    return_point = new Point();
+                                    return_point.setX(jObject.get("mapx"));
+                                    return_point.setY(jObject.get("mapy"));
+                                    return_point.setContentid(jObject.get("contentid"));
+                                    return_point.setReadcount(jObject.get("readcount"));
+                                    break;
+                                }
+                            }
+                            if(return_point!=null)
+                                break;
+                        }
+                        return return_point;
                     } else {
                         System.out.println("error");
                     }
-                }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-
-            return tmp_list;
+            System.out.println("알맞은 식당을 찾지 못했습니다.");
+            return null;
         }
     }
-
- */
 }

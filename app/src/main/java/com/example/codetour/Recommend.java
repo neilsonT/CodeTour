@@ -46,13 +46,15 @@ public class Recommend implements Serializable {
 
     public void recommendCourse() {
 
+        recommendSpotList=new ArrayList<>();
+        recommendSpotList.clear();
+
         HashMap<String, List> hash_map = SetUserData();
 
         for (String key : hash_map.keySet()) {
 
             List value = hash_map.get(key);
             List<Cluster> clusters = RecWithClustering(tripSchedule.areacode[0][(int) value.get(0)], tripSchedule.sigungucode[0][(int) value.get(0)], value.size());//클러스터링
-            System.out.println(key + "" + value.size());
             for (int i = 0; i < value.size(); i++) {
 
                 Point start_point = new Point(tripSchedule.startPosVal[(int) value.get(i)][0], tripSchedule.startPosVal[(int) value.get(i)][1]);
@@ -78,7 +80,6 @@ public class Recommend implements Serializable {
         return clusters;
 
     }
-
     private HashMap<String, List> SetUserData() {
 
         for (int i = 0; i < tripSchedule.theme_selection.size(); i++) {
@@ -217,8 +218,7 @@ public class Recommend implements Serializable {
         };
         List<Point> point_list = new ArrayList<>();
         List<Point> tmp_list = new ArrayList<>();
-        //numSpot = tripSchedule.times / 2;
-        numSpot =5;
+        numSpot = (tripSchedule.times / 2) - 1;
         if (cluster.points.size() < numSpot) {
             for (int i = 0; i < cluster.points.size(); i++)
                 tmp_list.add(cluster.points.get(i));
@@ -257,10 +257,20 @@ public class Recommend implements Serializable {
             spot_list[i]=tmp_list.get(path.get(i));
         }
         System.out.println("path출력 끝");
-        for (int i=0;i<numSpot;i++)
+        for (int i=0;i<numSpot;i++) {
             point_list.add(spot_list[i]);
+
+            if(i==1){
+                point_list.add(GetRestaurant(spot_list[i]));
+            }
+        }
         return point_list;
 
+    }
+    private Point GetRestaurant(Point point){
+        Point restaurant=TourApiManager.getInstance().getRestaurant(point,list_food);
+
+        return restaurant;
     }
     private double getShortestPath(boolean flag, int current, int visited){
 
@@ -337,45 +347,7 @@ public class Recommend implements Serializable {
 
         };
 
-        //Collections.sort(cluster.points, cmp);
-
-    }
-
-    private List<Point> SortPoint(List<Point> list) {
-
-        double middle_point = 0;
-        List<Point> return_list = new ArrayList<>();
-        for (Point point : list) {
-            middle_point += point.getY();
-        }
-
-        double avr_point = middle_point / list.size();
-
-        List<Point> up_list = new ArrayList<>();
-        List<Point> down_list = new ArrayList<>();
-
-        for (Point point : list) {
-            if (point.getY() < avr_point)
-                down_list.add(point);
-            else
-                up_list.add(point);
-        }
-
-        if (down_list.size() > up_list.size()) {
-            return_list.addAll(down_list);
-            Collections.reverse(up_list);
-            return_list.addAll(up_list);
-        } else {
-            return_list.addAll(up_list);
-            Collections.reverse((down_list));
-            return_list.addAll(down_list);
-        }
-
-        return return_list;
-    }
-
-    public void TSP(int current, int visited) { //cur : 현재 도시 인덱
-
+        Collections.sort(cluster.points, cmp);
 
     }
 }
