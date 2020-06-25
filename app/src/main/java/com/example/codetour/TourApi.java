@@ -144,7 +144,6 @@ public class TourApi {
         List<Point> point_list = new ArrayList<>();
         GetPointAsyncTask myAsyncTask = new GetPointAsyncTask();
         try {
-            //////////////////////////////////////////////////////////
             point_list=myAsyncTask.execute(Integer.toString(areaCode),Integer.toString(sigunguCode),cat1,cat2).get();
         } catch (Exception e) {
             System.out.println(e);
@@ -280,7 +279,6 @@ public class TourApi {
                                 + "&addrinfoYN=Y"
                                 + "&overviewYN=Y"
                                 + "&MobileOS=AND&MobileApp=TestParsing&_type=json";
-                        System.out.println(point.getContentid());
                         url = new URL(urlstr);
                         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                         if (conn.getResponseCode() == conn.HTTP_OK) {
@@ -397,8 +395,6 @@ public class TourApi {
                     }
                     receiveMsg = buffer.toString();
                     reader.close();
-
-                    System.out.println(receiveMsg);
 
                     JSONParser jsonParser = new JSONParser();
                     JSONObject jsonObjtmp = (JSONObject) jsonParser.parse(receiveMsg);

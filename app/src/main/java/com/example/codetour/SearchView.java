@@ -70,7 +70,6 @@ public class SearchView extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 //edittext에 글자가 입력되면 실행되는 함수
                 final String keyword = s.toString();
-                System.out.println("글자 입력 완료");
                 handler.removeCallbacks(workRunnable);
                 workRunnable = new Runnable() {
                     @Override

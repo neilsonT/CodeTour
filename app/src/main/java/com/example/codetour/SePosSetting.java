@@ -105,10 +105,10 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
                 for(int i=0;i<tour.difdays;i++){
                     tour.startAddr.set(i, stAddr[i]);
                     String[] add = stAddr[i].split(" ");
-                    System.out.println(add[0]+" , "+add[1]);
+
                     tour.endAddr.set(i, edAddr[i]);
                     add = edAddr[i].split(" ");
-                    System.out.println(add[0]+" , "+add[1]);
+
                 }
                 for(int i=0; i<tour.difdays; ++i){
                     tmp = (TextView)findViewById(stPosID[i]);
@@ -117,7 +117,7 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
                     tour.startPosVal[i] = stPosVal[i];
                     String[] add = stAddr[i].split(" ");
                     int[] temp= TourApiManager.getInstance().getAddtoCode(add[0],add[1]);
-                    System.out.println(add[1]);
+
                     tour.areacode[0][i] = temp[0];
                     tour.sigungucode[0][i] = temp[1];
                     tmp = (TextView)findViewById(edPosID[i]);
@@ -129,19 +129,14 @@ public class SePosSetting extends AppCompatActivity implements SePosSettingContr
                     tour.areacode[1][i] = temp[0];
                     tour.sigungucode[1][i] = temp[1];
                 }
-                System.out.println("출발도착지 test");
-                System.out.println(tour.areacode[0][0]+", "+tour.areacode[1][0]);
-                System.out.println(tour.areacode[0][1]+", "+tour.areacode[1][1]);
+
                 //TEMP();
-                //TODO: 현재 TEMP() 함수를 이용하여 areacode와 contentTypeID를 강제로 넘겨 주고 있으므로, 받아온 값을 넘겨주도록 
+
 
                 Recommend rec = new Recommend();
 
                 rec.setTripSchedule(tour);
-                //rec.setRecommendSpotList();
-                //rec.RecWithClustering();
                 rec.recommendCourse();
-                //rec.makeCourses();
                 Intent intent = new Intent(getApplicationContext(), RouteCheck.class);
                 intent.putExtra("rec", rec);
                 startActivity(intent);

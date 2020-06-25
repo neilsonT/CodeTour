@@ -46,21 +46,10 @@ public class KMeans implements Serializable {
 
     public void getPointData(int areaCode, int sigunguCode, String cat1, String cat2){
         List<Point> tmp_list=new ArrayList<Point>();
-        //System.out.println("areaCode, sigungoCode, cat1, cat2 : "+areaCode+" ,"+sigunguCode+" ,"+cat1+" ,"+cat2);
         tmp_list=TourApiManager.getInstance().getPoint(areaCode,sigunguCode,cat1,cat2);
         if(tmp_list!=null)
             points.addAll(tmp_list);
-        //System.out.println("tmp_list 출력 시작");
-        //for(int i=0; i<tmp_list.size(); ++i) System.out.println(tmp_list.get(i).getContentid());
 }
-
-    /*private void plotClusters() {   //Print
-        for (int i = 0; i<NUM_CLUSTERS ;i++){
-            Cluster c = clusters.get(i);
-            c.plotCluster();
-        }
-    }*/
-
     //The process to calculate the K Means, with iterating method.
     public List<Cluster> calculate() {
         boolean finish = false;
@@ -87,11 +76,6 @@ public class KMeans implements Serializable {
             for (int i = 0; i<lastCentroids.size(); i++){
                 distance += Point.distance(lastCentroids.get(i), currentCentroids.get(i));
             }
-            //System.out.println("#################");
-            //System.out.println("Iteration: " + iteration);
-            //System.out.println("Centroid distances: " + distance);
-            //plotClusters();
-
             if (distance ==0) {
                 finish = true;
             }

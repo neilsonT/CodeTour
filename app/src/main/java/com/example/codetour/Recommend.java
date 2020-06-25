@@ -246,23 +246,17 @@ public class Recommend implements Serializable {
         }
         int start = 0;
         double dis=getShortestPath(flag, start,visited);
-        System.out.println("dis : "+dis);
         List<Integer> path = findPath(flag,dis);
 
         Point[] spot_list = new Point[numSpot];
-        System.out.println("length path after return:"+path.size());
-        System.out.println("path출력 시작");
-        for (int i=0;i<numSpot;i++){
-            System.out.println("path[i] : " +path.get(i));
-            spot_list[i]=tmp_list.get(path.get(i));
-        }
-        System.out.println("path출력 끝");
-        for (int i=0;i<numSpot;i++) {
-            point_list.add(spot_list[i]);
 
-            if(i==1){
-                point_list.add(GetRestaurant(spot_list[i]));
-            }
+        for (int i=0;i<numSpot;i++)
+            spot_list[i]=tmp_list.get(path.get(i));
+
+        for (int i=0, time=tripSchedule.startTime[0];i<numSpot;i++,time+=2) {
+            if(time<14&&time>=12){
+                point_list.add(GetRestaurant(spot_list[i])); //식당추가
+            }            point_list.add(spot_list[i]);
         }
         return point_list;
 
@@ -274,9 +268,8 @@ public class Recommend implements Serializable {
     }
     private double getShortestPath(boolean flag, int current, int visited){
 
-        System.out.println("visited :"+visited);
+
         if (visited == (1<<numSpot)-1) { //모든 정점을 다 들른 경우
-            System.out.println("다 들름");
             /*
             if (flag)
                 return W[current][1];
@@ -316,7 +309,7 @@ public class Recommend implements Serializable {
             for(int k=0;k<=numSpot;k++){
                 if((masking&(1<<k))>0)
                     continue;
-                System.out.println("차이 :"+Math.abs((distance-W[piv][k])-dp[k][masking + (1<<k)]));
+                //System.out.println("차이 :"+Math.abs((distance-W[piv][k])-dp[k][masking + (1<<k)]));
                 if(Math.abs((distance-W[piv][k])-dp[k][masking + (1<<k)]) < 0.000001 ){
                     path.add(k);
                     distance = dp[k][masking + (1<<k)];
@@ -328,7 +321,7 @@ public class Recommend implements Serializable {
         /*
         if (flag)
             path.add(1);*/
-        System.out.println("length path before return:"+path.size());
+        //System.out.println("length path before return:"+path.size());
         return path;
     }
     private void sortPointReadCount(Cluster cluster) {

@@ -27,17 +27,7 @@ public class Cluster implements Serializable {
     public void addPoint(Point point) {
         points.add(point);
     }
-/*
-    public void plotCluster() {
-        System.out.println("[Cluster: " + id+"]");
-        System.out.println("[Centroid: " + centroid + "]");
-        System.out.println("[Points: \n");
-        for(int i=0;i<points.size();i++) {
-            System.out.println(points.get(i));
-        }
-        System.out.println("]");
-    }
-*/
+
     /*Get,Set*/
     public List getPoints() {return points;}
     public Point getCentroid() {return centroid;}
